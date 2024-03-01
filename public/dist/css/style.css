@@ -1,0 +1,74 @@
+@media (min-width: 768px){
+    .seven-cols .cal-md-1,
+    .seven-cols .cal-sm-1,
+    .seven-cols .cal-lg-1  {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .seven-cols .cal-md-1,
+    .seven-cols .cal-sm-1,
+    .seven-cols .cal-lg-1 {
+        width: 14.285714285714285714285714285714% !important;
+    }
+}
+
+/**
+*  The following is not really needed in this case
+*  Only to demonstrate the usage of @media for large screens
+*/
+@media (min-width: 1200px) {
+    .seven-cols .cal-md-1,
+    .seven-cols .cal-sm-1,
+    .seven-cols .cal-lg-1 {
+        width: 14.285714285714285714285714285714% !important;
+    }
+}
+@media (min-width: 768px) {
+    .cal-md-1 {
+        -ms-flex: 0 0 14.285714285714285714285714285714%;
+        flex: 0 0 14.285714285714285714285714285714%;
+        max-width: 14.285714285714285714285714285714%;
+    }
+}
+.cal-md-1{
+    position: relative;
+    width: 100%;
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+}
+.bled{
+    opacity: .5;
+}
+.disabled{
+    opacity: .5;
+}
+.col-md-11:has(> h5.bg-warning){
+    background-color: #ffc107;
+}
+.col-md-1:has(> .ml-2){
+    background-color: #ffc107;
+}
+
+.select2-selection .select2-selection--single{
+    height: 2.4rem !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+    top: 6px !important;
+}
+
+.client-header{
+    padding: 0.5rem 0.25rem !important;
+}
+
+.required-field::after {
+    content: "*";
+    color: red;
+}
+#ui-datepicker-div{
+    background-color: rgb(250, 251, 214);
+    padding: 0.7rem;
+
+}

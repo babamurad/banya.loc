@@ -1,0 +1,40 @@
+<div wire:ignore.self class="modal fade" id="EditDepartment" role="viewDialog" aria-hidden="true">
+    <div class="modal-dialog card" style="max-width: 50%;">
+        <div class="modal-content">
+                <div class="modal-header primary" style="background-color: #007bff;">
+                    <h4 class="modal-title text-white ">{{ __('Add Client')}}</h4>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="required-field" for="name">{{__('Название')}} </label>
+                                    <input name="name" type="text"
+                                           class="form-control @error('name') is-invalid @enderror"
+                                           placeholder=" {{__('Название')}} " wire:model="name" value="{{ old('name') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="required-field" for="price"> {{__('Цена за 1 час')}} </label>
+                                    <input name="price" type="number" step="any" class="form-control"
+                                           placeholder=" {{__('Цена')}} " wire:model="price" value="{{ old('price') }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Close')}} </button>
+                    <button type="submit" class="btn btn-primary" wire:click="updateDepartment"> {{__('Save changes')}} </button>
+                </div>
+                <!-- /modal-content  -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
