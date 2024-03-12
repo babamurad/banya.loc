@@ -7,6 +7,7 @@ use App\Livewire\DepartmentComponent;
 use App\Livewire\EventsComponent;
 use App\Livewire\HomeComponent;
 use App\Livewire\JobTitleComponent;
+use App\Livewire\LoginRegisterComponent;
 use App\Livewire\OrderComponent;
 use App\Livewire\OrderCreate;
 use App\Livewire\ShiftCloseComponent;
@@ -30,6 +31,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('login', LoginRegisterComponent::class)->name('login');
 
 Route::get('admin', HomeComponent::class)->name('admin');
 Route::get('users', UserComponent::class)->name('users');

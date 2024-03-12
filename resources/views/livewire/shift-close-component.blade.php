@@ -26,7 +26,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label>Кассиры</label>
-                    <select class="form-control">
+                    <select class="form-control" @readonly(true)>
                         @foreach ($users as $user)
                         <option value="{{ $user->id }}">{{ $user->first_name . ' ' . $user->last_name }}</option>
                         @endforeach
@@ -36,7 +36,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="start">Дата: </label><br>
-                    <input type="date" id="start" name="trip-start" style="width: 50%;"
+                    <input type="date" id="start" name="trip-start" style="width: 50%;" readonly
                     value="{{ \Carbon\Carbon::create(now())->format('Y-m-d') }}"
                     min="2024-01-01"
                     max="2024-12-31" />
