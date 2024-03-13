@@ -12,6 +12,8 @@ use App\Livewire\OrderComponent;
 use App\Livewire\OrderCreate;
 use App\Livewire\ShiftCloseComponent;
 use App\Livewire\UserComponent;
+use App\Livewire\RegisterComponent;
+use App\Livewire\LockScreenComponent;
 
 
 use App\Models\Order;
@@ -28,11 +30,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', LoginRegisterComponent::class);
+
 
 Route::get('login', LoginRegisterComponent::class)->name('login');
+Route::get('register', RegisterComponent::class)->name('register');
+Route::get('lock-screen', LockScreenComponent::class)->name('lock-screen');
 
 Route::get('admin', HomeComponent::class)->name('admin');
 Route::get('users', UserComponent::class)->name('users');
