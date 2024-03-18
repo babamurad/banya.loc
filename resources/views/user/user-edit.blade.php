@@ -1,4 +1,4 @@
-<div class="modal fade" id="EditUserDialog" role="viewDialog" aria-hidden="true">
+<div wire:ignore class="modal fade" id="closeEditUserModal" role="viewDialog" aria-hidden="true">
     <div class="modal-dialog card" style="max-width: 50%;">
         <div class="modal-content">
           <div class="modal-header primary" style="background-color: #007bff;">
@@ -10,38 +10,60 @@
           <div class="modal-body">
                   <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="first_name">First Name</label>
+                                  <input name="first_name" type="text" class="form-control" placeholder="First Name" wire:model="firstname">
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="last_name">Last Name</label>
+                                  <input name="last_name" type="text" class="form-control" placeholder="Last Name" wire:model="lastname">
+                              </div>
+                          </div>
+                      </div>
+                    <div class="row">
+                        <div class="col-md-4">
                             <div class="form-group">
                             <label for="name">Name</label>
-                            <input name="name" type="text" class="form-control" placeholder="Name">
+                            <input name="name" type="text" class="form-control" placeholder="Name" wire:model="name">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>{{ __('Тип') }}</label>
+                                <select class="custom-select" wire:model="utype">
+                                    <option value="USR">Пользователь</option>
+                                    <option value="ADM">Администратор</option>
+                                    <option value="KSS">Кассир</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label></label>
+                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch3" wire:model.live="status" style="cursor: pointer;">
+                                    <label class="custom-control-label" for="customSwitch3" style="cursor: pointer;">
+                                        Активирован
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="first_name">First Name</label>
-                                <input name="first_name" type="text" class="form-control" placeholder="First Name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="last_name">Last Name</label>
-                                <input name="last_name" type="text" class="form-control" placeholder="Last Name">
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" wire:model="email">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" wire:model="password">
                             </div>
                         </div>
                     </div>
@@ -49,7 +71,7 @@
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary" wire:click="update">Save changes</button>
           </div>
         </div>
         <!-- /.modal-content -->

@@ -1,16 +1,19 @@
 <div>
     <div class="lockscreen-wrapper">
+        @include('components.alerts')
         <div class="lockscreen-logo">
             <a href="/"><b>Banya</b>Loc</a>
         </div>
         <!-- User name -->
-        <div class="lockscreen-name mb-4 ml-5 pl-5">{{ auth()->user()->name }}</div>
+        <div class="lockscreen-name mb-4 ml-5 pl-5">
+            <h6 class="pl-5">Имя: <strong>{{ auth()->user()->name }}</strong> </h6>
+        </div>
 
         <!-- START LOCK SCREEN ITEM -->
         <div class="lockscreen-item">
             <!-- lockscreen image -->
             <div class="lockscreen-image">
-                <img src="{{ asset('dist/img/avatar2.png') }}" alt="User Image">
+                <img src="{{ asset('dist/img/avatar.png') }}" alt="User Image">
             </div>
             <!-- /.lockscreen-image -->
 

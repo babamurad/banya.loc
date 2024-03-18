@@ -1,4 +1,5 @@
 <div>
+    @include('components.alerts')
     <div class="register-box">
         <div class="register-logo">
             <a href="/"><b>Banya</b>Loc</a>

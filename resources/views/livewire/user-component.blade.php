@@ -1,17 +1,24 @@
 <div>
+    <script>
+        window.addEventListener('closeEditUserModal', event=> {
+            $('#closeEditUserModal').modal('hide');
+        })
+    </script>
     <!--Modal -->
     @include('user.user-create')
     @include('user.user-edit')
     <!--Modal -->
 
-
     <section class="content-header">
         <div class="container-fluid">
+            <div class="row">
+                @include('components.alerts')
+            </div>
           <div class="row mb-2">
             <div class="col-sm-4">
               <h1> {{__('User Tables')}} </h1>
             </div>
-            <div class="col-md-4">@include('components.alerts')</div>
+            <div class="col-md-4"></div>
             <div class="col-sm-4">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#"> {{__('Home')}} </a></li>
@@ -26,7 +33,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-success"
+                    <button class="btn btn-block btn-primary"
                     data-toggle="modal" onClick="javascript:viewFile()" data-target="#CreateUserDialog">
                     <i class="fas fa-plus mr-1"></i> {{__('Add User')}}
                     </button>
@@ -103,10 +110,11 @@
                         <td>
                             <div>
                                 <button type="button" class="btn btn-secondary btn-sm"
-                                data-toggle="modal" onClick="javascript:edit()" data-target="#EditUserDialog">
+                                data-toggle="modal" onClick="javascript:edit()" data-target="#closeEditUserModal" wire:click="edit({{ $user->id }})">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button onclick="confirm('Are you sure want to delete {{$user->name}}?') || event.stopImmediatePropagation() " type="button" class="btn btn-danger btn-sm" wire:click="delete({{$user->id}})">
+                                <button onclick="confirm('Are you sure want to delete {{$user->name}}?') || event.stopImmediatePropagation() "
+                                        type="button" class="btn btn-danger btn-sm" wire:click="delete({{$user->id}})">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </div>

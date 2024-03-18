@@ -11,4 +11,9 @@ class LockScreenComponent extends Component
         return view('livewire.lock-screen-component')
             ->layout('components.layouts.login');
     }
+
+    public function login()
+    {
+
+    }
 }
