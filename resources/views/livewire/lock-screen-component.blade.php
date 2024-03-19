@@ -4,6 +4,7 @@
         <div class="lockscreen-logo">
             <a href="/"><b>Banya</b>Loc</a>
         </div>
+
         <!-- User name -->
         <div class="lockscreen-name mb-4 ml-5 pl-5">
             <h6 class="pl-5">Имя: <strong>{{ auth()->user()->name }}</strong> </h6>
@@ -38,6 +39,7 @@
         </div>
         <div class="text-center">
             <a href="{{ route('login') }}">Или авторизуйтесь другим пользователем</a>
+            <a href="{{ route('admin') }}" class="btn"><i class="fas fa-undo"></i>Назад</a>
         </div>
         <div class="lockscreen-footer text-center">
             Copyright © 2024 <b><a href="/" class="text-black">banya.loc</a></b><br>

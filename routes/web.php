@@ -32,14 +32,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', LoginRegisterComponent::class);
 
+Route::middleware(\App\Http\Middleware\AuthAdmin::class)->group(function (){
+    Route::get('users', UserComponent::class)->name('users');
+    Route::get('clients', ClientComponent::class)->name('clients');
+});
+
 
 Route::get('login', LoginRegisterComponent::class)->name('login');
 Route::get('register', RegisterComponent::class)->name('register');
 Route::get('lock-screen', LockScreenComponent::class)->name('lock-screen');
 
 Route::get('admin', HomeComponent::class)->name('admin');
-Route::get('users', UserComponent::class)->name('users');
-Route::get('clients', ClientComponent::class)->name('clients');
+
 Route::get('/department', DepartmentComponent::class)->name('department');
 Route::get('jobtitle', JobTitleComponent::class)->name('jobtitle');
 Route::get('orders', OrderComponent::class)->name('orders');

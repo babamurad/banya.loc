@@ -12,8 +12,9 @@ class LockScreenComponent extends Component
             ->layout('components.layouts.login');
     }
 
-    public function login()
+    public function logoutLogin()
     {
-
+        auth()->logout();
+        return redirect()->route('login');
     }
 }
