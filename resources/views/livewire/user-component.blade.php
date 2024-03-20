@@ -91,13 +91,21 @@
                             @if($sortBy=='last_name') {!!$sortIcon!!} @else <i class="fas fa-sort ml-1"></i> @endif
                             </button>
                     </th>
-                    <th class="sorting" wire:click="setSortBy('email')">
+                    <th class="sorting">
                         <button class="btn btn-block btn-default">
-                            <strong> {{__('Email')}} </strong>
-                            @if($sortBy=='email') {!!$sortIcon!!} @else <i class="fas fa-sort ml-1"></i> @endif
-                            </button>
+                           {{__('Type')}}
+                        </button>
                     </th>
-                    <th class="sorting"> {{__('Action')}} </th>
+                    <th class="sorting">
+                        <button class="btn btn-block btn-default">
+                        {{__('Status')}}
+                        </button>
+                    </th>
+                    <th class="sorting">
+                        <button class="btn btn-block btn-default">
+                        {{__('Action')}}
+                        </button>
+                    </th>
                 </tr>
             </thead>
               <tbody>
@@ -106,7 +114,8 @@
                         <td class="dtr-control sorting_1" tabindex="0">{{$user->name}}</td>
                         <td>{{$user->first_name}}</td>
                         <td>{{$user->last_name}}</td>
-                        <td>{{$user->email}}</td>
+                        <td>{{$user->utype}}</td>
+                        <td class="{{$user->status=='Не активирован'? 'text-danger':'text-success'}}">{{$user->status}}</td>
                         <td>
                             <div>
                                 <button type="button" class="btn btn-secondary btn-sm"

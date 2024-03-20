@@ -28,11 +28,11 @@ class LoginRegisterComponent extends Component
         {
             Auth::user($user);
             //dd(Auth::check());
-            if ((auth()->user()->utype == 'KSS')){
+            if (auth()->user()->utype == 'KSS' || auth()->user()->utype == 'ADM'){
                 //dd(auth()->user()->utype.' - '.auth()->user()->status);
                 return redirect()->route('admin');
             } else {
-                dd(auth()->user()->utype.' - '.auth()->user()->status);
+                //dd(auth()->user()->utype.' - '.auth()->user()->status);
                 $this->redirectRoute('lock-screen');
             }
             session()->flash('success', __('Вы авторизованы.'));

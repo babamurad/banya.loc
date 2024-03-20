@@ -48,11 +48,7 @@ class OrderCreate extends Component
         //dd($time_list[0]->time);
         $dep_name = Department::findOrFail($this->department_id);
         $dep_name = $dep_name->name;
-//        if ($this->depart_id) {
-//            //dd('deprtment id');
-//            $dp = Department::findOrFail($this->department_id)->first();
-//            $this->jprice = $dp->price;
-//        }
+
         $departments = Department::all();
 
         if ($this->employe_id){

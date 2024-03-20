@@ -14,6 +14,7 @@ use App\Livewire\ShiftCloseComponent;
 use App\Livewire\UserComponent;
 use App\Livewire\RegisterComponent;
 use App\Livewire\LockScreenComponent;
+use \App\Livewire\OrderEdit;
 
 
 use App\Models\Order;
@@ -48,6 +49,8 @@ Route::get('/department', DepartmentComponent::class)->name('department');
 Route::get('jobtitle', JobTitleComponent::class)->name('jobtitle');
 Route::get('orders', OrderComponent::class)->name('orders');
 Route::get('order-create/{data}/{dep_id}/{number}', OrderCreate::class)->name('order-create');
+
+Route::get('order-edit/{id}', OrderEdit::class)->name('order-edit');
 
 Route::get('day-events', DayEventsComponent::class)->name('day-events');
 Route::get('shift', ShiftCloseComponent::class)->name('shift');

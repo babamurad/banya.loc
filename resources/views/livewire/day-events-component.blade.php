@@ -39,6 +39,34 @@
                 <h5><i class="icon fas fa-check"></i> {{ session('success') }}</h5>
             </div>
         @endif
+<div wire:ignore.self class="modal fade" id="ConfirmDelete" role="viewDialog" aria-hidden="true">
+            <div class="modal-dialog card" style="max-width: 25%;">
+                <div class="modal-content">
+
+                        <div class="modal-header primary" style="background-color: #007bff;">
+                            <h4 class="modal-title text-white ">{{ __('Удалить заказ')}}</h4>
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Хотитие удалить заказ № {{ $del_id }}</label>
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="submit" class="btn btn-danger" wire:click="destroy"> {{__('Удалить')}} </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Закрыть')}} </button>
+                        </div>
+                        <!-- /modal-content  -->
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     <div class="content-header">
         <div class="form-group d-flex">
             @foreach($departments as $department)
@@ -96,16 +124,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <button class="btn btn-outline-success" wire:click="newOrder()">Новый заказ</button>
-                                {{--                                <a href="{{ route('order-create', ['data'=>(\Carbon\Carbon::create($data)->format('Y-m-d')), 'dep_id'=>$department_id, 'number'=>$num]) }}"--}}
-                                {{--                                   class="btn btn-sm btn-success" wire:navigate>Create Order--}}
-                                {{--                                </a>--}}
-                                {{--                                    <button class="btn btn-block btn-success"--}}
-                                {{--                                            data-toggle="modal" data-target="#CreateClientDialog">--}}
-                                {{--                                        <i class="fas fa-plus mr-1"></i> {{__('Add Client')}}--}}
-                                {{--                                    </button>--}}
                             </div>
                             <div class="col-md-6">
-
 
                             </div>
                         </div>
@@ -151,41 +171,47 @@
 
 
         </div>
-
+<!-- Orders Times  -->
         <div class="col-md-4">
-            <div class="card card-default pt-2"  style="max-height: 35%; overflow: scroll;">
+            <div class="card card-default pt-2" style="max-height: 35%; overflow: scroll;">
                 <div class="card-body p-0">
-            <ul>
-                @foreach($tb_times as $tb_time)
-                    <li class="border-bottom" wire:key="{{$tb_time['id']}}">
-                        <div class="row">
-                            <div class="col-md-2 bg-warning">
-                                <span class="pl-3"><strong>{{ substr($tb_time['time'], 0, 5) }}</strong>   </span>
-                            </div>
-                            <div class="col-md-10 {{ $tb_time['busy']==1? 'bg-warning':'' }}">
+                    <ul>
+                        @foreach($tb_times as $tb_time)
+                            <li class="border-bottom" wire:key="{{$tb_time['id']}}">
+                                <div class="row">
+                                    <div class="col-md-2 bg-warning">
+                                        <span
+                                            class="pl-3"><strong>{{ substr($tb_time['time'], 0, 5) }}</strong>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-10 justify-content-between d-flex py-1 px-5 {{ $tb_time['busy']==1? 'bg-warning':'' }}">
 
-                                    @if($tb_time['busy']==1)
-                                        <button type="button" class="btn btn-sm btn-outline-info">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-secondary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button onclick="confirm('Are you sure want to delete ?') || event.stopImmediatePropagation() " type="button"
-                                                class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    @endif
+                                        @if($tb_time['busy']==1)
+                                            <span>Order#{{$tb_time->order_id}}</span>
+                                            <button type="button" class="btn btn-sm btn-outline-info">
+                                                <i class="fas fa-eye mr-2"></i>View
+                                            </button>
+{{--                                            {{ route('order-edit', ['id' => $tb_time->order_id]) }}--}}
+{{--                                            <a href="#" type="button" class="btn btn-outline-secondary btn-sm">--}}
+{{--                                                <i class="fas fa-edit"></i>--}}
+{{--                                            </a>--}}
+                                            <button
+                                                data-toggle="modal" data-target="#ConfirmDelete" type="button"
+                                                class="btn btn-sm btn-outline-danger" wire:click="deleteId({{$tb_time->order_id}})">
+                                                <i class="fas fa-trash-alt mr-2"></i>Delete
+                                            </button>
+                                        @endif
 
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
 
-                    </li>
-                @endforeach
-            </ul>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
+ <!-- /Orders Times  -->
     </div>
 
 

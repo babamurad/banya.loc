@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Client;
 use App\Models\Department;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\TimeTb;
 use App\Models\User;
 use Carbon\Carbon;
@@ -29,6 +30,7 @@ class DayEventsComponent extends Component
     public $start, $end, $qty, $price, $sum;
     public $first_name, $last_name, $phone, $Address;
     public $num;
+    public $del_id;
 
     protected $rules = [
         'first_name' => 'required|min:3',
@@ -37,6 +39,7 @@ class DayEventsComponent extends Component
 
     public function render()
     {
+        //dd($this->tb_times);
         $date = $this->year . '/'. $this->mon . '/' . '01';
         $this->htmlCalendar = $this->calendar($date);
 
@@ -44,7 +47,7 @@ class DayEventsComponent extends Component
         $this->clients_array = Client::orderBy('first_name')->get()->toArray();
 
         $departments = Department::orderBy('id')->get();
-        $users = User::where('post_id', '=', 1)->get();
+        $users = User::where('utype', '=', 'KSS')->get();
         return view('livewire.day-events-component', compact('clients', 'departments', 'users'));
     }
 
@@ -64,12 +67,24 @@ class DayEventsComponent extends Component
         $this->department_id = Department::first()->id;
     }
 
-    #[On('client-create')]
-    public function updateClient()
+    public function deleteId($id)
     {
-
+        $this->del_id = $id;
     }
 
+    public function destroy()
+    {
+        $order = Order::findOrFail($this->del_id);
+        $order_details = OrderDetail::where('order_id', '=', $order->id)->get();
+        foreach ($order_details as $order_detail)
+        {
+
+        }
+
+
+        $order->delete();
+        session()->flash('error', 'Order has been deleted!');
+    }
     public function vcheck()
     {
         $this->vis = !$this->vis;
@@ -121,7 +136,8 @@ class DayEventsComponent extends Component
         $this->department_id = $this->department_id ? $this->department_id : 1;
         //Это ХП в БД переводит время с таблицы заказов в таблицу времени TimeTb для отображения
         DB::select('CALL procGetOrderTime("'.$data.'", "'.$this->department_id.'")');
-        $this->tb_times = TimeTb::all()->toArray();
+        $this->tb_times = TimeTb::all();
+        //dd($this->tb_times);
         $this->DepartmentChecked();
 
     }
@@ -138,7 +154,10 @@ class DayEventsComponent extends Component
         //dd($this->department_id);
         $this->department_id? $this->department_id : $this->department_id=Department::first()->id;
         $data = Carbon::create($this->data)->format('Y-m-d');
-        $time_array = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$data . '")');
+        //$time_array = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$data . '")');
+        DB::select('CALL procGetOrderTime("'.$data . '", "'.$this->department_id.'" )');
+        $time_array = TimeTb::all();
+        //dd($time_array);
         $this->time_list = [];
         foreach ($time_array as $ta) {
             $this->time_list[] = $ta;
@@ -186,4 +205,6 @@ class DayEventsComponent extends Component
         $order->save();
         return redirect()->route('order-create', ['data'=>(\Carbon\Carbon::create($this->data)->format('Y-m-d')), 'dep_id'=>$this->department_id, 'number'=>$this->num]);
     }
+
+
 }
