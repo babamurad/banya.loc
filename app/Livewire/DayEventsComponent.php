@@ -138,7 +138,7 @@ class DayEventsComponent extends Component
         DB::select('CALL procGetOrderTime("'.$data.'", "'.$this->department_id.'")');
         $this->tb_times = TimeTb::all();
         //dd($this->tb_times);
-        $this->DepartmentChecked();
+        $this->DepartmentChecked($this->department_id);
 
     }
 
@@ -149,10 +149,11 @@ class DayEventsComponent extends Component
 
     }
 
-    public function DepartmentChecked()
+    public function DepartmentChecked($id)
     {
-        //dd($this->department_id);
-        $this->department_id? $this->department_id : $this->department_id=Department::first()->id;
+        //dd($id);
+        //$this->department_id? $this->department_id : $this->department_id=Department::first()->id;
+        $this->department_id = $id;
         $data = Carbon::create($this->data)->format('Y-m-d');
         //$time_array = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$data . '")');
         DB::select('CALL procGetOrderTime("'.$data . '", "'.$this->department_id.'" )');

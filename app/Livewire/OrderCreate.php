@@ -8,21 +8,26 @@ use App\Models\Employe;
 use App\Models\JobTitle;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\TimeTb;
 use Carbon\Carbon;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use function Laravel\Prompts\table;
 
 class OrderCreate extends Component
 {
     public $first_name, $last_name, $phone, $Address;
     public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $depart_id;
-    public $searchClient, $clients_id;
+    public $searchClient;
+    public $clients_id = '';
     public $data;
     public $employe_id, $job_id, $qty, $sum, $price;
     public $jobEnabled = 'disabled';
 
     public $jobtitle_id, $jqty, $jprice, $jsum, $dep_sum;
     public $startOrder, $endOrder;
+    public $details_sum;
 
     protected $rules = [
         'first_name' => 'required|min:3',
@@ -44,7 +49,8 @@ class OrderCreate extends Component
             get();
         }
         $employes = Employe::all();
-        $time_list = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$this->data . '")');
+        //$time_list = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$this->data . '")');
+        $time_list = TimeTb::all();//where('busy', '=', 0)->get();
         //dd($time_list[0]->time);
         $dep_name = Department::findOrFail($this->department_id);
         $dep_name = $dep_name->name;
@@ -89,6 +95,10 @@ class OrderCreate extends Component
             $data = Carbon::create($data)->format('Y-m-d');
         }
 
+        if (session()->get('client')){
+            $this->clients_id = session()->get('client');
+        }
+
         //$order = DB::select('SELECT * FROM orders ORDER BY id DESC LIMIT 0, 1'); $order[0]->id;
 
         $this->data = $data;
@@ -111,12 +121,26 @@ class OrderCreate extends Component
 
         $this->jsum = $this->jprice * $this->jqty;
 
-//        $time_list = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$this->data . '")');
-//        $this->startOrder = $time_list[0]->time;
+        $this->details_sum = OrderDetail::where('order_id', $this->num)->sum(DB::raw('qty * price'));
+        //dd($this->details_sum);
 
         $this->job_id = $jobtitles->id;
         $this->price = $jobtitles->price;
         $this->sum = $jobtitles->sum;
+
+    }
+
+    public function updatedСlients_id()
+    {
+        dd($this->clients_id);
+        if ($this->clients_id) {
+            dd($this->clients_id);
+            session()->put('client', $this->clients_id);
+        }
+        if (session()->get('client')){
+            dd($this->clients_id);
+            $this->clients_id = session()->get('client');
+        }
 
     }
 
@@ -133,6 +157,10 @@ class OrderCreate extends Component
         {
             session()->flash('error', 'Выберите клиента');
             return;
+        }
+        if ($this->clients_id) {
+            //dd($this->clients_id);
+            session()->put('client', $this->clients_id);
         }
         //dd($this->startOrder.'-'.$this->endOrder);
         $order = Order::findOrFail($this->num);
@@ -152,7 +180,6 @@ class OrderCreate extends Component
 
         $order->save();
 
-        //dd($order->jsum);
         session()->flash('success', 'Заказ сохранен.');
         $this->jobEnabled = 'enabled';
         $this->order_id = $order->id;
@@ -270,18 +297,10 @@ class OrderCreate extends Component
         $this->searchClient = '';
     }
 
-    public function timeDiff()
+    public function storeOrderJob($id, $name, $qty, $price)
     {
-        //dd($this->startOrder.'-'.$this->endOrder);
-
-        $tm =  DB::select('call procTimeDiff("'.$this->num.'")');
-
-
-        //dd($tm[0]->tDiff*25);
+        Cart::instance('jobs')->add($id, $name, $qty, $price)->associate('App\Models\OrderDetail');
+        $this->dispatch('closeJobTitleModal');
     }
 
-    public function EditOrderJob()
-    {
-
-    }
 }

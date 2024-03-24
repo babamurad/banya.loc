@@ -50,18 +50,13 @@
                                 <input class="form-control" type="text" value="{{ $qty*$price }}" readonly>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="form-group">
-                        <label>Textarea</label>
-                        <textarea class="form-control" rows="3" placeholder="Enter ..." wire:model="Address"></textarea>
                     </div>
 
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Close')}} </button>
-                <button type="submit" class="btn btn-primary" wire:click="addOrderJob"> {{__('Save changes')}} </button>
+                <button type="submit" class="btn btn-primary" wire:click="storeOrderJob({{$job_id}}, '{{ $jobtitle->name }}', {{ $qty }}, {{ $price }})"> {{__('Save changes')}} </button>
             </div>
             <!-- /modal-content  -->
         </div>

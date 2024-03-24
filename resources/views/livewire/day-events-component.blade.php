@@ -39,40 +39,41 @@
                 <h5><i class="icon fas fa-check"></i> {{ session('success') }}</h5>
             </div>
         @endif
-<div wire:ignore.self class="modal fade" id="ConfirmDelete" role="viewDialog" aria-hidden="true">
+        <div wire:ignore.self class="modal fade" id="ConfirmDelete" role="viewDialog" aria-hidden="true">
             <div class="modal-dialog card" style="max-width: 25%;">
                 <div class="modal-content">
 
-                        <div class="modal-header primary" style="background-color: #007bff;">
-                            <h4 class="modal-title text-white ">{{ __('Удалить заказ')}}</h4>
-                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="card-body">
-                                        <div class="form-group">
-                                            <label>Хотитие удалить заказ № {{ $del_id }}</label>
-                                        </div>
+                    <div class="modal-header primary" style="background-color: #007bff;">
+                        <h4 class="modal-title text-white ">{{ __('Удалить заказ')}}</h4>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Хотитие удалить заказ № {{ $del_id }}</label>
                             </div>
                         </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="submit" class="btn btn-danger" wire:click="destroy"> {{__('Удалить')}} </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Закрыть')}} </button>
-                        </div>
-                        <!-- /modal-content  -->
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" class="btn btn-danger" wire:click="destroy"> {{__('Удалить')}} </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Закрыть')}} </button>
+                    </div>
+                    <!-- /modal-content  -->
 
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
         </div>
+
     <div class="content-header">
         <div class="form-group d-flex">
             @foreach($departments as $department)
             <div class="custom-control custom-radio mr-3">
                 <input class="custom-control-input" type="radio" id="customRadio{{$department->id}}" name="customRadio"
-                       wire:model="department_id" wire:key="department-{{$department->id}}" wire:click="DepartmentChecked()" value="{{$department->id}}">
+                       wire:model="department_id" wire:key="department-{{$department->id}}" wire:click="DepartmentChecked({{$department->id}})" value="{{$department->id}}">
                 <label for="customRadio{{$department->id}}" class="custom-control-label" style="cursor: pointer;">{{$department->name}}</label>
             </div>
             @endforeach

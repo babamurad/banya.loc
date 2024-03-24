@@ -13,36 +13,6 @@
     @include('orders.create-client')
     @include('orders.add-jobtitle')
     @include('orders.edit-jobtitle')
-
-        <div wire:ignore.self class="modal fade" id="ConfirmDelete" role="viewDialog" aria-hidden="true">
-            <div class="modal-dialog card" style="max-width: 25%;">
-                <div class="modal-content">
-
-                    <div class="modal-header primary" style="background-color: #007bff;">
-                        <h4 class="modal-title text-white ">{{ __('Удалить заказ')}}</h4>
-                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Хотитие удалить заказ № </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="submit" class="btn btn-danger" wire:click="destroy"> {{__('Удалить')}} </button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Закрыть')}} </button>
-                    </div>
-                    <!-- /modal-content  -->
-
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -77,6 +47,14 @@
                         <div class="form-group">
                             <label class="required-field">Выберите отдел - {{$dep_name}}</label>
                             <input class="form-control" type="text" wire:model="dep_name" readonly value="{{$dep_name}}">
+{{--                            <select class="form-control" wire:model.live="depart_id">--}}
+{{--                                <option value="">Выберите отдел</option>--}}
+{{--                                @foreach($departments as $department)--}}
+{{--                                    <option {{ $dep_name->id == $department->id ? 'selected':'' }} value="{{$department->id}}"--}}
+{{--                                        wire:key="{{$department->id}}"> {{$department->name}}--}}
+{{--                                    </option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
                         </div>
                     </div>
                     <div class="col md-2">
@@ -129,14 +107,13 @@
                             @endif
                         </div>
 
-
                         <div class="text-center mt-1-half">
-                            <select class="form-control md-form h-100" name="client-value" wire:model.live="clients_id">
+                            <select class="form-control md-form h-100" name="client-value" wire:model="clients_id">
                                 <option value="0" selected>Выберите клиента</option>
                                 @foreach($clients as $client)
                                     <option
                                         value="{{ $client->id }}" wire:key="{{$client->id}}">
-                                        {{ $client->first_name . ' ' .$client->last_name }}  {{ '  Tel:  ' . $client->phone }}
+                                        {{ $client->first_name . ' ' .$client->last_name }} </br> {{ '  Tel:  ' . $client->phone }}
                                     </option>
                                 @endforeach
                             </select>
@@ -162,8 +139,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <p>Услуги: {{ \Gloudemans\Shoppingcart\Facades\Cart::instance('jobs')->subtotal() }} </p>
-                        <p>Всего (включая услуги): {{ \Gloudemans\Shoppingcart\Facades\Cart::instance('jobs')->subtotal()+ $jsum }} </p>
+                        <p>Услуги: {{ $details_sum }} </p>
+                        <p>Всего (включая услуги): {{ $jsum+$details_sum }} </p>
                     </div>
 
                     <button
@@ -177,7 +154,10 @@
         <div class="card">
             <div class="card-title">
                 <div class="form-group">
-                <button class="btn btn-sm btn-outline-info m-3" data-toggle="modal" data-target="#AddJobTitle" >
+                <button class="btn btn-sm btn-outline-info m-3"data-toggle="modal" data-target="#AddJobTitle" {{ $jobEnabled }}>
+                    <i class="fas fa-plus mr-2"></i>Add
+                </button>
+                <button class="btn btn-sm btn-outline-info m-3" wire:click="timeDiff">
                     <i class="fas fa-plus mr-2"></i>Add
                 </button>
                 </div>
@@ -211,15 +191,21 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if(\Gloudemans\Shoppingcart\Facades\Cart::instance('jobs')->count() > 0)
-                                    @foreach(\Gloudemans\Shoppingcart\Facades\Cart::instance('jobs')->content() as $detail)
+                                @if($details)
+                                @foreach ($details as $detail)
                                     <tr wire:key="{{$detail->id}}">
-                                        <td>{{$detail->id}}-{{$detail->name}}</td>
+                                        <td>{{$detail->name}}</td>
                                         <td>{{$detail->qty}} </td>
                                         <td>{{$detail->price}} {{__('man.')}} </td>
                                         <td>{{$detail->qty*$detail->price}} {{__('man.')}} </td>
                                         <td>
                                             <div>
+                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                        data-toggle="modal"
+                                                        data-target="#EditJobTitleDialog"
+                                                        wire:click='edit({{$detail->id}})'>
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
                                                 <button
                                                     onclick="confirm('Are you sure want to delete {{$detail->name}}?') || event.stopImmediatePropagation() "
                                                     type="button" class="btn btn-danger btn-sm"
