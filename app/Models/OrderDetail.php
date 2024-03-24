@@ -21,4 +21,14 @@ class OrderDetail extends Model
         'price',
         'sum',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+
+    public function employe()
+    {
+        return $this->belongsTo(Employe::class, 'employes_id', 'id');
+    }
 }

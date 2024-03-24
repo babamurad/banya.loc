@@ -6,6 +6,9 @@
             window.addEventListener('closeModal', event=> {
                 $('#CreateClientDialog').modal('hide');
             });
+ window.addEventListener('closeDeleteModal', event=> {
+                $('#ConfirmDelete').modal('hide');
+            });
 
             //$('#add-client').hide();
 
@@ -103,13 +106,15 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Кассиры</label>
-                                        <select class="form-control">
-                                            <option value="">Выберите кассира</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">{{ $user->first_name . ' ' . $user->last_name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Кассир</label> <br>
+                                        <label><span>{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</span></label>
+
+{{--                                        <select class="form-control" >--}}
+{{--                                            <option value="">Выберите кассира</option>--}}
+{{--                                            @foreach ($users as $user)--}}
+{{--                                                <option value="{{ $user->id }}">{{ $user->first_name . ' ' . $user->last_name }}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
                                     </div>
                                 </div>
 
@@ -192,10 +197,10 @@
                                             <button type="button" class="btn btn-sm btn-outline-info">
                                                 <i class="fas fa-eye mr-2"></i>View
                                             </button>
-{{--                                            {{ route('order-edit', ['id' => $tb_time->order_id]) }}--}}
-{{--                                            <a href="#" type="button" class="btn btn-outline-secondary btn-sm">--}}
-{{--                                                <i class="fas fa-edit"></i>--}}
-{{--                                            </a>--}}
+
+                                            <a href="{{ route('order-edit', ['id' => $tb_time->order_id]) }}" type="button" class="btn btn-outline-secondary btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
                                             <button
                                                 data-toggle="modal" data-target="#ConfirmDelete" type="button"
                                                 class="btn btn-sm btn-outline-danger" wire:click="deleteId({{$tb_time->order_id}})">

@@ -8,6 +8,8 @@ use App\Models\Employe;
 use App\Models\JobTitle;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\TimeTb;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -71,11 +73,23 @@ class OrderEdit extends Component
         } else {
             $details = '';
         }
-        return view('livewire.order-edit');
+        $time_list = TimeTb::all();
+        //$order = Order::with('department', 'order_details')->where('id', '=', $this->edit_id)->get();
+        $order = Order::with('department', 'order_details')->where('id', '=', $this->edit_id)->first();
+        //dd($order->order_details);
+        return view('livewire.order-edit', compact('employes', 'jobtitles', 'order', 'clients', 'time_list'));
     }
 
     public function mount($id)
     {
         $this->edit_id = $id;
+        //dd($this->edit_id);
+        $order = Order::with('department', 'client')->where('id', '=', $this->edit_id)->first();
+        //dd( $order->id);
+        $this->department_id = $order->department_id;
+        $this->clients_id = $order->client->id;
+        $this->startOrder = $order->start;
+        $this->endOrder = $order->end;
+        $this->data = Carbon::create($order->data)->format('Y-m-d');
     }
 }

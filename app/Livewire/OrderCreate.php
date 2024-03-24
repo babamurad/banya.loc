@@ -70,8 +70,8 @@ class OrderCreate extends Component
         }
 
         if ($this->num){
-            $details = OrderDetail::where('order_id', $this->num)->get();
-            $order = Order::where('num', $this->num)->get();
+            $details = OrderDetail::with('order')->with('employe')->where('order_id', $this->num)->get();
+            $order = Order::with('order_details')->where('num', $this->num)->get();
             //dd($order[0]->start);
             $this->startOrder = $order[0]->start;
             $this->endOrder = $order[0]->end;
@@ -132,7 +132,7 @@ class OrderCreate extends Component
 
     public function updatedСlients_id()
     {
-        dd($this->clients_id);
+        //dd($this->clients_id);
         if ($this->clients_id) {
             dd($this->clients_id);
             session()->put('client', $this->clients_id);
@@ -187,20 +187,26 @@ class OrderCreate extends Component
 
     public function addOrderJob()
     {
-        //dd($this->job_id);
-        $jname = JobTitle::find($this->job_id);
-        $detail = new OrderDetail();
-        $detail->num = $this->num;
-        $detail->name = $jname->name;
-        $detail->order_id = $this->order_id;
-        $detail->jobtitle_id = $this->job_id;
-        $detail->employes_id = $this->employe_id;
-        $detail->qty = $this->qty;
-        $detail->price = $this->price;
-        $detail->sum = $this->sum;
-        $detail->save();
-        $this->dispatch('closeJobTitleModal');
-        session()->flash('success', 'Добавлен вид услуг.');
+        if ($this->num){
+            //dd($this->num);
+            $jname = JobTitle::find($this->job_id);
+            $detail = new OrderDetail();
+            $detail->num = $this->num;
+            $detail->name = $jname->name;
+            $detail->order_id = $this->num;
+            $detail->jobtitle_id = $this->job_id;
+            $detail->employes_id = $this->employe_id;
+            $detail->qty = $this->qty;
+            $detail->price = $this->price;
+            $detail->sum = $this->qty * $this->price;
+            $detail->save();
+            $this->dispatch('closeJobTitleModal');
+            session()->flash('success', 'Добавлен вид услуг.');
+        } else {
+            session()->flash('error', 'Сначачала сохраните заказ');
+            return;
+        }
+
     }
 
     public function updatedQty()
@@ -250,7 +256,8 @@ class OrderCreate extends Component
     public function updatedStartOrder()
     {
         //dd($this->num);
-        $order = Order::findOrFail($this->num);
+        $order = Order::where('num', '=', $this->num)->first();
+        //dd($order->num);
         $order->start = $this->startOrder;
         $order->end = $this->endOrder;
         $order->save();

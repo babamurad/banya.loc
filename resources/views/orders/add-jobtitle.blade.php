@@ -10,6 +10,12 @@
             <div class="modal-body">
                 <div class="card-body">
                     <div class="row">
+                        @if(session('error'))
+                            <div class="alert alert-danger alert-dismissible" style="margin-bottom: 0%; padding-top:0.5rem; padding-bottom:0.5rem; ">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h5><i class="icon fas fa-info"></i> {{ session('error') }}</h5>
+                            </div>
+                        @endif
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Выберите работника {{ $employe_id }} </label>
@@ -56,7 +62,7 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Close')}} </button>
-                <button type="submit" class="btn btn-primary" wire:click="storeOrderJob({{$job_id}}, '{{ $jobtitle->name }}', {{ $qty }}, {{ $price }})"> {{__('Save changes')}} </button>
+                <button type="submit" class="btn btn-primary" wire:click="addOrderJob"> {{__('Save changes')}} </button>
             </div>
             <!-- /modal-content  -->
         </div>

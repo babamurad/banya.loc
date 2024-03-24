@@ -18,8 +18,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
-                        <li class="breadcrumb-item"><a href="{{ route('day-events') }}" wire:navigate> {{__('Back to Day Events')}} </a></li>
-                        <li class="breadcrumb-item active"> {{__('Create Order')}} </li>
+                        <li class="breadcrumb-item"><a href="{{ route('day-events') }}" wire:navigate> Назад к заказам </a></li>
+                        <li class="breadcrumb-item active"> Просмотр Заказа </li>
                     </ol>
                 </div>
                 <div class="col-sm-6">
@@ -32,8 +32,8 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h5>Create Order</h5>
-                {{$dep_name}} / {{ $data }}
+                <h5>Просмотр Заказа</h5>
+                {{$order->department->name}} / {{ $order->data }}
             </div>
             <div class="card-body">
                 <div class="row">
@@ -45,8 +45,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required-field">Выберите отдел - {{$dep_name}}</label>
-                            <input class="form-control" type="text" wire:model="dep_name" readonly value="{{$dep_name}}">
+                            <label class="required-field">Выберите отдел - {{$order->department->name}}</label>
+                            <input class="form-control" type="text" wire:model="dep_name" readonly value="{{$order->department->name}}">
                             {{--                            <select class="form-control" wire:model.live="depart_id">--}}
                             {{--                                <option value="">Выберите отдел</option>--}}
                             {{--                                @foreach($departments as $department)--}}
@@ -80,9 +80,9 @@
                     <div class="col-md-6">
                         <div class="d-flex">
                             <label class="card-title w-100 d-flex required-field">
-                                {{ __('Clients') }} - {{$clients_id}}
+                                 Клиент - {{ $order->client->first_name . ' ' . $order->client->last_name }}
                             </label>
-                            <button class="btn btn-sm text-green" data-toggle="modal" data-target="#CreateOrderClient"><i
+                            <button class="btn btn-sm text-green d-none" data-toggle="modal" data-target="#CreateOrderClient"><i
                                     class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -120,6 +120,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
+{{--                        {{$startOrder}} - {{$endOrder}}--}}
                         <div class="form-group">
                             <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
                             <select class="custom-select" wire:model.live="startOrder">
@@ -141,9 +142,10 @@
                         </div>
                         <p>Total sum</p>
                     </div>
-                    <button
-                        class="btn btn-sm btn-success" wire:click="SaveOrder">Save Order
-                    </button>
+                    <div class="mt-1">
+                        <a class="btn btn-sm btn-default" href="{{ route('day-events') }}" > Назад </a>
+                    </div>
+
                 </div>
 
 
@@ -152,10 +154,7 @@
         <div class="card">
             <div class="card-title">
                 <div class="form-group">
-                    <button class="btn btn-sm btn-outline-info m-3"data-toggle="modal" data-target="#AddJobTitle" {{ $jobEnabled }}>
-                        <i class="fas fa-plus mr-2"></i>Add
-                    </button>
-                    <button class="btn btn-sm btn-outline-info m-3" wire:click="timeDiff">
+                    <button class="btn btn-sm btn-outline-info m-3" data-toggle="modal" data-target="#AddJobTitle">
                         <i class="fas fa-plus mr-2"></i>Add
                     </button>
                 </div>
@@ -189,8 +188,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if($details)
-                                    @foreach ($details as $detail)
+                                @if($order->order_details->count()>0)
+                                    @foreach ($order->order_details as $detail)
                                         <tr wire:key="{{$detail->id}}">
                                             <td>{{$detail->name}}</td>
                                             <td>{{$detail->qty}} </td>

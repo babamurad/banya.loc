@@ -74,15 +74,17 @@ class DayEventsComponent extends Component
 
     public function destroy()
     {
-        $order = Order::findOrFail($this->del_id);
-        $order_details = OrderDetail::where('order_id', '=', $order->id)->get();
-        foreach ($order_details as $order_detail)
-        {
+        $order = Order::with('order_details')->findOrFail($this->del_id);
 
-        }
+        //$order_details = OrderDetail::where('order_id', '=', $order->id)->get();
+//        foreach ($order_details as $order_detail)
+//        {
+//
+//        }
 
 
         $order->delete();
+        $this->dispatch('closeDeleteModal');
         session()->flash('error', 'Order has been deleted!');
     }
     public function vcheck()

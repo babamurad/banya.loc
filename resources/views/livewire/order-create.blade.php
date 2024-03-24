@@ -196,6 +196,9 @@
                                 <thead>
                                 <tr>
                                     <th>
+                                        <strong> ID </strong>
+                                    </th>
+                                    <th>
                                         <strong> {{__('Service Name')}} </strong>
                                     </th>
                                     <th>
@@ -211,10 +214,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if(\Gloudemans\Shoppingcart\Facades\Cart::instance('jobs')->count() > 0)
-                                    @foreach(\Gloudemans\Shoppingcart\Facades\Cart::instance('jobs')->content() as $detail)
+                                    @foreach($details as $detail)
                                     <tr wire:key="{{$detail->id}}">
-                                        <td>{{$detail->id}}-{{$detail->name}}</td>
+                                        <td>{{$detail->order->id }}</td>
+                                        <td>{{$detail->id}}-{{$detail->name}}-{{ $detail->employe->name }}</td>
                                         <td>{{$detail->qty}} </td>
                                         <td>{{$detail->price}} {{__('man.')}} </td>
                                         <td>{{$detail->qty*$detail->price}} {{__('man.')}} </td>
@@ -230,7 +233,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                @endif
                                 </tbody>
 
                             </table>
