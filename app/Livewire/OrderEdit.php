@@ -82,14 +82,20 @@ class OrderEdit extends Component
 
     public function mount($id)
     {
+
         $this->edit_id = $id;
-        //dd($this->edit_id);
         $order = Order::with('department', 'client')->where('id', '=', $this->edit_id)->first();
-        //dd( $order->id);
+        $this->num = $order->num;
         $this->department_id = $order->department_id;
         $this->clients_id = $order->client->id;
         $this->startOrder = $order->start;
         $this->endOrder = $order->end;
         $this->data = Carbon::create($order->data)->format('Y-m-d');
+        $this->sum = $order->sum;
+        $department = Department::findOrFail($this->department_id);
+        $this->department_id = $department->id;
+        $this->jprice = $department->price;
+        $order_qty = DB::select('call procTimeDiff("'.$this->num.'")');
+        $this->jqty = $order_qty[0]->tDiff;
     }
 }

@@ -247,7 +247,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{route('day-events')}}" class="nav-link {{ request()->is('day-events') ? 'active' : '' }}" wire:navigate>
+            <a href="{{route('day-events', ['data' => null, 'dep_id' => null])}}" class="nav-link {{ request()->is('day-events') ? 'active' : '' }}" wire:navigate>
               <i class="nav-icon fas fa-calendar-week"></i>
               <p>
                 {{__('Day Events')}}

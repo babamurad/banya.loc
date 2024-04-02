@@ -2,7 +2,7 @@
 
 Invoice print check printer size 7,8 мм
 
-Kassirlaryn smenasy 
+Kassirlaryn smenasy
 
 06:00 - 10:00
 10:00 - 16:30
@@ -14,7 +14,7 @@ Kassirlaryn 1 gundeki obshiy ishinin (zakazlarynyn) jemi otdellar boyunca gorunm
 Массажиста работают на 50/50
 Их выручка не входит в заказы по бане
 
-Заказ по отелам. 
+Заказ по отелам.
 В чеке видна общая сумма отдел + массажисты
 
 Но учет ведется по отдельности, отдельно по отделам и отдельно по массажистам
@@ -31,3 +31,5 @@ Kassirlaryn 1 gundeki obshiy ishinin (zakazlarynyn) jemi otdellar boyunca gorunm
 а так же общее количество людей за смену и/или за день
 Массажисты и дополнительные услуги имеются в общем отделе
 (производить их расчет с привязкой к конкретному заказу)
+
+Завтра: Создать компонент для просмотра заказа, скопировать содержимое можно с create-order

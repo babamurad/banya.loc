@@ -18,8 +18,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-left">
-                        <li class="breadcrumb-item"><a href="{{ route('day-events') }}" wire:navigate> Назад к заказам </a></li>
-                        <li class="breadcrumb-item active"> Просмотр Заказа </li>
+                        <li class="breadcrumb-item"><a href="{{ route('day-events', ['data' => session()->get('data'), 'dep_id' => session()->get('dep_id')]) }}" wire:navigate> Назад к заказам </a></li>
+                        <li class="breadcrumb-item active"> Редактировать Заказ </li>
                     </ol>
                 </div>
                 <div class="col-sm-6">
@@ -72,7 +72,7 @@
                     <div class="col md-4">
                         <div class="form-group">
                             <label for="jsum">Сумма</label>
-                            <input type="number" class="form-control" placeholder="Сумма" wire:model.live="jsum" readonly>
+                            <input type="number" class="form-control" placeholder="Сумма" wire:model.live="sum" readonly>
                         </div>
                     </div>
                 </div>
@@ -121,11 +121,11 @@
                     </div>
                     <div class="col-md-3">
 {{--                        {{$startOrder}} - {{$endOrder}}--}}
-                        <div class="form-group">
+                        <div class="form-group ">
                             <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
                             <select class="custom-select" wire:model.live="startOrder">
                                 @foreach($time_list  as $times)
-                                    <option>{{$times->time}}</option>
+                                    <option wire:key="{{ $times->id }}">{{$times->time}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -136,14 +136,15 @@
                             <label class="required-field">{{__('End Time')}} - {{$endOrder}}</label>
                             <select class="custom-select" wire:model.live="endOrder">
                                 @foreach($time_list  as $times)
-                                    <option>{{$times->time}}</option>
+                                    <option wire:key="{{ $times->id }}">{{$times->time}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <p>Total sum</p>
                     </div>
                     <div class="mt-1">
-                        <a class="btn btn-sm btn-default" href="{{ route('day-events') }}" > Назад </a>
+                        <a class="btn btn-sm btn-default" href="{{ route('day-events', ['data' => session()->get('data'), 'dep_id' => session()->get('dep_id')]) }}" > Назад </a>
+                        <a class="btn btn-sm btn-primary ml-3" href="#" > Сохранить </a>
                     </div>
 
                 </div>

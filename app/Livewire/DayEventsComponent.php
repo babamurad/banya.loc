@@ -51,9 +51,18 @@ class DayEventsComponent extends Component
         return view('livewire.day-events-component', compact('clients', 'departments', 'users'));
     }
 
-    public function mount()
+    public function mount($data = null, $dep_id = null)
     {
-        $now = Carbon::now();
+        if ($data) {
+            $now = Carbon::create($data);
+        } else {
+            $now = Carbon::now();
+        }
+        if ($dep_id) {
+            $this->department_id = $dep_id;
+        } else {
+            $this->department_id = Department::first()->id;
+        }
         $this->year = $now->year;
         $this->month = $now->month;
         $this->mon = $now->month;
@@ -64,7 +73,7 @@ class DayEventsComponent extends Component
 
         $this->calendar($this->data);
         $this->viewDay($this->data);
-        $this->department_id = Department::first()->id;
+
     }
 
     public function deleteId($id)
@@ -81,7 +90,6 @@ class DayEventsComponent extends Component
 //        {
 //
 //        }
-
 
         $order->delete();
         $this->dispatch('closeDeleteModal');
@@ -140,22 +148,8 @@ class DayEventsComponent extends Component
         DB::select('CALL procGetOrderTime("'.$data.'", "'.$this->department_id.'")');
         $this->tb_times = TimeTb::all();
         //dd($this->tb_times);
-        $this->DepartmentChecked($this->department_id);
-
-    }
-
-    public function AddBooking()
-    {
-        //dd($this->clients_id);
-        //dd($this->data);
-
-    }
-
-    public function DepartmentChecked($id)
-    {
-        //dd($id);
-        //$this->department_id? $this->department_id : $this->department_id=Department::first()->id;
-        $this->department_id = $id;
+//        $this->DepartmentChecked($this->department_id);
+//        $this->department_id = $id;
         $data = Carbon::create($this->data)->format('Y-m-d');
         //$time_array = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$data . '")');
         DB::select('CALL procGetOrderTime("'.$data . '", "'.$this->department_id.'" )');
@@ -165,6 +159,25 @@ class DayEventsComponent extends Component
         foreach ($time_array as $ta) {
             $this->time_list[] = $ta;
         }
+        session()->put('data', $data);
+        session()->put('dep_id', $this->department_id);
+
+    }
+
+    public function DepartmentChecked($id)
+    {
+        $this->viewDay($this->data);
+        //$this->department_id? $this->department_id : $this->department_id=Department::first()->id;
+//        $this->department_id = $id;
+//        $data = Carbon::create($this->data)->format('Y-m-d');
+//        //$time_array = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$data . '")');
+//        DB::select('CALL procGetOrderTime("'.$data . '", "'.$this->department_id.'" )');
+//        $time_array = TimeTb::all();
+//        //dd($time_array);
+//        $this->time_list = [];
+//        foreach ($time_array as $ta) {
+//            $this->time_list[] = $ta;
+//        }
     }
 
     public function SaveClient()

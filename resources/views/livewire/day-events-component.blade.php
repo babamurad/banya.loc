@@ -6,7 +6,7 @@
             window.addEventListener('closeModal', event=> {
                 $('#CreateClientDialog').modal('hide');
             });
- window.addEventListener('closeDeleteModal', event=> {
+            window.addEventListener('closeDeleteModal', event=> {
                 $('#ConfirmDelete').modal('hide');
             });
 
@@ -161,13 +161,14 @@
                         <div class="card
                         {{ $mon != \Carbon\Carbon::create($day)->format('m') ? 'bled' : ''}}
                         {{ $den == \Carbon\Carbon::create($data)->format('d.m.Y')? 'bg-danger disabled ':'bg-primary'}}
-                        {{ $day == \Carbon\Carbon::create()->now()->format('d.m.Y')? 'bg-success disabled ':'' }}"
-                             style="cursor: pointer;"
+                        {{ $day == \Carbon\Carbon::create()->now()->format('d.m.Y')? 'bg-success disabled ':'' }}" style="cursor: pointer;"
                              wire:click="viewDay('{{$day}}')" wire:change="{{$day}}">
                             <div class="card-body">
+                                <a href="{{ route('day-events', ['data' => \Carbon\Carbon::create($day)->format('Y-m-d'), 'dep_id' => $department_id]) }}" class="text-white">
                                 <div class="card-title text-center">
                                     <h4>{{\Carbon\Carbon::create($day)->format('d')}}</h4>
                                 </div>
+                                </a>
                             </div>
                         </div>
                     </div>

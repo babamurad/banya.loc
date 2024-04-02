@@ -48,12 +48,12 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
-                            <li class="breadcrumb-item"><a href="{{ route('day-events') }}" wire:navigate> {{__('Back to Day Events')}} </a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('day-events', ['data' => session()->get('data'), 'dep_id' => session()->get('dep_id')]) }}" wire:navigate> {{__('Back to Day Events')}} </a></li>
                             <li class="breadcrumb-item active"> {{__('Create Order')}} </li>
                         </ol>
                     </div>
                     <div class="col-sm-6">
-    @include('components.alerts')
+                        @include('components.alerts')
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -75,8 +75,13 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="required-field">Выберите отдел - {{$dep_name}}</label>
-                            <input class="form-control" type="text" wire:model="dep_name" readonly value="{{$dep_name}}">
+                            <label for="department" class="required-field">Выберите отдел - {{$dep_name}} {{ $departments->count() }}</label>
+                            <select class="form-control md-form h-100" name="department" id="department" wire:model="department_id" disabled>
+                                @foreach($departments as $department)
+                                    <option value="{{ $department->id }}" wire:key="{{ $department->id }}">{{ $department->name }}</option>
+                                @endforeach
+                            </select>
+{{--                            <input class="form-control" type="text" wire:model="dep_name" readonly value="{{$dep_name}}">--}}
                         </div>
                     </div>
                     <div class="col md-2">
@@ -151,7 +156,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <p>Всего: {{ $jsum }}</p>
+                        <p>Всего: {{ number_format($jsum, 2, ',', ' ') }}</p>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
@@ -162,8 +167,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <p>Услуги: {{ \Gloudemans\Shoppingcart\Facades\Cart::instance('jobs')->subtotal() }} </p>
-                        <p>Всего (включая услуги): {{ \Gloudemans\Shoppingcart\Facades\Cart::instance('jobs')->subtotal()+ $jsum }} </p>
+                        <p>Услуги: {{ number_format($details_sum, 2, ',', ' ') }} </p>
+                        <p><strong>Итого: {{ number_format($details_sum + $jsum, 2, ',', ' ') }}</strong> </p>
                     </div>
 
                     <button

@@ -114,6 +114,7 @@ class OrderCreate extends Component
         $jobtitles = JobTitle::first();
 
         $department = Department::findOrFail($this->department_id);
+        $this->department_id = $department->id;
         $this->jprice = $department->price;
 
         $order_qty = DB::select('call procTimeDiff("'.$this->num.'")');
@@ -132,7 +133,6 @@ class OrderCreate extends Component
 
     public function updatedСlients_id()
     {
-        //dd($this->clients_id);
         if ($this->clients_id) {
             dd($this->clients_id);
             session()->put('client', $this->clients_id);
@@ -162,13 +162,16 @@ class OrderCreate extends Component
             //dd($this->clients_id);
             session()->put('client', $this->clients_id);
         }
-        //dd($this->startOrder.'-'.$this->endOrder);
+
         $order = Order::findOrFail($this->num);
         $order->num = $this->num;
         $order->data = $this->data;
         $order->department_id = $this->department_id;
         $order->clients_id = $this->clients_id;
         $order->user_id = 22;
+        if (!$this->startOrder) {
+            $this->startOrder = '06:00';
+        }
         $order->start = $this->startOrder;
         $order->end = $this->endOrder;
 
@@ -188,7 +191,6 @@ class OrderCreate extends Component
     public function addOrderJob()
     {
         if ($this->num){
-            //dd($this->num);
             $jname = JobTitle::find($this->job_id);
             $detail = new OrderDetail();
             $detail->num = $this->num;
@@ -198,7 +200,7 @@ class OrderCreate extends Component
             $detail->employes_id = $this->employe_id;
             $detail->qty = $this->qty;
             $detail->price = $this->price;
-            $detail->sum = $this->qty * $this->price;
+            $detail->sum = number_format($this->qty * $this->price, 2, 2);
             $detail->save();
             $this->dispatch('closeJobTitleModal');
             session()->flash('success', 'Добавлен вид услуг.');
@@ -206,6 +208,7 @@ class OrderCreate extends Component
             session()->flash('error', 'Сначачала сохраните заказ');
             return;
         }
+        $this->details_sum = OrderDetail::where('order_id', $this->num)->sum(DB::raw('qty * price'));
 
     }
 
@@ -213,9 +216,7 @@ class OrderCreate extends Component
     {
         if (is_numeric($this->price) && is_numeric($this->qty))
         {
-            //dd($this->qty*$this->price);
             $this->sum = $this->qty * $this->price;
-
         }
     }
 
@@ -249,30 +250,27 @@ class OrderCreate extends Component
         if (is_numeric($this->price) && is_numeric($this->qty))
         {
             $this->sum = $this->qty * $this->price;
-
         }
     }
 
     public function updatedStartOrder()
     {
-        //dd($this->num);
-        $order = Order::where('num', '=', $this->num)->first();
-        //dd($order->num);
-        $order->start = $this->startOrder;
-        $order->end = $this->endOrder;
-        $order->save();
-        //dd($this->num);
-        //dd($this->endOrder);
-        $order_qty = DB::select('call procTimeDiff("'.$this->num.'")');
-        $this->jqty = $order_qty[0]->tDiff;
-        $this->jsum = $this->jprice * $this->jqty;
-        //dd($this->jprice);
-        //dd($order_qty);
+        $this->updatedEndOrder();
     }
 
     public function updatedEndOrder()
     {
-        $this->updatedStartOrder();
+        $order = Order::where('num', '=', $this->num)->first();
+        if (!$this->startOrder) {
+            $this->startOrder = '06:00';
+        }
+        $order->start = $this->startOrder;
+        $order->end = $this->endOrder;
+        $order->save();
+        $order_qty = DB::select('call procTimeDiff("'.$this->num.'")');
+        $this->jqty = $order_qty[0]->tDiff;
+        $this->jsum = $this->jprice * $this->jqty;
+
     }
 
     public function SaveClient()
@@ -308,6 +306,14 @@ class OrderCreate extends Component
     {
         Cart::instance('jobs')->add($id, $name, $qty, $price)->associate('App\Models\OrderDetail');
         $this->dispatch('closeJobTitleModal');
+    }
+
+    public function destroy($id)
+    {
+        $detail = OrderDetail::findOrFail($id);
+        $detail->delete();
+        $this->details_sum = OrderDetail::where('order_id', $this->num)->sum(DB::raw('qty * price'));
+        session()->flash('error', 'Услуга удалена!');
     }
 
 }

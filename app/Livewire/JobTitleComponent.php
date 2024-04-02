@@ -42,6 +42,9 @@ class JobTitleComponent extends Component
         $employe->last_name = $this->last_name;
         $employe->phone = $this->phone;
         $employe->address = $this->address;
+        $employe->department_id = 1;
+        $employe->jobtitle_id = 1;
+        $employe->role_id = 1;
         $employe->save();
         $this->resetEmployeFields();
         $this->dispatch('closeModal');
@@ -110,7 +113,6 @@ class JobTitleComponent extends Component
         session()->flash('error', __('Job Title has been deleted!'));
     }
 
-
     public function setSortBy($sortBy)
     {
         if ($sortBy == $this->sortBy)
@@ -123,17 +125,11 @@ class JobTitleComponent extends Component
             {
                 $this->sortIcon = '<i class="fas fa-sort-down ml-1"></i>';
             }
-
             return;
         }
         $this->sortBy = $sortBy;
         $this->sortDirection = 'ASC';
         $this->sortIcon = '<i class="fas fa-sort-up ml-1"></i>';
-    }
-
-    public function mount()
-    {
-        //
     }
 
     public function render()

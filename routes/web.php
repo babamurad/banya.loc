@@ -36,6 +36,8 @@ Route::get('/', LoginRegisterComponent::class);
 Route::middleware(\App\Http\Middleware\AuthAdmin::class)->group(function (){
     Route::get('users', UserComponent::class)->name('users');
     Route::get('clients', ClientComponent::class)->name('clients');
+
+    Route::get('day-events/{data?}/{dep_id?}', DayEventsComponent::class)->name('day-events');
 });
 
 
@@ -52,7 +54,7 @@ Route::get('order-create/{data}/{dep_id}/{number}', OrderCreate::class)->name('o
 
 Route::get('order-edit/{id}', OrderEdit::class)->name('order-edit');
 
-Route::get('day-events', DayEventsComponent::class)->name('day-events');
+
 Route::get('shift', ShiftCloseComponent::class)->name('shift');
 
 Route::get('events', EventsComponent::class)->name('events');

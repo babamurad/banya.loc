@@ -2,7 +2,7 @@
     <div class="modal-dialog card" style="max-width: 50%;">
         <div class="modal-content">
                 <div class="modal-header primary" style="background-color: #007bff;">
-                    <h4 class="modal-title text-white ">{{ __('Add Client')}}</h4>
+                    <h4 class="modal-title text-white ">{{ __('Добавить работника')}}</h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
