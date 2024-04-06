@@ -3,6 +3,8 @@
         <link href="{{ asset('dist/css/tom-select.css') }}" rel="stylesheet">
         <script src="{{ asset('dist/js/tom-select.complete.min.js') }}"></script>
         <script>
+            $(document).ready(function(){
+
             window.addEventListener('closeModal', event=> {
                 $('#CreateClientDialog').modal('hide');
             });
@@ -31,7 +33,7 @@
                     direction: "asc"
                 }
             });
-
+            })
         </script>
     @endpush
     @include('calendar.create-order')
@@ -60,7 +62,7 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="submit" class="btn btn-danger" wire:click="destroy"> {{__('Удалить')}} </button>
+                        <button class="btn btn-danger" wire:click="destroy"> {{__('Удалить')}} </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Закрыть')}} </button>
                     </div>
                     <!-- /modal-content  -->
@@ -184,7 +186,7 @@
                 <div class="card-body p-0">
                     <ul>
                         @foreach($tb_times as $tb_time)
-                            <li class="border-bottom" wire:key="{{$tb_time['id']}}">
+                            <li class="border-bottom" wire:key="{{$tb_time['id']}}" wire:key='{{ $tb_time->id }}'>
                                 <div class="row">
                                     <div class="col-md-2 bg-warning">
                                         <span
@@ -194,14 +196,14 @@
                                     <div class="col-md-10 justify-content-between d-flex py-1 px-5 {{ $tb_time['busy']==1? 'bg-warning':'' }}">
 
                                         @if($tb_time['busy']==1)
-                                            <span>Order#{{$tb_time->order_id}}</span>
-                                            <button type="button" class="btn btn-sm btn-outline-info">
+                                            <span>#{{$tb_time->order_id}}</span>
+                                            <button type="button" class="btn btn-sm btn-outline-info" wire:click='gotoView("{{ $tb_time->order_id }}")'>
                                                 <i class="fas fa-eye mr-2"></i>View
                                             </button>
 
-                                            <a href="{{ route('order-edit', ['id' => $tb_time->order_id]) }}" type="button" class="btn btn-outline-secondary btn-sm">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
+                                            <button type="button" class="btn btn-outline-success btn-sm" wire:click='gotoEdit("{{ $tb_time->order_id }}")'>
+                                                <i class="fas fa-edit"></i>Edit
+                                            </button>
                                             <button
                                                 data-toggle="modal" data-target="#ConfirmDelete" type="button"
                                                 class="btn btn-sm btn-outline-danger" wire:click="deleteId({{$tb_time->order_id}})">

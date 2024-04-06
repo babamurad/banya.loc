@@ -48,7 +48,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
-                            <li class="breadcrumb-item"><a href="{{ route('day-events', ['data' => session()->get('data'), 'dep_id' => session()->get('dep_id')]) }}" wire:navigate> {{__('Back to Day Events')}} </a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('day-events', ['data' => session()->get('data'), 'dep_id' => session()->get('dep_id')]) }}"  wire:navigate> {{__('Back to Day Events')}} </a></li>
                             <li class="breadcrumb-item active"> {{__('Create Order')}} </li>
                         </ol>
                     </div>
@@ -152,7 +152,7 @@
                             <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
                             <select class="custom-select" wire:model.live="startOrder">
                                 @foreach($time_list  as $times)
-                                    <option class="{{ $times->busy? 'bg-danger disabled color-palette':'' }}" {{ $times->busy? 'disabled':'' }}>{{$times->time}}</option>
+                                    <option class="{{ $times->busy? 'bg-danger disabled color-palette':'' }}" {{ $times->busy? 'disabled':'' }} wire:key='{{$times->id}}'>{{$times->time}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -163,14 +163,14 @@
                             <label class="required-field">{{__('End Time')}} - {{$endOrder}}</label>
                             <select class="custom-select" wire:model.live="endOrder">
                                 @foreach($time_list  as $times)
-                                    <option class="{{ $times->busy? 'bg-danger disabled color-palette':'' }}" {{ $times->busy? 'disabled':'' }}>{{$times->time}}</option>
+                                    <option class="{{ $times->busy? 'bg-danger disabled color-palette':'' }}" {{ $times->busy? 'disabled':'' }} wire:key='{{$times->id}}'>{{$times->time}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <p>Услуги: {{ number_format($details_sum, 2, ',', ' ') }} </p>
                         <p><strong>Итого: {{ number_format($details_sum + $jsum, 2, ',', ' ') }}</strong> </p>
                     </div>
-
+                    <button class="btn btn-sm btn-default mr-3" wire:click='delIfEmpty' > Назад </button>
                     <button
                         class="btn btn-sm btn-success" wire:click="SaveOrder">Save Order
                     </button>

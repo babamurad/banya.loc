@@ -125,26 +125,29 @@
                             <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
                             <select class="custom-select" wire:model.live="startOrder">
                                 @foreach($time_list  as $times)
-                                    <option wire:key="{{ $times->id }}">{{$times->time}}</option>
+                                    <option class="{{ $times->busy && $times->order_id!=$num? 'bg-danger disabled color-palette':'' }}"
+                                        {{ $times->busy && $times->order_id!=$num? 'disabled':'' }} wire:key="{{ $times->id }}" wire:key="{{$times->id}}">{{$times->time}}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
-                        <p>Total summ:</p>
+                        <p>Total summ: {{ number_format($jsum, 2, ',', ' ') }}</p>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="required-field">{{__('End Time')}} - {{$endOrder}}</label>
                             <select class="custom-select" wire:model.live="endOrder">
                                 @foreach($time_list  as $times)
-                                    <option wire:key="{{ $times->id }}">{{$times->time}}</option>
+                                    <option class="{{ $times->busy && $times->order_id!=$num? 'bg-danger disabled color-palette':'' }}" {{ $times->busy && $times->order_id!=$num? 'disabled':'' }} wire:key="{{ $times->id }}" wire:key="{{$times->id}}">{{$times->time}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <p>Total sum</p>
+                        {{-- <p>Услуги: {{ number_format($details_sum, 2, ',', ' ') }} </p>
+                        <p><strong>Итого: {{ number_format($details_sum + $jsum, 2, ',', ' ') }}</strong> </p> --}}
                     </div>
                     <div class="mt-1">
                         <a class="btn btn-sm btn-default" href="{{ route('day-events', ['data' => session()->get('data'), 'dep_id' => session()->get('dep_id')]) }}" > Назад </a>
-                        <a class="btn btn-sm btn-primary ml-3" href="#" > Сохранить </a>
+                        <a class="btn btn-sm btn-primary ml-3" href="#" wire:click='update'> Сохранить </a>
                     </div>
 
                 </div>

@@ -18,11 +18,13 @@ class DayEventsComponent extends Component
     public $startTime, $endTime;
     public $data, $year, $month, $mon;
     public $title, $vis = false;
-    public $weekString = ['Понедельник', 'Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
+    public $weekString = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
     public $monthStr = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     public $daysM = [];
     public $clients = [];
-    public $tb_times =[], $time_list = [];
+    public $tb_times = [], $time_list = [];
+    public $htmlCalendar;
+    public $clients_array = [];
 
 
     public $clients_id, $orderClient;
@@ -37,12 +39,13 @@ class DayEventsComponent extends Component
         'phone' => 'required',
     ];
 
+
     public function render()
     {
         //dd($this->tb_times);
-        $date = $this->year . '/'. $this->mon . '/' . '01';
+        $date = $this->year . '/' . $this->mon . '/' . '01';
         $this->htmlCalendar = $this->calendar($date);
-
+        //dd('delOrder');
         $clients = Client::orderBy('first_name')->get()->toArray();
         $this->clients_array = Client::orderBy('first_name')->get()->toArray();
 
@@ -51,6 +54,7 @@ class DayEventsComponent extends Component
         return view('livewire.day-events-component', compact('clients', 'departments', 'users'));
     }
 
+    #[On('delOrder')]
     public function mount($data = null, $dep_id = null)
     {
         if ($data) {
@@ -73,7 +77,6 @@ class DayEventsComponent extends Component
 
         $this->calendar($this->data);
         $this->viewDay($this->data);
-
     }
 
     public function deleteId($id)
@@ -85,15 +88,12 @@ class DayEventsComponent extends Component
     {
         $order = Order::with('order_details')->findOrFail($this->del_id);
 
-        //$order_details = OrderDetail::where('order_id', '=', $order->id)->get();
-//        foreach ($order_details as $order_detail)
-//        {
-//
-//        }
-
         $order->delete();
         $this->dispatch('closeDeleteModal');
+        $this->dispatch('delOrder');
         session()->flash('error', 'Order has been deleted!');
+
+        
     }
     public function vcheck()
     {
@@ -116,17 +116,15 @@ class DayEventsComponent extends Component
         $html .= '<div class="days">';
 
         $dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        foreach ($dayLabels as $dayLabel)
-        {
+        foreach ($dayLabels as $dayLabel) {
             $html .= '<span class="day-label">' . $dayLabel . '</span>';
         }
         $this->daysM = [];
-        while($startOfCalendar <= $endOfCalendar)
-        {
+        while ($startOfCalendar <= $endOfCalendar) {
             $extraClass = $startOfCalendar->format('m') != $date->format('m') ? 'dull' : '';
             $extraClass .= $startOfCalendar->isToday() ? ' today' : '';
 
-            $html .= '<span class="day '.$extraClass.'"><span class="content">' . $startOfCalendar->format('j') . '</span></span>';
+            $html .= '<span class="day ' . $extraClass . '"><span class="content">' . $startOfCalendar->format('j') . '</span></span>';
             $this->daysM[] = $startOfCalendar->format('d.m.Y');
             $startOfCalendar->addDay();
         }
@@ -145,14 +143,14 @@ class DayEventsComponent extends Component
         $data = Carbon::create($this->data)->format('Y-m-d');
         $this->department_id = $this->department_id ? $this->department_id : 1;
         //Это ХП в БД переводит время с таблицы заказов в таблицу времени TimeTb для отображения
-        DB::select('CALL procGetOrderTime("'.$data.'", "'.$this->department_id.'")');
+        DB::select('CALL procGetOrderTime("' . $data . '", "' . $this->department_id . '")');
         $this->tb_times = TimeTb::all();
         //dd($this->tb_times);
-//        $this->DepartmentChecked($this->department_id);
-//        $this->department_id = $id;
+        //        $this->DepartmentChecked($this->department_id);
+        //        $this->department_id = $id;
         $data = Carbon::create($this->data)->format('Y-m-d');
         //$time_array = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$data . '")');
-        DB::select('CALL procGetOrderTime("'.$data . '", "'.$this->department_id.'" )');
+        DB::select('CALL procGetOrderTime("' . $data . '", "' . $this->department_id . '" )');
         $time_array = TimeTb::all();
         //dd($time_array);
         $this->time_list = [];
@@ -161,23 +159,22 @@ class DayEventsComponent extends Component
         }
         session()->put('data', $data);
         session()->put('dep_id', $this->department_id);
-
     }
 
     public function DepartmentChecked($id)
     {
         $this->viewDay($this->data);
         //$this->department_id? $this->department_id : $this->department_id=Department::first()->id;
-//        $this->department_id = $id;
-//        $data = Carbon::create($this->data)->format('Y-m-d');
-//        //$time_array = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$data . '")');
-//        DB::select('CALL procGetOrderTime("'.$data . '", "'.$this->department_id.'" )');
-//        $time_array = TimeTb::all();
-//        //dd($time_array);
-//        $this->time_list = [];
-//        foreach ($time_array as $ta) {
-//            $this->time_list[] = $ta;
-//        }
+        //        $this->department_id = $id;
+        //        $data = Carbon::create($this->data)->format('Y-m-d');
+        //        //$time_array = DB::select('CALL procTimeList("'.$this->department_id.'", "'.$data . '")');
+        //        DB::select('CALL procGetOrderTime("'.$data . '", "'.$this->department_id.'" )');
+        //        $time_array = TimeTb::all();
+        //        //dd($time_array);
+        //        $this->time_list = [];
+        //        foreach ($time_array as $ta) {
+        //            $this->time_list[] = $ta;
+        //        }
     }
 
     public function SaveClient()
@@ -186,14 +183,14 @@ class DayEventsComponent extends Component
 
         $client = new Client();
         $client->first_name = $this->first_name;
-        $client->last_name = $this->last_name? $this->last_name: '';
+        $client->last_name = $this->last_name ? $this->last_name : '';
         $client->phone = $this->phone ? $this->phone : 0;
         $client->address = $this->Address ? $this->Address : '';
         $client->save();
         $this->clients_id = $client->id;
         $this->clients = $this->clients_id;
-//        $this->dispatch('closeModal');
-//        $this->ResetInputFields();
+        //        $this->dispatch('closeModal');
+        //        $this->ResetInputFields();
         session()->flash('success', 'Client has been added!');
     }
 
@@ -210,7 +207,7 @@ class DayEventsComponent extends Component
         $this->data = Carbon::create($this->data)->format('Y-m-d');
 
         $order = DB::select('SELECT * FROM orders ORDER BY id DESC LIMIT 0, 1');
-        $this->num = $order[0]->id+1;
+        $this->num = $order[0]->id + 1;
         $order = new Order();
         $order->num = $this->num;
         $order->data = $this->data;
@@ -219,8 +216,16 @@ class DayEventsComponent extends Component
         $order->clients_id = $cl_id->id;
         $order->employes_id = 3;
         $order->save();
-        return redirect()->route('order-create', ['data'=>(\Carbon\Carbon::create($this->data)->format('Y-m-d')), 'dep_id'=>$this->department_id, 'number'=>$this->num]);
+        return redirect()->route('order-create', ['data' => (\Carbon\Carbon::create($this->data)->format('Y-m-d')), 'dep_id' => $this->department_id, 'number' => $this->num]);
     }
 
+    public function gotoView($id)
+    {
+        return redirect()->route('order-view', ['id' => $id]);
+    }
 
+    public function gotoEdit($id)
+    {
+        return redirect()->route('order-edit', ['id' => $id]);
+    }
 }

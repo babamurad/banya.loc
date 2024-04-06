@@ -15,8 +15,7 @@ use App\Livewire\UserComponent;
 use App\Livewire\RegisterComponent;
 use App\Livewire\LockScreenComponent;
 use \App\Livewire\OrderEdit;
-
-
+use App\Livewire\OrderViewComponent;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', LoginRegisterComponent::class);
 
-Route::middleware(\App\Http\Middleware\AuthAdmin::class)->group(function (){
+Route::middleware(['auth', 'authadmin'])->group(function () {
     Route::get('users', UserComponent::class)->name('users');
     Route::get('clients', ClientComponent::class)->name('clients');
 
@@ -53,6 +52,7 @@ Route::get('orders', OrderComponent::class)->name('orders');
 Route::get('order-create/{data}/{dep_id}/{number}', OrderCreate::class)->name('order-create');
 
 Route::get('order-edit/{id}', OrderEdit::class)->name('order-edit');
+Route::get('order-view/{id}', OrderViewComponent::class)->name('order-view');
 
 
 Route::get('shift', ShiftCloseComponent::class)->name('shift');
