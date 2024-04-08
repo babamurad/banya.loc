@@ -144,9 +144,10 @@
                         <p>Total sum</p>
                     </div>
                     <div class="mt-1">
-                        <a class="btn btn-sm btn-default" href="{{ route('day-events', ['data' => session()->get('data'), 'dep_id' => session()->get('dep_id')]) }}" > Назад </a>
+                        {{-- <a class="btn btn-sm btn-default" href="{{ route('day-events', ['data' => session()->get('data'), 'dep_id' => session()->get('dep_id')]) }}" > Назад </a> --}}
+                        <a class="btn btn-sm btn-default" href="{{ redirect()->back() }}" > Назад </a>
                         <a class="btn btn-sm btn-primary ml-3" href="#" wire:click='update'> Сохранить </a>
-                        <a class="btn btn-sm btn-secondary ml-3" href="#" > Редактировать </a>
+                        <a class="btn btn-sm btn-secondary ml-3" href="{{ route('order-edit', ['id' => $num]) }}" > Редактировать </a>
                     </div>
 
                 </div>
