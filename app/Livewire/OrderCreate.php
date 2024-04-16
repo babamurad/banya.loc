@@ -254,9 +254,10 @@ class OrderCreate extends Component
         if (!$this->startOrder) {
             $this->startOrder = '06:00';
         }
-        //dd($this->endOrder);
+
         $order->start = $this->startOrder;
         $order->end = $this->endOrder;
+
         $this->endOrder = substr($this->endOrder, 0, -3);
         //$order_qty = DB::select('call procTimeDiff("' . $this->num . '")');
         $t1 = strtotime($this->startOrder);

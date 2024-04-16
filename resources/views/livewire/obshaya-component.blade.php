@@ -4,6 +4,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Общая баня</h1>
+                    <input type="submit" value="Новый Заказ" class="btn btn-success" wire:click="toggleNewOrder">
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -14,80 +15,109 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <section class="content">
-        <div class="row">
-            <div class="col-12 mb-2">
-                <a href="#" class="btn btn-secondary">Cancel</a>
-                <input type="submit" value="Create new Project" class="btn btn-success float-right">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">General</h3>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
+    <section class="content {{ $visOrder? 'd-none' : '' }}">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Новый Заказ - Общий Отдел</h3>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="inputName">Project Name</label>
-                            <input type="text" id="inputName" class="form-control">
+                       <div class="row">
+                           <div class="col-sm-2">
+                               <div class="form-group">
+                                   <label>Номер</label>
+                                   <input class="form-control" type="text" placeholder="Number" readonly wire:model="num">
+                               </div>
+                           </div>
+                           <div class="col md-2">
+                               <div class="form-group">
+                                   <label for="jprice">Цена Взр. 1 час</label>
+                                   <input type="text" class="form-control" name="jprice" readonly value="70 ман.">
+                               </div>
+                           </div>
+                           <div class="col md-2">
+                               <div class="form-group">
+                                   <label for="cprice">Цена дет. 1 час</label>
+                                   <input type="text" class="form-control" name="cprice" readonly value="30 ман.">
+                               </div>
+                           </div>
+                           <div class="col md-2">
+                               <div class="form-group">
+                                   <label for="jqty">Время (час)</label>
+                                   <input type="number" class="form-control" id="jqty" placeholder="Кол-во" wire:model.live="jqty" readonly>
+                               </div>
+                           </div>
+                           <div class="col md-4">
+                               <div class="form-group">
+                                   <label for="jsum">Сумма</label>
+                                   <input type="number" class="form-control" placeholder="Сумма" wire:model.live="jsum" readonly>
+                               </div>
+                           </div>
+                       </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
+                                    <select class="custom-select" wire:model.live="startOrder">
+                                        @foreach($time_list  as $times)
+                                            <option wire:key='{{$times->id}}'>{{$times->time}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="required-field">{{__('End Time')}} - {{$endOrder}}</label>
+                                    <select class="custom-select" wire:model.live="endOrder">
+                                        @foreach($time_list  as $times)
+                                            <option wire:key='{{$times->id}}'>{{$times->time}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Взрослые</label>
+                                    <input type="number" class="form-control" wire:model.live="qtyAdults">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Дети до 12 лет</label>
+                                    <input type="number" class="form-control" wire:model.live="qtyChildren">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputDescription">Project Description</label>
-                            <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for=""></label>
+                                <div class="form-group" ><span>Услуги: {{ number_format($details_sum, 2, ',', ' ') }} </span></div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for=""></label>
+                                <div class="form-group"><span><strong>Итого: {{ number_format($details_sum + $jsum, 2, ',', ' ') }}</strong> </span></div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputStatus">Status</label>
-                            <select id="inputStatus" class="form-control custom-select">
-                                <option selected="" disabled="">Select one</option>
-                                <option>On Hold</option>
-                                <option>Canceled</option>
-                                <option>Success</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputClientCompany">Client Company</label>
-                            <input type="text" id="inputClientCompany" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputProjectLeader">Project Leader</label>
-                            <input type="text" id="inputProjectLeader" class="form-control">
-                        </div>
+                        <input type="submit" value="Сохранить" class="btn btn-success float-right" wire:click="addOrder">
+                        <a href="#" class="btn btn-secondary">Cancel</a>
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">Budget</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
+                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddJobTitle" >
+                                <i class="fas fa-plus mr-2"></i>Добавить Услугу
                             </button>
-                        </div>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="inputEstimatedBudget">Estimated budget</label>
-                            <input type="number" id="inputEstimatedBudget" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputSpentBudget">Total amount spent</label>
-                            <input type="number" id="inputSpentBudget" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEstimatedDuration">Estimated project duration</label>
-                            <input type="number" id="inputEstimatedDuration" class="form-control">
-                        </div>
+
+                        <input type="submit" value="Сохранить" class="btn btn-success float-right" wire:click="addOrder">
+                        <a href="#" class="btn btn-secondary">Cancel</a>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -95,6 +125,7 @@
             </div>
         </div>
     </section>
+
     <div class="row">
         <div class="col-12 mt-2">
             <div class="card">
