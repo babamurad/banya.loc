@@ -161,7 +161,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="required-field">{{__('End Time')}} - {{$endOrder}}</label>
-                            <select class="custom-select" wire:model.live="endOrder">
+                            <select class="custom-select" wire:model="endOrder">
                                 @foreach($time_list  as $times)
                                     <option class="{{ $times->busy? 'bg-danger disabled color-palette':'' }}" {{ $times->busy? 'disabled':'' }} wire:key='{{$times->id}}'>{{$times->time}}</option>
                                 @endforeach

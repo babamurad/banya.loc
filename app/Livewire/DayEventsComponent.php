@@ -49,7 +49,8 @@ class DayEventsComponent extends Component
         $clients = Client::orderBy('first_name')->get()->toArray();
         $this->clients_array = Client::orderBy('first_name')->get()->toArray();
 
-        $departments = Department::orderBy('id')->get();
+        $departments = Department::orderBy('id')->skip(1)->take(15)->get();
+
         $users = User::where('utype', '=', 'KSS')->get();
         return view('livewire.day-events-component', compact('clients', 'departments', 'users'));
     }
@@ -93,7 +94,7 @@ class DayEventsComponent extends Component
         $this->dispatch('delOrder');
         session()->flash('error', 'Order has been deleted!');
 
-        
+
     }
     public function vcheck()
     {
@@ -206,8 +207,10 @@ class DayEventsComponent extends Component
     {
         $this->data = Carbon::create($this->data)->format('Y-m-d');
 
-        $order = DB::select('SELECT * FROM orders ORDER BY id DESC LIMIT 0, 1');
-        $this->num = $order[0]->id + 1;
+//        $numb = DB::select('SELECT (num + 1) AS Number FROM orders ORDER BY id DESC LIMIT 0, 1');
+        $numb = DB::select('call procNewNumber()');
+        $this->num = $numb[0]->Number;
+
         $order = new Order();
         $order->num = $this->num;
         $order->data = $this->data;

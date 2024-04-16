@@ -18,6 +18,7 @@ use \App\Livewire\OrderEdit;
 use App\Livewire\OrderViewComponent;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
+use \App\Livewire\ObshayaComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'authadmin'])->group(function () {
     Route::get('clients', ClientComponent::class)->name('clients');
 
     Route::get('day-events/{data?}/{dep_id?}', DayEventsComponent::class)->name('day-events');
+    Route::get('obshaya', ObshayaComponent::class)->name('obshaya');
 });
 
 

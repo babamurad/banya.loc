@@ -120,13 +120,12 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-{{--                        {{$startOrder}} - {{$endOrder}}--}}
                         <div class="form-group ">
-                            <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
+                            <label class="required-field">{{__('Start Time')}} - {{$startOrder}} - {{ $num }}</label>
                             <select class="custom-select" wire:model.live="startOrder">
                                 @foreach($time_list  as $times)
                                     <option class="{{ $times->busy && $times->order_id!=$num? 'bg-danger disabled color-palette':'' }}"
-                                        {{ $times->busy && $times->order_id!=$num? 'disabled':'' }} wire:key="{{ $times->id }}" wire:key="{{$times->id}}">{{$times->time}}
+                                        {{ $times->busy && $times->order_id!=$num? 'disabled':'' }} wire:key="{{ $times->id }}">{{$times->order_id}} - {{$times->time}}
                                     </option>
                                 @endforeach
                             </select>
@@ -227,4 +226,3 @@
                 </div>
 
             </div>
-

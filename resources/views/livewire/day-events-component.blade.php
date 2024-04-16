@@ -202,10 +202,9 @@
                                             </button>
 
                                             <button type="button" class="btn btn-outline-success btn-sm" wire:click='gotoEdit("{{ $tb_time->order_id }}")'>
-                                                <i class="fas fa-edit"></i>Edit
+                                                <i class="fas fa-edit mr-2"></i>Edit
                                             </button>
-                                            <button
-                                                data-toggle="modal" data-target="#ConfirmDelete" type="button"
+                                            <button data-toggle="modal" data-target="#ConfirmDelete" type="button"
                                                 class="btn btn-sm btn-outline-danger" wire:click="deleteId({{$tb_time->order_id}})">
                                                 <i class="fas fa-trash-alt mr-2"></i>Delete
                                             </button>
