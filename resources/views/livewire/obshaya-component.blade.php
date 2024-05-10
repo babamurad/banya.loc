@@ -46,7 +46,7 @@
             <div class="row mb-2">
                 <div class="col-sm-3">
                     <h1>Общая баня</h1>
-                    <button type="submit" class="btn btn-success mt-4"  wire:click="addOrder">
+                    <button type="submit" class="btn btn-success mt-4"  wire:click="toggleNewOrder">
                         Новый Заказ<i class="fas fa-chevron-{{ $visOrder? 'down' : 'up'}} ml-3"></i>
 
 {{--                        --}}

@@ -14,7 +14,7 @@ use Livewire\Component;
 
 class ObshayaComponent extends Component
 {
-    public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $depart_id;
+    public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $depart_id, $clients_id;
     public $startOrder = "06:00", $endOrder;
     public $jobtitle_id, $jqty, $jprice, $jsum, $dep_sum;
     public $employe_id, $job_id, $qty, $sum, $price;
@@ -52,9 +52,28 @@ class ObshayaComponent extends Component
         //create number for new order num + 1
         $numb = DB::select('call procNewNumber()');
         $this->num = $numb[0]->Number;
+
+        DB::beginTransaction();
+
+        try {
+
+            $order = new Order();
+            $order->num = $this->num;
+            $order->clients_id = $this->clients_id;
+            $order->data = $this->order_data;
+            $order->employes_id = $this->employe_id;
+            $order->department_id = $this->department_id;
+            $order->sum = $this->sum ? : 0;
+            $order->save();
+
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['message' => 'Произошла ошибка при создании заказа: ' . $e->getMessage()], 500);
+        }
+
         //$employe_id, $job_id, $qty, $sum, $price
         session()->flash('success', 'Новый заказ создан');
-
     }
 
     public function cancelOrder()
@@ -136,7 +155,7 @@ class ObshayaComponent extends Component
             $this->dispatch('closeJobTitleModal');
             session()->flash('success', 'Добавлен вид услуг.');
         } else {
-            session()->flash('error', 'Сначачала сохраните заказ');
+            session()->flash('error', 'Сначала сохраните заказ');
             return;
         }
         $this->details_sum = OrderDetail::where('order_id', $this->num)->sum(DB::raw('qty * price'));
