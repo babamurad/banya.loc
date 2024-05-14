@@ -14,13 +14,20 @@ use Livewire\Component;
 
 class ObshayaComponent extends Component
 {
+    //Использую Livewire, laravel связанные таблицы, в подчиненной таблице может быть несколько записей,
+    // нужно сделать добавление, удаление и редактирование. В главной таблице есть поля: num, title, start_date, end_date.
+    // В подчиненной есть такие поля: name, quantity, price, sum, description. Нужно сделать все в одном компоненте,
+    // нужно использовать массив для подчиненной таблицы. Нужно использовать DB::beginTransaction();
     public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $depart_id, $clients_id;
-    public $startOrder = "06:00", $endOrder;
+    public $startOrder = "06:00:00", $endOrder;
+    //Sprawocniki kazhetsya
     public $jobtitle_id, $jqty, $jprice, $jsum, $dep_sum;
+    //For Order Details
     public $employe_id, $job_id, $qty, $sum, $price;
     public $details_sum;
     public $visOrder = true;
     public $qtyAdults = 1, $qtyChildren = 0;
+    public $jobs = [];
 
     public function render()
     {
@@ -66,7 +73,6 @@ class ObshayaComponent extends Component
             $order->sum = $this->sum ? : 0;
             $order->save();
 
-
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['message' => 'Произошла ошибка при создании заказа: ' . $e->getMessage()], 500);
@@ -84,7 +90,6 @@ class ObshayaComponent extends Component
 
     public function saveOrder()
     {
-
         if (!$this->order_id == null || $this->sum != 0 || $this->sum != null) {
 
             if (!$this->order_id) {

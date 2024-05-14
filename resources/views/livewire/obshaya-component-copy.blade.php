@@ -212,7 +212,6 @@
                                             <th class="sorting"> {{__('Action')}} </th>
                                         </tr>
                                         </thead>
-                                        @if($details->count() > 0)
                                         <tbody>
                                         @foreach($details as $detail)
                                             <tr wire:key="{{$detail->id}}">
@@ -234,7 +233,7 @@
                                             </tr>
                                         @endforeach
                                         </tbody>
-                                        @endif
+
                                     </table>
 
                                 </div>
