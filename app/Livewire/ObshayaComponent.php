@@ -11,6 +11,7 @@ use App\Models\TimeTb;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ObshayaComponent extends Component
 {
@@ -18,7 +19,9 @@ class ObshayaComponent extends Component
     // нужно сделать добавление, удаление и редактирование. В главной таблице есть поля: num, title, start_date, end_date.
     // В подчиненной есть такие поля: name, quantity, price, sum, description. Нужно сделать все в одном компоненте,
     // нужно использовать массив для подчиненной таблицы. Нужно использовать DB::beginTransaction();
-    public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $depart_id, $clients_id;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $depart_id, $clients_id, $pol = 1;
     public $startOrder = "06:00:00", $endOrder;
     //Sprawocniki kazhetsya
     public $jobtitle_id, $jqty, $jprice, $jsum, $dep_sum;
@@ -28,11 +31,14 @@ class ObshayaComponent extends Component
     public $visOrder = true;
     public $qtyAdults = 1, $qtyChildren = 0;
     public $jobs = [];
+    public $gender;
 
     public function render()
     {
         $employes = Employe::all();
         $time_list = TimeTb::all();
+        $mans = Order::where('gender', '=', 1)->count();
+        $womans = Order::where('gender', '=', 2)->count();
         if ($this->employe_id) {
             $jobtitles = JobTitle::where('employe_id', $this->employe_id)->get();
         } else {
@@ -43,14 +49,16 @@ class ObshayaComponent extends Component
                 ->with('employe')
                 ->where('order_id', $this->num)
                 ->get();
-            $order = Order::with('order_details')->where('num', $this->num)->get();
-            //dd($order[0]->start);
-            //$this->startOrder = $order[0]->start;
-            //$this->endOrder = $order[0]->end;
-//        } else {
-//            $details = '';
-//        }
-        return view('livewire.obshaya-component', compact('time_list', 'employes', 'jobtitles', 'details'));
+            //$orders = Order::with('order_details')->orderBy('id', 'DESC')->paginate(10);
+            $orders_query = Order::query();
+            if ($this->gender) { $orders_query->where('gender', '=', $this->gender); }
+            $orders = $orders_query
+                ->with('order_details')
+                ->orderBy('id', 'DESC')
+                ->paginate(10);
+
+
+        return view('livewire.obshaya-component', compact('time_list', 'employes', 'jobtitles', 'details', 'orders', 'mans', 'womans'));
     }
 
     public function addOrder()
@@ -90,15 +98,10 @@ class ObshayaComponent extends Component
 
     public function saveOrder()
     {
-        if (!$this->order_id == null || $this->sum != 0 || $this->sum != null) {
-
-            if (!$this->order_id) {
-                $order = new Order();
-                $save = true;} else {
-                $order = Order::findOrFail($this->order_id);
-                $save = false;
-            }
-
+        $numb = DB::select('call procNewNumber()');
+        $this->num = $numb[0]->Number;
+        if ($this->sum > 0) {
+            $order = new Order();
             $order->num = $this->num;
 
             $order->data = Carbon::create(now());
@@ -106,17 +109,22 @@ class ObshayaComponent extends Component
             $cl_id = Client::select('id')->first();
             $order->clients_id = $cl_id->id;
             $order->employes_id = 3;
+            $order->adults = $this->qtyAdults;
+            $order->children = $this->qtyChildren;
+            $order->start = $this->startOrder;
+            $order->end = $this->endOrder;
             $order->sum = $this->sum;
-
-            if ($save) {
-                $order->save();
-            } else {
-                $order->update();
-            }
+            $order->gender = $this->pol;
+            $order->save();
             session()->flash('success', 'Сохранено');
+            $this->toggleNewOrder();
+            $this->reset('num', 'department_id', 'clients_id', 'sum', 'qty');
         } else {
-            session()->flash('error', 'Сумма не может быть 0');
+            session()->flash('error', 'Сумма не может быть 0. Проверьте время заказа');
         }
+
+
+            //
     }
 
     public function toggleNewOrder()
@@ -129,8 +137,14 @@ class ObshayaComponent extends Component
         $t1 = strtotime($this->startOrder);
         $t2 =  strtotime($this->endOrder);
         $this->qty = ($t2 - $t1) / 3600;
+        if ($this->qty < 0) {
+            $this->qty = 0;
+        }
 
         $this->sum = $this->qtyAdults * 70 * $this->qty + $this->qtyChildren * 30 * $this->qty;
+        if ($this->sum < 0) {
+            $this->sum = 0;
+        }
 
     }
 

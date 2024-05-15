@@ -20,7 +20,10 @@ class Order extends Model
         'end',
         'start',
         'sum',
-        'desc'
+        'desc',
+        'gender',
+        'adults',
+        'children'
     ];
 
     public function scopeSearch($query, $search)

@@ -57,7 +57,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>51</h3>
+                            <h3>{{ $mans }}</h3>
 
                             <p>Человек в мужской бане</p>
                         </div>
@@ -67,7 +67,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>{{ $womans }}</h3>
 
                             <p>Человек в женской бане</p>
                         </div>
@@ -124,24 +124,17 @@
                            </div>
                        </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
-                                    <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
-                                    <select class="custom-select" wire:model.live="startOrder">
-                                        @foreach($time_list  as $times)
-                                            <option wire:key='{{$times->id}}'>{{$times->time}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="required-field">{{__('End Time')}} - {{$endOrder}}</label>
-                                    <select class="custom-select" wire:model.live="endOrder">
-                                        @foreach($time_list  as $times)
-                                            <option wire:key='{{$times->id}}'>{{$times->time}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label>Выбор Пола</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radio1" checked="" wire:model="pol" value="1">
+                                        <label class="form-check-label">Мужчина</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radio1" wire:model="pol" value="2">
+                                        <label class="form-check-label">Женщина</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -154,6 +147,26 @@
                                 <div class="form-group">
                                     <label>Дети до 12 лет</label>
                                     <input type="number" class="form-control" wire:model.live="qtyChildren">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
+                                    <select class="custom-select" wire:model.live="startOrder">
+                                        @foreach($time_list  as $times)
+                                            <option wire:key='{{$times->id}}'>{{$times->time}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="required-field">{{__('End Time')}} - {{$endOrder}}</label>
+                                    <select class="custom-select" wire:model.live="endOrder">
+                                        @foreach($time_list  as $times)
+                                            <option wire:key='{{$times->id}}'>{{$times->time}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -254,18 +267,17 @@
         <div class="col-12 mt-2">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Fixed Header Table</h3>
+                    <h3 class="card-title">Таблица Общая баня</h3>
 
                     <div class="card-tools">
                         <div class="row">
                             <div class="form-group mr-1"><label>Выбор</label></div>
-
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <div class="form-group float-right">
-                                    <select class="form-control">
-                                        <option>Все</option>
-                                        <option>Мужская</option>
-                                        <option>Женская</option>
+                                    <select class="form-control" wire:model.live="gender">
+                                        <option value="">Все</option>
+                                        <option value="1">Мужская</option>
+                                        <option value="2">Женская</option>
                                     </select>
                                 </div>
                             </div>
@@ -274,69 +286,49 @@
 
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body table-responsive p-0" style="height: 300px;">
-                    <table class="table table-head-fixed text-nowrap">
+                <div class="card-body table-responsive p-0" style="height: 60vh;">
+                    <table class="table ">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>User</th>
-                            <th>Date</th>
-                            <th>Status</th>
+                            <th>No</th>
+                            <th>Пол</th>
+                            <th>Дата</th>
+                            <th>Время</th>
+                            <th>Взр./Дет.</th>
+                            <th>Сумма</th>
+                            <th>Действие</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>183</td>
-                            <td>John Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-success">Approved</span></td>
-                        </tr>
-                        <tr>
-                            <td>219</td>
-                            <td>Alexander Pierce</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-warning">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>657</td>
-                            <td>Bob Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-primary">Approved</span></td>
-                        </tr>
-                        <tr>
-                            <td>175</td>
-                            <td>Mike Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-danger">Denied</span></td>
-                        </tr>
-                        <tr>
-                            <td>134</td>
-                            <td>Jim Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-success">Approved</span></td>
-                        </tr>
-                        <tr>
-                            <td>494</td>
-                            <td>Victoria Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-warning">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>832</td>
-                            <td>Michael Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-primary">Approved</span></td>
-                        </tr>
-                        <tr>
-                            <td>982</td>
-                            <td>Rocky Doe</td>
-                            <td>11-7-2014</td>
-                            <td><span class="tag tag-danger">Denied</span></td>
-                        </tr>
+                        @foreach($orders as $order)
+                            <tr>
+                                <td>{{ $order->num }}</td>
+                                <td><span class=" {{ $order->gender == 1? "bg-gradient-lightblue":"bg-gradient-cyan" }}  p-1 rounded">{{ $order->gender == 1? "Man":"Woman" }}</span></td>
+                                <td>{{ \Carbon\Carbon::create($order->data)->format('d.m.Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($order->start)->format('H:i') }} - {{ \Carbon\Carbon::parse($order->end)->format('H:i') }}</td>
+                                <td>{{ $order->adults }} / {{ $order->children }}</td>
+                                <td>{{ $order->sum }}</td>
+                                <td>
+                                    <div>
+                                        <button type="button" class="btn btn-secondary btn-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="confirm('Are you sure want to delete ?') || event.stopImmediatePropagation() " type="button"
+                                                class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
+
                 </div>
                 <!-- /.card-body -->
+                <div class="card-footer">
+                    {{ $orders->links() }}
+                </div>
             </div>
             <!-- /.card -->
         </div>
