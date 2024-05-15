@@ -173,11 +173,15 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for=""></label>
+                                <div class="form-group" ><span>Баня: {{ number_format($sum, 2, ',', ' ') }} </span></div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for=""></label>
                                 <div class="form-group" ><span>Услуги: {{ number_format($details_sum, 2, ',', ' ') }} </span></div>
                             </div>
                             <div class="col-sm-3">
                                 <label for=""></label>
-                                <div class="form-group"><span><strong>Итого: {{ number_format($details_sum + $jsum, 2, ',', ' ') }}</strong> </span></div>
+                                <div class="form-group"><span><strong>Итого: {{ number_format($details_sum + $sum, 2, ',', ' ') }}</strong> </span></div>
                             </div>
                         </div>
                         <a href="#" class="btn btn-secondary" wire:click="cancelOrder">Cancel</a>

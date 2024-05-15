@@ -118,7 +118,7 @@ class ObshayaComponent extends Component
             $order->save();
             session()->flash('success', 'Сохранено');
             $this->toggleNewOrder();
-            $this->reset('num', 'department_id', 'clients_id', 'sum', 'qty');
+            $this->reset('num', 'department_id', 'clients_id', 'sum', 'qty', 'qtyChildren');
         } else {
             session()->flash('error', 'Сумма не может быть 0. Проверьте время заказа');
         }
