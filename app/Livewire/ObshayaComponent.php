@@ -24,7 +24,7 @@ class ObshayaComponent extends Component
     public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $depart_id, $clients_id, $pol = 1;
     public $startOrder = "06:00:00", $endOrder;
     //Sprawocniki kazhetsya
-    public $jobtitle_id, $jqty, $jprice, $jsum, $dep_sum;
+    public $jobtitle_id, $jqty, $jprice, $jsum, $dep_sum, $job;
     //For Order Details
     public $employe_id, $job_id, $qty, $sum, $price;
     public $details_sum;
@@ -32,23 +32,29 @@ class ObshayaComponent extends Component
     public $qtyAdults = 1, $qtyChildren = 0;
     public $jobs = [];
     public $gender;
+    public $order;
+    public $details;
 
     public function render()
     {
         $employes = Employe::all();
         $time_list = TimeTb::all();
-        $mans = Order::where('gender', '=', 1)->count();
-        $womans = Order::where('gender', '=', 2)->count();
+        //$mans = Order::where('gender', '=', 1)->count();
+        //$womans = Order::where('gender', '=', 2)->count();
+        $kol = DB::select('SELECT SUM(CASE WHEN o.gender=1 THEN 1 END) AS mans, SUM(CASE WHEN o.gender=2 THEN 1 END) AS womans FROM orders o')[0];
+        //dd($kol->mans);
         if ($this->employe_id) {
             $jobtitles = JobTitle::where('employe_id', $this->employe_id)->get();
         } else {
             $jobtitles = JobTitle::all();
         }
-//        if ($this->num) {
-            $details = OrderDetail::with('order')
+
+        if ($this->order) {
+            $this->details = OrderDetail::with('order')
                 ->with('employe')
-                ->where('order_id', $this->num)
+                ->where('order_id', $this->order->id)
                 ->get();
+        }
             //$orders = Order::with('order_details')->orderBy('id', 'DESC')->paginate(10);
             $orders_query = Order::query();
             if ($this->gender) { $orders_query->where('gender', '=', $this->gender); }
@@ -58,7 +64,14 @@ class ObshayaComponent extends Component
                 ->paginate(10);
 
 
-        return view('livewire.obshaya-component', compact('time_list', 'employes', 'jobtitles', 'details', 'orders', 'mans', 'womans'));
+        return view('livewire.obshaya-component', compact('time_list', 'employes', 'jobtitles', 'orders', 'kol'));
+    }
+
+    public function mount()
+    {
+        $employe = Employe::first();
+        $this->employe_id = $employe->id;
+        $this->job = JobTitle:: where('employe_id', $this->employe_id)->get();
     }
 
     public function addOrder()
@@ -117,14 +130,17 @@ class ObshayaComponent extends Component
             $order->gender = $this->pol;
             $order->save();
             session()->flash('success', 'Сохранено');
-            $this->toggleNewOrder();
-            $this->reset('num', 'department_id', 'clients_id', 'sum', 'qty', 'qtyChildren');
+            //$this->toggleNewOrder();
+            $this->order = $order;
         } else {
             session()->flash('error', 'Сумма не может быть 0. Проверьте время заказа');
         }
+    }
 
-
-            //
+    public function closeForm()
+    {
+        $this->toggleNewOrder();
+        $this->reset('num', 'department_id', 'clients_id', 'sum', 'qty', 'qtyChildren');
     }
 
     public function toggleNewOrder()
@@ -157,17 +173,18 @@ class ObshayaComponent extends Component
         $this->updatedEndOrder();
     }
 
-    public function addOrderJob()
+    public function addOrderJob():void
     {
-        if ($this->num) {
-            $jname = JobTitle::find($this->job_id);
+
+        if ($this->order) {
             $detail = new OrderDetail();
-            $detail->num = $this->num;
-            $detail->name = $jname->name;
-            $detail->order_id = $this->num;
+            $detail->num = $this->order->num;
+
+            $detail->name = $this->job->name;
+            $detail->order_id = $this->order->id;
             $detail->jobtitle_id = $this->job_id;
             $detail->employes_id = $this->employe_id;
-            $detail->qty = $this->qty;
+            $detail->jqty = $this->qty;
             $detail->price = $this->price;
             $detail->sum = number_format($this->qty * $this->price, 2, 2);
             $detail->save();
@@ -178,5 +195,24 @@ class ObshayaComponent extends Component
             return;
         }
         $this->details_sum = OrderDetail::where('order_id', $this->num)->sum(DB::raw('qty * price'));
+        return;
+    }
+
+    public function updatedQty()
+    {
+        //$employe_id, $job_id, $qty, $sum, $price;
+    }
+
+    public function updatedJobId()
+    {
+        $this->job = JobTitle::where('employe_id', $this->employe_id)->where('id', $this->job_id)->first();
+        $this->price = $this->job->price;
+
+    }
+
+    public function updatedEmployeId()
+    {
+        $this->job = JobTitle::where('employe_id', $this->employe_id)->first();
+        $this->price = $this->job->price;
     }
 }

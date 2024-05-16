@@ -57,7 +57,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{ $mans }}</h3>
+                            <h3>{{ $kol->mans }}</h3>
 
                             <p>Человек в мужской бане</p>
                         </div>
@@ -67,7 +67,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{ $womans }}</h3>
+                            <h3>{{ $kol->womans }}</h3>
 
                             <p>Человек в женской бане</p>
                         </div>
@@ -185,7 +185,9 @@
                             </div>
                         </div>
                         <a href="#" class="btn btn-secondary" wire:click="cancelOrder">Cancel</a>
-                        <button type="button" class="btn btn-success float-right" wire:click="saveOrder">Сохранить</button>
+                        <button class="btn btn-secondary float-right" wire:click="closeForm">Close</button>
+                        <button type="button" class="btn btn-success float-right mr-1" wire:click="saveOrder">Сохранить</button>
+
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -194,7 +196,7 @@
             <div class="col-md-5">
                 <div class="card card-secondary">
                     <div class="card-header">
-                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddJobTitle" >
+                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddJobTitle" @if(!$order) disabled @endif>
                                 <i class="fas fa-plus mr-2"></i>Добавить Услугу
                             </button>
                     </div>
@@ -229,7 +231,7 @@
                                             <th class="sorting"> {{__('Action')}} </th>
                                         </tr>
                                         </thead>
-                                        @if($details->count() > 0)
+                                        @if($details)
                                         <tbody>
                                         @foreach($details as $detail)
                                             <tr wire:key="{{$detail->id}}">

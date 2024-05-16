@@ -41,13 +41,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="name">{{__('Количество')}} </label>
-                                <input name="name" type="number" step="any" class="form-control" placeholder=" {{__('Количество')}} " wire:model.lazy="qty">
+                                <input name="name" type="number" step="any" class="form-control" placeholder=" {{__('Количество')}} " wire:model.live="jqty">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="name">{{__('Цена')}} </label>
-                                <input name="name" type="number" class="form-control" placeholder=" {{__('Цена')}} " wire:model="price" disabled>
+                                <input name="name" type="number" class="form-control" placeholder=" {{__('Цена')}} " wire:model.live="price" disabled>
                             </div>
                         </div>
                         <div class="col-md-4">
