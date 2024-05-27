@@ -33,7 +33,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-primary"
+                    <button class="btn btn-block btn-primary d-none"
                     data-toggle="modal" onClick="javascript:viewFile()" data-target="#CreateUserDialog">
                     <i class="fas fa-plus mr-1"></i> {{__('Add User')}}
                     </button>

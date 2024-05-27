@@ -17,6 +17,9 @@
                                     <input name="name" type="text"
                                            class="form-control @error('first_name') is-invalid @enderror"
                                            placeholder=" {{__('First Name')}} " wire:model="first_name">
+                                    @error('first_name')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -31,19 +34,22 @@
                                     <label class="required-field" for="phone"> {{__('Phone')}} </label>
                                     <input type="number" class="form-control @error('phone') is-invalid @enderror"
                                            id="phone" placeholder=" {{__('Phone')}} " wire:model="phone">
+                                    @error('phone')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                             <div class="form-group">
                                 <label>Textarea</label>
-                                <textarea class="form-control" rows="3" placeholder="Enter ..." wire:model="Address"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="Enter ..." wire:model="address"></textarea>
                             </div>
 
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal"> {{__('Close')}} </button>
-                    <button type="submit" class="btn btn-primary" wire:click="SaveClient"> {{__('Save changes')}} </button>
+                    <button type="submit" class="btn btn-primary"> {{__('Save changes')}} </button>
                 </div>
                 <!-- /modal-content  -->
             </form>

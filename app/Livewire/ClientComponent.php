@@ -10,6 +10,7 @@ class ClientComponent extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
+
     public $perPage = 10;
     public $search = '';
     public $us_count;
@@ -17,14 +18,24 @@ class ClientComponent extends Component
     public $sortDirection = 'DESC';
     public $sortIcon = '<i class="fas fa-sort ml-1"></i>';
 
-    public $first_name, $last_name, $phone, $address, $email, $idc;
 
+    public $first_name;
+    public $last_name, $phone, $address, $email, $idc;
+
+    protected $rules = [
+        'first_name' => 'required|min:5',
+        'phone' => 'required|min:5',
+    ];
+    protected $messages = [
+        'first_name.required' => 'Имя объязательное.',
+        'first_name.min' => 'Имя должно быть не меньше 3-х символов.',
+        'phone.required' => 'Номер телефона объязателен.',
+        'phone.min' => 'Телефон должен быть не меньше 5 ти цифр.',
+    ];
 
     public function edit($id)
     {
-
         $client = Client::findOrFail($id);
-        //dd($client);
         $this->idc = $client->id;
         $this->first_name = $client->first_name;
         $this->last_name = $client->last_name;
@@ -35,19 +46,16 @@ class ClientComponent extends Component
 
     public function updateClient()
     {
-        $this->validate([
-            'first_name' => 'required',
-            'phone' => 'required',
-        ]);
+        $this->validate();
 
         $client = Client::findOrFail($this->idc);
-        $client->first_name = $this->FirstName;
-        $client->last_name = $this->LastName;
-        $client->phone = $this->Phone ? $this->Phone : 0;
-        $client->address = $this->Address ? $this->Address : '';
-        $client->email = $this->Email ? $this->Email :'';
-        $client->save();
-        $this->dispatch('closeModal');
+        $client->first_name = $this->first_name;
+        $client->last_name = $this->last_name;
+        $client->phone = $this->phone ? $this->phone : 0;
+        $client->address = $this->address ? $this->address : '';
+        $client->email = $this->email ? $this->email :'';
+        $client->update();
+        $this->dispatch('closeUpdateModal');
         $this->ResetInputFields();
         session()->flash('update', 'Client has been updated!');
     }
@@ -63,10 +71,7 @@ class ClientComponent extends Component
 
     public function SaveClient()
     {
-        $this->validate([
-            'first_name' => 'required',
-            'phone' => 'required',
-        ]);
+        $this->validate();
 
         $client = new Client();
         $client->first_name = $this->first_name;
@@ -74,9 +79,11 @@ class ClientComponent extends Component
         $client->phone = $this->phone ? $this->phone : 0;
         $client->address = $this->address ? $this->address : '';
         $client->save();
-        $this->dispatch('closeModal');
-        $this->ResetInputFields();
+
+        $this->dispatch('closeCreateModal');
         session()->flash('success', 'Client has been added!');
+        $this->reset(['first_name', 'last_name', 'phone', 'address']);
+
     }
 
     public function updatedSearch()

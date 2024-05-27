@@ -1,7 +1,7 @@
 <div wire:ignore.self class="modal fade" id="EditClientDialog" role="viewDialog" aria-hidden="true">
     <div class="modal-dialog card" style="max-width: 50%;">
         <div class="modal-content">
-            <form action="" wire:submit.prevent="SaveClient">
+            <form action="" wire:submit.prevent="updateClient">
                 <div class="modal-header primary" style="background-color: #007bff;">
                     <h4 class="modal-title text-white ">{{ __('Add Client')}}</h4>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
@@ -16,7 +16,10 @@
                                     <label class="required-field" for="name">{{__('First Name')}} </label>
                                     <input name="name" type="text"
                                            class="form-control @error('first_name') is-invalid @enderror"
-                                           placeholder=" {{__('First Name')}} " wire:model="first_name" value="{{ old('first_name') }}">
+                                           placeholder=" {{__('First Name')}} " wire:model="first_name">
+                                    @error('first_name')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -31,6 +34,9 @@
                                     <label class="required-field" for="phone"> {{__('Phone')}} </label>
                                     <input type="number" class="form-control @error('phone') is-invalid @enderror"
                                            id="phone" placeholder=" {{__('Phone')}} " wire:model="phone">
+                                    @error('phone')
+                                    <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

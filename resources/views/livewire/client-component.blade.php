@@ -3,14 +3,12 @@
     @include('client.client-create')
     @include('client.client-edit')
     <!--Modal -->
-{{--    <div class="container">--}}
-{{--    @include('components.alerts')--}}
-{{--    </div>--}}
+
     <script>
-        window.addEventListener('closeModal', event=> {
+        window.addEventListener('closeCreateModal', event=> {
             $('#CreateClientDialog').modal('hide');
         })
-        window.addEventListener('closeModal', event=> {
+        window.addEventListener('closeUpdateModal', event=> {
             $('#EditClientDialog').modal('hide');
         })
     </script>
