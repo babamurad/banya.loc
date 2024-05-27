@@ -16,13 +16,19 @@
                                 <input name="name" type="text"
                                        class="form-control @error('name') is-invalid @enderror"
                                        placeholder=" {{__('Название')}} " wire:model="name">
+                                @error('name')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="required-field" for="price"> {{__('Цена за 1 час')}} </label>
-                                <input name="price" type="number" step="any" class="form-control"
+                                <input name="price" type="number" step="any" class="form-control @error('price') is-invalid @enderror"
                                        placeholder=" {{__('Цена')}} " wire:model="price">
+                                @error('price')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>

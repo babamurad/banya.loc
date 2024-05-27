@@ -20,6 +20,12 @@ class DepartmentComponent extends Component
         'price' => 'required',
     ];
 
+    protected $messages = [
+        'name.required' => 'Имя объязательное.',
+        'name.min' => 'Имя должно быть не меньше 3-х символов.',
+        'price.required' => 'Цена объязательна.',
+    ];
+
     public function render()
     {
         $departments = Department::orderBy($this->sortBy, $this->sortDirection)->paginate(50);
@@ -28,10 +34,7 @@ class DepartmentComponent extends Component
 
     public function storeDepartment()
     {
-        $validated = $this->validate([
-            'name' => 'required|min:3',
-            'price' => 'required',
-        ]);
+        $validated = $this->validate();
 
         Department::create($validated);
         $this->ResetInputFields();
