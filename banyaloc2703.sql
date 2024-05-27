@@ -1,4 +1,4 @@
--- --------------------------------------------------------
+﻿-- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               8.0.24 - MySQL Community Server - GPL
 -- Операционная система:         Win64
@@ -20,156 +20,7 @@ DROP DATABASE IF EXISTS `banya`;
 CREATE DATABASE IF NOT EXISTS `banya` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `banya`;
 
--- Дамп структуры для таблица banya.addresses
-DROP TABLE IF EXISTS `addresses`;
-CREATE TABLE IF NOT EXISTS `addresses` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` bigint unsigned NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `addresses_user_id_foreign` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AVG_ROW_LENGTH=1638 ROW_FORMAT=DYNAMIC;
 
--- Дамп данных таблицы banya.addresses: ~10 rows (приблизительно)
-DELETE FROM `addresses`;
-INSERT INTO `addresses` (`id`, `user_id`, `address`, `created_at`, `updated_at`) VALUES
-	(11, 3, '237 Lee Drive\nMcKenzieport, KY 46393', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(12, 3, '812 Weimann Track\nMrazmouth, RI 24069', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(13, 3, '703 Cartwright Station\nNorth Emmymouth, NM 86767', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(14, 1, '5026 Isabelle Island\nKochtown, MA 59273-6265', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(15, 2, '447 Ford Streets\nSouth Levibury, FL 48109-3062', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(16, 1, '17453 Shields Falls\nZoeborough, OK 42642', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(17, 1, '6039 Schmidt Forest\nNew Katelynnton, SD 17245-6572', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(18, 3, '30713 Lennie Fort Suite 518\nKuvalismouth, IL 01614', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(19, 2, '3180 Houston Manor Apt. 147\nFeilstad, IA 80115', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
-	(20, 1, '80192 Leanne Track\nPamelaside, IN 71926', '2023-11-16 01:31:00', '2023-11-16 01:31:00');
-
--- Дамп структуры для процедура banya.ClearOrderTime
-DROP PROCEDURE IF EXISTS `ClearOrderTime`;
-DELIMITER //
-CREATE PROCEDURE `ClearOrderTime`()
-BEGIN
-  UPDATE time_tb tt
-  SET tt.busy = FALSE,
-      tt.order_time = '',
-      tt.order_id = 0;
-END//
-DELIMITER ;
-
--- Дамп структуры для таблица banya.clients
-DROP TABLE IF EXISTS `clients`;
-CREATE TABLE IF NOT EXISTS `clients` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AVG_ROW_LENGTH=207 ROW_FORMAT=DYNAMIC;
-
--- Дамп данных таблицы banya.clients: ~74 rows (приблизительно)
-DELETE FROM `clients`;
-INSERT INTO `clients` (`id`, `first_name`, `last_name`, `email`, `address`, `phone`, `created_at`, `updated_at`) VALUES
-	(2, 'Emilio', 'Harvey', 'dach.vidal@donnelly.com', '128 Ritchie Hill Apt. 738\nSanfordfurt, NM 22382-8341', '+1-539-226-0369', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(3, 'Beverli', 'Hills', 'lswaniawski@yahoo.com', '40935 Boyer Ports\nNorth Gabe, LA 03623-0614', '(248) 344-3127', '2023-11-16 01:44:06', '2023-11-18 14:45:20'),
-	(7, 'Kaylee', 'DuBuque', 'joana.rohan@hotmail.com', '867 Kuphal Light\nBradtkeview, NH 76803-1696', '1-936-609-4746', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(8, 'Sonia', 'O\'Kon', 'natasha.thiel@yahoo.com', '15886 Louie Turnpike\nPort Christianbury, ND 72058-5537', '+1 (352) 909-4336', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(9, 'Michelle', 'Cummings', 'frogahn@yahoo.com', '70220 Grady Cliff\nWest Mabel, CT 76488', '+1 (475) 985-6072', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(11, 'Jana', 'Casper', 'amir37@sawayn.org', '223 Natalia Port Suite 188\nPort Bell, AZ 44174', '351.842.5090', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(13, 'Lurline', 'Schowalter', 'gretchen.steuber@gmail.com', '552 Schinner Route Suite 962\nPort Wilfredo, DE 22762', '669-487-0242', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(14, 'Desiree', 'Hagenes', 'elaina47@yahoo.com', '273 Ivory Centers Suite 772\nLebsackhaven, NH 62105', '765.357.2658', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(15, 'Horace', 'Witting', 'jesse08@wolf.com', '440 Rodrick Plaza Apt. 895\nLeonoraton, AZ 81410', '+12014161320', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(16, 'Barney', 'Veum', 'manuel75@gmail.com', '780 Anabel Park Suite 631\nReesemouth, OR 93308-8954', '+1.979.413.4197', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(17, 'Ted', 'Johnston', 'marvin.schmitt@hotmail.com', '241 Dayana Canyon\nShieldsfurt, TX 73428-5346', '+1.425.389.4906', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(18, 'Briana', 'Bartoletti', 'stoltenberg.camille@hotmail.com', '7382 Welch Hollow Apt. 450\nJohnsmouth, OR 89727-3225', '+13147441284', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(19, 'Jairo', 'Lebsack', 'ramon03@gmail.com', '3083 Raynor Park Apt. 515\nSouth Isaias, SD 03125', '1-630-908-4787', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(20, 'Marley', 'Spinka', 'block.hector@yahoo.com', '5133 Brown Ramp\nSouth Delbertside, KS 95872', '937-325-6331', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(22, 'Lorenz', 'Smith', 'roy.rempel@lockman.com', '16825 Bednar Valley\nEast Kassandra, KS 29245-1943', '774.762.4182', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(24, 'Alda', 'Veum', 'haylie67@satterfield.org', '97562 Considine Expressway Suite 136\nOkunevaview, GA 41197', '+19473198563', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(25, 'Mossie', 'Rogahn', 'baron.douglas@hermiston.com', '63060 Blick Center\nNienowfurt, AR 16188-1086', '573.542.4374', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(26, 'Leonel', 'Funk', 'ludwig.okeefe@gmail.com', '316 Sid Lake\nFadelfort, MI 59673', '361-209-9878', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(27, 'Dariana', 'Wintheiser', 'hosinski@boehm.com', '5149 Ayana Island\nFeiltown, WI 68041-3357', '629-207-8356', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(28, 'Raymond', 'Olson', 'champlin.oren@yahoo.com', '273 Satterfield Path\nFayview, AK 33856-1851', '+1-234-320-7467', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(29, 'Aliya', 'Ferry', 'prohaska.rowland@maggio.org', '58393 Tad Causeway\nWindlerton, KS 73845-4619', '386-898-2689', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(30, 'Cyrus', 'Beer', 'doyle77@cronin.com', '389 Hessel Forest\nWeldonberg, GA 49188-3106', '1-218-499-4252', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(31, 'Ed', 'Daniel', 'jacobi.andrew@yahoo.com', '37796 Hilpert Ramp Apt. 264\nAxelfort, DE 64229-6404', '(309) 615-7694', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(32, 'Rosanna', 'Mills', 'ajohns@moen.org', '385 Buckridge Vista Suite 216\nHaneborough, ME 57416-1173', '903.618.6675', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(33, 'Margaret', 'Welch', 'reilly.jackeline@yahoo.com', '51478 Vince Cove Suite 266\nWest Vito, KS 52621-7933', '1-540-776-2679', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(34, 'Denis', 'Durgan', 'ajenkins@okuneva.com', '6553 Nolan Stravenue\nWaelchiberg, MN 76115-2959', '+1.480.263.4019', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(35, 'Liam', 'Nikolaus', 'flarkin@yahoo.com', '59487 Lia Forest\nEmmettport, NM 57501', '816.562.2657', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(36, 'Adele', 'Kassulke', 'ogottlieb@tremblay.com', '7804 Wuckert Dale Apt. 316\nIsobelhaven, TX 30215-5412', '+1-361-822-6123', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(37, 'Gennaro', 'Wehner', 'xcummings@gmail.com', '7476 Terrence Underpass Apt. 468\nBudfort, OR 23513', '920.767.4706', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(38, 'Wendy', 'Kub', 'kayleigh.haag@marks.com', '1308 Marvin Hill\nLake Estellefort, WV 97802-2281', '(951) 505-1645', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(39, 'Kaelyn', 'Turcotte', 'greichert@gmail.com', '739 Jerde Lake Suite 972\nJamesonview, TN 75870', '(305) 568-0210', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(40, 'Pierre', 'Ruecker', 'madelyn29@hotmail.com', '1852 Vida Keys\nDibberthaven, UT 00141-5002', '1-785-794-5437', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(41, 'Estelle', 'Boyer', 'bradford.mitchell@gerhold.com', '9319 Dach Union\nGoyetteside, MT 58915', '(601) 583-7644', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(42, 'Ola', 'West', 'lkuhn@gmail.com', '890 Braun Trafficway Suite 072\nThompsonhaven, DE 90864-1381', '989.926.7517', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(43, 'Lysanne', 'Bernier', 'gladys47@rolfson.com', '2722 Dennis Ranch Suite 466\nWest Nataliemouth, TN 69487', '1-443-739-2216', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(44, 'Alexys', 'Frami', 'anderson.orin@hotmail.com', '458 Vandervort Circles Suite 426\nBertramborough, AR 32835', '440.578.7314', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(45, 'Katharina', 'Hamill', 'ghickle@rath.com', '534 Willms Corner Suite 051\nDooleyburgh, WY 58522-9067', '+1-802-914-0040', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(46, 'Kathryn', 'Kutch', 'easter.rodriguez@yahoo.com', '46276 Carmen Track\nWest Kailey, MN 09328', '+1.678.816.4611', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(47, 'Caleigh', 'Grady', 'zjohns@hammes.net', '391 Austyn Knolls Suite 143\nNorth Ellie, NJ 90965-4920', '754.576.8483', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(48, 'Raphael', 'Quigley', 'sharon.murray@hagenes.com', '1873 Stan Vista\nLake Eladio, AK 18236-5863', '320-390-5082', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(49, 'Geovanni', 'Dickinson', 'daniela67@yahoo.com', '633 Bridget View\nValentinland, NC 30452-9219', '+1-458-567-6771', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(50, 'Sidney', 'Sawayn', 'gbergstrom@mcclure.org', '14036 Hahn Burg Apt. 107\nLake Domingo, KY 42867-7946', '339.758.2779', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(51, 'Francisca', 'Balistreri', 'johnson.feil@powlowski.com', '820 Stark Pike Apt. 467\nSouth Joetown, OK 54527-7255', '620.269.9118', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(52, 'Levi', 'Grady', 'borer.verda@yahoo.com', '772 Zelda Plains\nEphraimhaven, VT 30696-8503', '+18313718173', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(53, 'Jany', 'Maggio', 'kayli.lubowitz@nikolaus.net', '3424 Waino Park\nTiaraport, NH 22458-6410', '480.470.5819', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(54, 'Roel', 'Denesik', 'flatley.amanda@roob.com', '43232 Nolan Burg Apt. 379\nPort Eldon, AZ 56477-5562', '339.255.1484', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(55, 'Judy', 'Wiegand', 'cmante@yahoo.com', '20926 Lela Roads\nLake Fred, AR 65637', '+1 (469) 798-9523', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(56, 'Moses', 'Hermiston', 'yschmidt@yahoo.com', '20745 Beer Locks Suite 507\nBoehmbury, GA 75245-6465', '+1-915-598-9009', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(57, 'Fleta', 'Smith', 'zieme.bridgette@hotmail.com', '9066 Jeanie Oval Suite 584\nLake Elzastad, IA 88247-4561', '(820) 829-3720', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(58, 'Odie', 'Gulgowski', 'mante.catalina@casper.com', '1932 Deckow Plains\nMarquardtmouth, HI 47594-3136', '+1.229.952.7732', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(59, 'Jade', 'Sauer', 'rheller@yahoo.com', '4118 Donna Land\nMosesberg, DC 42872', '+1-779-604-2318', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(60, 'Amos', 'Bernier', 'lottie.langworth@hotmail.com', '9970 Friesen Fords\nWest Reaganville, UT 96578', '+1 (860) 282-2635', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(61, 'Marguerite', 'Champlin', 'vreichel@gmail.com', '734 Jordy Mountains Apt. 109\nVandervortside, HI 24621', '+17547817799', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(62, 'Chauncey', 'Corwin', 'pbrown@yahoo.com', '5521 Gottlieb Circles\nSouth Vaughn, DE 02042', '386.445.3591', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(63, 'Santa', 'Swift', 'grimes.darius@corkery.com', '9802 Lesly Key Suite 198\nLake Ethanshire, TN 78357', '1-669-701-8199', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(64, 'Idella', 'Botsford', 'sydnie36@gmail.com', '930 Bogisich Summit Apt. 854\nDevenbury, CA 65593-3427', '+1-539-799-0315', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(65, 'Dorothy', 'Stracke', 'krystal36@yahoo.com', '156 Ewell Pike\nNew Cecil, IL 43602-1141', '+13218125919', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(66, 'Erich', 'Bogisich', 'harmony.gleichner@olson.com', '946 Kyla River\nThielhaven, MA 40140', '208.509.2093', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(67, 'Jarod', 'Keeling', 'larkin.okey@hotmail.com', '5765 Joana Hills Apt. 835\nNew Arashire, NH 77421', '1-440-209-3948', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(68, 'Lucy', 'Steuber', 'jtorphy@hotmail.com', '31956 Stracke Cape Apt. 231\nSouth Caterina, AR 76170-6380', '+1.480.356.8839', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(69, 'Elijah', 'Stanton', 'vandervort.leonard@yahoo.com', '83213 Graham Mall Suite 536\nMarisaview, CT 40763-1816', '1-770-650-4121', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(70, 'Avery', 'Batz', 'kmante@pagac.com', '6218 Hills Springs Apt. 287\nRempelmouth, WV 11094', '347.243.7287', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(71, 'Marlene', 'Hammes', 'aweissnat@hotmail.com', '717 Shaun Wells Suite 407\nBaumbachton, HI 44693-7660', '630-828-6255', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(72, 'Paula', 'Bergstrom', 'gkuphal@gmail.com', '9923 Rau Court\nKodyhaven, DE 38734-9832', '+1-740-786-2859', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(73, 'Isabelle', 'Lockman', 'albert92@dare.org', '20982 Trevion Club\nHuelsmouth, KS 10271-5685', '231-693-0301', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
-	(85, 'Linda Schroeder', 'Rina', 'regumu@mailinator.com', 'Vel non ut expedita ', '+1 (408) 876-5159', '2023-12-24 07:56:15', '2023-12-24 07:56:15'),
-	(86, 'Robin Silva', 'Samson', 'tiluv@mailinator.com', 'Suscipit qui quam ex', '+1 (903) 632-1939', '2023-12-24 08:02:00', '2023-12-24 08:02:00'),
-	(87, 'Kalia Dunn', 'Darrel', 'xokadyhi@mailinator.com', 'Sed est inventore mo', '+1 (328) 514-6716', '2024-01-05 12:31:07', '2024-01-05 12:31:07'),
-	(88, 'Kalia Dunn', 'Darrel', NULL, NULL, NULL, '2024-01-11 11:41:00', '2024-01-11 11:41:00'),
-	(89, 'Ria Haley', 'Darrel', NULL, NULL, NULL, '2024-01-11 11:41:34', '2024-01-11 11:41:34'),
-	(90, 'Robin Silva', 'Samson', NULL, NULL, '19036321939', '2024-01-11 11:42:42', '2024-01-11 11:42:42'),
-	(91, 'Borielle', 'Schneider', NULL, NULL, '15187026755', '2024-01-11 11:44:32', '2024-01-11 11:44:32'),
-	(92, 'Barclay', 'Ingram', NULL, NULL, '1545785546', '2024-01-11 11:45:27', '2024-01-11 11:45:27'),
-	(93, 'Emmanuel', 'Vega', NULL, NULL, '9034598712', '2024-01-11 11:46:47', '2024-01-11 11:46:47'),
-	(133, 'Brent Burns', 'Calderon', NULL, 'Magna pariatur Sint', '26', '2024-03-22 02:17:03', '2024-03-22 02:17:03');
-
--- Дамп структуры для таблица banya.departments
-DROP TABLE IF EXISTS `departments`;
-CREATE TABLE IF NOT EXISTS `departments` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` decimal(19,2) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AVG_ROW_LENGTH=4096 ROW_FORMAT=DYNAMIC;
-
--- Дамп данных таблицы banya.departments: ~4 rows (приблизительно)
-DELETE FROM `departments`;
-INSERT INTO `departments` (`id`, `name`, `price`, `created_at`, `updated_at`) VALUES
-	(1, 'Obshiy', 100.00, NULL, '2024-02-04 08:28:31'),
-	(2, 'Sauna ', 125.00, NULL, '2024-02-04 08:34:24'),
-	(3, 'Vip Sauna', 150.00, NULL, '2024-02-04 08:28:53'),
-	(4, 'Basseynn', 70.00, NULL, '2024-02-10 06:44:26'),
-	(6, 'Finskaya Sauna', 125.00, '2024-02-29 06:20:39', '2024-02-29 06:20:39');
 
 -- Дамп структуры для таблица banya.discounts
 DROP TABLE IF EXISTS `discounts`;
@@ -914,6 +765,158 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 
 -- Дамп данных таблицы banya.user_roles: ~0 rows (приблизительно)
 DELETE FROM `user_roles`;
+
+-- Дамп структуры для таблица banya.addresses
+DROP TABLE IF EXISTS `addresses`;
+CREATE TABLE IF NOT EXISTS `addresses` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `addresses_user_id_foreign` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AVG_ROW_LENGTH=1638 ROW_FORMAT=DYNAMIC;
+
+-- Дамп данных таблицы banya.addresses: ~10 rows (приблизительно)
+DELETE FROM `addresses`;
+INSERT INTO `addresses` (`id`, `user_id`, `address`, `created_at`, `updated_at`) VALUES
+	(11, 3, '237 Lee Drive\nMcKenzieport, KY 46393', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(12, 3, '812 Weimann Track\nMrazmouth, RI 24069', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(13, 3, '703 Cartwright Station\nNorth Emmymouth, NM 86767', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(14, 1, '5026 Isabelle Island\nKochtown, MA 59273-6265', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(15, 2, '447 Ford Streets\nSouth Levibury, FL 48109-3062', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(16, 1, '17453 Shields Falls\nZoeborough, OK 42642', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(17, 1, '6039 Schmidt Forest\nNew Katelynnton, SD 17245-6572', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(18, 3, '30713 Lennie Fort Suite 518\nKuvalismouth, IL 01614', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(19, 2, '3180 Houston Manor Apt. 147\nFeilstad, IA 80115', '2023-11-16 01:31:00', '2023-11-16 01:31:00'),
+	(20, 1, '80192 Leanne Track\nPamelaside, IN 71926', '2023-11-16 01:31:00', '2023-11-16 01:31:00');
+
+-- Дамп структуры для процедура banya.ClearOrderTime
+DROP PROCEDURE IF EXISTS `ClearOrderTime`;
+DELIMITER //
+CREATE PROCEDURE `ClearOrderTime`()
+BEGIN
+  UPDATE time_tb tt
+  SET tt.busy = FALSE,
+      tt.order_time = '',
+      tt.order_id = 0;
+END//
+DELIMITER ;
+
+-- Дамп структуры для таблица banya.clients
+DROP TABLE IF EXISTS `clients`;
+CREATE TABLE IF NOT EXISTS `clients` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AVG_ROW_LENGTH=207 ROW_FORMAT=DYNAMIC;
+
+-- Дамп данных таблицы banya.clients: ~74 rows (приблизительно)
+DELETE FROM `clients`;
+INSERT INTO `clients` (`id`, `first_name`, `last_name`, `email`, `address`, `phone`, `created_at`, `updated_at`) VALUES
+	(2, 'Emilio', 'Harvey', 'dach.vidal@donnelly.com', '128 Ritchie Hill Apt. 738\nSanfordfurt, NM 22382-8341', '+1-539-226-0369', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(3, 'Beverli', 'Hills', 'lswaniawski@yahoo.com', '40935 Boyer Ports\nNorth Gabe, LA 03623-0614', '(248) 344-3127', '2023-11-16 01:44:06', '2023-11-18 14:45:20'),
+	(7, 'Kaylee', 'DuBuque', 'joana.rohan@hotmail.com', '867 Kuphal Light\nBradtkeview, NH 76803-1696', '1-936-609-4746', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(8, 'Sonia', 'O\'Kon', 'natasha.thiel@yahoo.com', '15886 Louie Turnpike\nPort Christianbury, ND 72058-5537', '+1 (352) 909-4336', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(9, 'Michelle', 'Cummings', 'frogahn@yahoo.com', '70220 Grady Cliff\nWest Mabel, CT 76488', '+1 (475) 985-6072', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(11, 'Jana', 'Casper', 'amir37@sawayn.org', '223 Natalia Port Suite 188\nPort Bell, AZ 44174', '351.842.5090', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(13, 'Lurline', 'Schowalter', 'gretchen.steuber@gmail.com', '552 Schinner Route Suite 962\nPort Wilfredo, DE 22762', '669-487-0242', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(14, 'Desiree', 'Hagenes', 'elaina47@yahoo.com', '273 Ivory Centers Suite 772\nLebsackhaven, NH 62105', '765.357.2658', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(15, 'Horace', 'Witting', 'jesse08@wolf.com', '440 Rodrick Plaza Apt. 895\nLeonoraton, AZ 81410', '+12014161320', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(16, 'Barney', 'Veum', 'manuel75@gmail.com', '780 Anabel Park Suite 631\nReesemouth, OR 93308-8954', '+1.979.413.4197', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(17, 'Ted', 'Johnston', 'marvin.schmitt@hotmail.com', '241 Dayana Canyon\nShieldsfurt, TX 73428-5346', '+1.425.389.4906', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(18, 'Briana', 'Bartoletti', 'stoltenberg.camille@hotmail.com', '7382 Welch Hollow Apt. 450\nJohnsmouth, OR 89727-3225', '+13147441284', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(19, 'Jairo', 'Lebsack', 'ramon03@gmail.com', '3083 Raynor Park Apt. 515\nSouth Isaias, SD 03125', '1-630-908-4787', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(20, 'Marley', 'Spinka', 'block.hector@yahoo.com', '5133 Brown Ramp\nSouth Delbertside, KS 95872', '937-325-6331', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(22, 'Lorenz', 'Smith', 'roy.rempel@lockman.com', '16825 Bednar Valley\nEast Kassandra, KS 29245-1943', '774.762.4182', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(24, 'Alda', 'Veum', 'haylie67@satterfield.org', '97562 Considine Expressway Suite 136\nOkunevaview, GA 41197', '+19473198563', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(25, 'Mossie', 'Rogahn', 'baron.douglas@hermiston.com', '63060 Blick Center\nNienowfurt, AR 16188-1086', '573.542.4374', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(26, 'Leonel', 'Funk', 'ludwig.okeefe@gmail.com', '316 Sid Lake\nFadelfort, MI 59673', '361-209-9878', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(27, 'Dariana', 'Wintheiser', 'hosinski@boehm.com', '5149 Ayana Island\nFeiltown, WI 68041-3357', '629-207-8356', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(28, 'Raymond', 'Olson', 'champlin.oren@yahoo.com', '273 Satterfield Path\nFayview, AK 33856-1851', '+1-234-320-7467', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(29, 'Aliya', 'Ferry', 'prohaska.rowland@maggio.org', '58393 Tad Causeway\nWindlerton, KS 73845-4619', '386-898-2689', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(30, 'Cyrus', 'Beer', 'doyle77@cronin.com', '389 Hessel Forest\nWeldonberg, GA 49188-3106', '1-218-499-4252', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(31, 'Ed', 'Daniel', 'jacobi.andrew@yahoo.com', '37796 Hilpert Ramp Apt. 264\nAxelfort, DE 64229-6404', '(309) 615-7694', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(32, 'Rosanna', 'Mills', 'ajohns@moen.org', '385 Buckridge Vista Suite 216\nHaneborough, ME 57416-1173', '903.618.6675', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(33, 'Margaret', 'Welch', 'reilly.jackeline@yahoo.com', '51478 Vince Cove Suite 266\nWest Vito, KS 52621-7933', '1-540-776-2679', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(34, 'Denis', 'Durgan', 'ajenkins@okuneva.com', '6553 Nolan Stravenue\nWaelchiberg, MN 76115-2959', '+1.480.263.4019', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(35, 'Liam', 'Nikolaus', 'flarkin@yahoo.com', '59487 Lia Forest\nEmmettport, NM 57501', '816.562.2657', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(36, 'Adele', 'Kassulke', 'ogottlieb@tremblay.com', '7804 Wuckert Dale Apt. 316\nIsobelhaven, TX 30215-5412', '+1-361-822-6123', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(37, 'Gennaro', 'Wehner', 'xcummings@gmail.com', '7476 Terrence Underpass Apt. 468\nBudfort, OR 23513', '920.767.4706', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(38, 'Wendy', 'Kub', 'kayleigh.haag@marks.com', '1308 Marvin Hill\nLake Estellefort, WV 97802-2281', '(951) 505-1645', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(39, 'Kaelyn', 'Turcotte', 'greichert@gmail.com', '739 Jerde Lake Suite 972\nJamesonview, TN 75870', '(305) 568-0210', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(40, 'Pierre', 'Ruecker', 'madelyn29@hotmail.com', '1852 Vida Keys\nDibberthaven, UT 00141-5002', '1-785-794-5437', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(41, 'Estelle', 'Boyer', 'bradford.mitchell@gerhold.com', '9319 Dach Union\nGoyetteside, MT 58915', '(601) 583-7644', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(42, 'Ola', 'West', 'lkuhn@gmail.com', '890 Braun Trafficway Suite 072\nThompsonhaven, DE 90864-1381', '989.926.7517', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(43, 'Lysanne', 'Bernier', 'gladys47@rolfson.com', '2722 Dennis Ranch Suite 466\nWest Nataliemouth, TN 69487', '1-443-739-2216', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(44, 'Alexys', 'Frami', 'anderson.orin@hotmail.com', '458 Vandervort Circles Suite 426\nBertramborough, AR 32835', '440.578.7314', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(45, 'Katharina', 'Hamill', 'ghickle@rath.com', '534 Willms Corner Suite 051\nDooleyburgh, WY 58522-9067', '+1-802-914-0040', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(46, 'Kathryn', 'Kutch', 'easter.rodriguez@yahoo.com', '46276 Carmen Track\nWest Kailey, MN 09328', '+1.678.816.4611', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(47, 'Caleigh', 'Grady', 'zjohns@hammes.net', '391 Austyn Knolls Suite 143\nNorth Ellie, NJ 90965-4920', '754.576.8483', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(48, 'Raphael', 'Quigley', 'sharon.murray@hagenes.com', '1873 Stan Vista\nLake Eladio, AK 18236-5863', '320-390-5082', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(49, 'Geovanni', 'Dickinson', 'daniela67@yahoo.com', '633 Bridget View\nValentinland, NC 30452-9219', '+1-458-567-6771', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(50, 'Sidney', 'Sawayn', 'gbergstrom@mcclure.org', '14036 Hahn Burg Apt. 107\nLake Domingo, KY 42867-7946', '339.758.2779', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(51, 'Francisca', 'Balistreri', 'johnson.feil@powlowski.com', '820 Stark Pike Apt. 467\nSouth Joetown, OK 54527-7255', '620.269.9118', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(52, 'Levi', 'Grady', 'borer.verda@yahoo.com', '772 Zelda Plains\nEphraimhaven, VT 30696-8503', '+18313718173', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(53, 'Jany', 'Maggio', 'kayli.lubowitz@nikolaus.net', '3424 Waino Park\nTiaraport, NH 22458-6410', '480.470.5819', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(54, 'Roel', 'Denesik', 'flatley.amanda@roob.com', '43232 Nolan Burg Apt. 379\nPort Eldon, AZ 56477-5562', '339.255.1484', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(55, 'Judy', 'Wiegand', 'cmante@yahoo.com', '20926 Lela Roads\nLake Fred, AR 65637', '+1 (469) 798-9523', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(56, 'Moses', 'Hermiston', 'yschmidt@yahoo.com', '20745 Beer Locks Suite 507\nBoehmbury, GA 75245-6465', '+1-915-598-9009', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(57, 'Fleta', 'Smith', 'zieme.bridgette@hotmail.com', '9066 Jeanie Oval Suite 584\nLake Elzastad, IA 88247-4561', '(820) 829-3720', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(58, 'Odie', 'Gulgowski', 'mante.catalina@casper.com', '1932 Deckow Plains\nMarquardtmouth, HI 47594-3136', '+1.229.952.7732', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(59, 'Jade', 'Sauer', 'rheller@yahoo.com', '4118 Donna Land\nMosesberg, DC 42872', '+1-779-604-2318', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(60, 'Amos', 'Bernier', 'lottie.langworth@hotmail.com', '9970 Friesen Fords\nWest Reaganville, UT 96578', '+1 (860) 282-2635', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(61, 'Marguerite', 'Champlin', 'vreichel@gmail.com', '734 Jordy Mountains Apt. 109\nVandervortside, HI 24621', '+17547817799', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(62, 'Chauncey', 'Corwin', 'pbrown@yahoo.com', '5521 Gottlieb Circles\nSouth Vaughn, DE 02042', '386.445.3591', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(63, 'Santa', 'Swift', 'grimes.darius@corkery.com', '9802 Lesly Key Suite 198\nLake Ethanshire, TN 78357', '1-669-701-8199', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(64, 'Idella', 'Botsford', 'sydnie36@gmail.com', '930 Bogisich Summit Apt. 854\nDevenbury, CA 65593-3427', '+1-539-799-0315', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(65, 'Dorothy', 'Stracke', 'krystal36@yahoo.com', '156 Ewell Pike\nNew Cecil, IL 43602-1141', '+13218125919', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(66, 'Erich', 'Bogisich', 'harmony.gleichner@olson.com', '946 Kyla River\nThielhaven, MA 40140', '208.509.2093', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(67, 'Jarod', 'Keeling', 'larkin.okey@hotmail.com', '5765 Joana Hills Apt. 835\nNew Arashire, NH 77421', '1-440-209-3948', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(68, 'Lucy', 'Steuber', 'jtorphy@hotmail.com', '31956 Stracke Cape Apt. 231\nSouth Caterina, AR 76170-6380', '+1.480.356.8839', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(69, 'Elijah', 'Stanton', 'vandervort.leonard@yahoo.com', '83213 Graham Mall Suite 536\nMarisaview, CT 40763-1816', '1-770-650-4121', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(70, 'Avery', 'Batz', 'kmante@pagac.com', '6218 Hills Springs Apt. 287\nRempelmouth, WV 11094', '347.243.7287', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(71, 'Marlene', 'Hammes', 'aweissnat@hotmail.com', '717 Shaun Wells Suite 407\nBaumbachton, HI 44693-7660', '630-828-6255', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(72, 'Paula', 'Bergstrom', 'gkuphal@gmail.com', '9923 Rau Court\nKodyhaven, DE 38734-9832', '+1-740-786-2859', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(73, 'Isabelle', 'Lockman', 'albert92@dare.org', '20982 Trevion Club\nHuelsmouth, KS 10271-5685', '231-693-0301', '2023-11-16 01:44:06', '2023-11-16 01:44:06'),
+	(85, 'Linda Schroeder', 'Rina', 'regumu@mailinator.com', 'Vel non ut expedita ', '+1 (408) 876-5159', '2023-12-24 07:56:15', '2023-12-24 07:56:15'),
+	(86, 'Robin Silva', 'Samson', 'tiluv@mailinator.com', 'Suscipit qui quam ex', '+1 (903) 632-1939', '2023-12-24 08:02:00', '2023-12-24 08:02:00'),
+	(87, 'Kalia Dunn', 'Darrel', 'xokadyhi@mailinator.com', 'Sed est inventore mo', '+1 (328) 514-6716', '2024-01-05 12:31:07', '2024-01-05 12:31:07'),
+	(88, 'Kalia Dunn', 'Darrel', NULL, NULL, NULL, '2024-01-11 11:41:00', '2024-01-11 11:41:00'),
+	(89, 'Ria Haley', 'Darrel', NULL, NULL, NULL, '2024-01-11 11:41:34', '2024-01-11 11:41:34'),
+	(90, 'Robin Silva', 'Samson', NULL, NULL, '19036321939', '2024-01-11 11:42:42', '2024-01-11 11:42:42'),
+	(91, 'Borielle', 'Schneider', NULL, NULL, '15187026755', '2024-01-11 11:44:32', '2024-01-11 11:44:32'),
+	(92, 'Barclay', 'Ingram', NULL, NULL, '1545785546', '2024-01-11 11:45:27', '2024-01-11 11:45:27'),
+	(93, 'Emmanuel', 'Vega', NULL, NULL, '9034598712', '2024-01-11 11:46:47', '2024-01-11 11:46:47'),
+	(133, 'Brent Burns', 'Calderon', NULL, 'Magna pariatur Sint', '26', '2024-03-22 02:17:03', '2024-03-22 02:17:03');
+
+-- Дамп структуры для таблица banya.departments
+DROP TABLE IF EXISTS `departments`;
+CREATE TABLE IF NOT EXISTS `departments` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` decimal(19,2) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AVG_ROW_LENGTH=4096 ROW_FORMAT=DYNAMIC;
+
+-- Дамп данных таблицы banya.departments: ~4 rows (приблизительно)
+DELETE FROM `departments`;
+INSERT INTO `departments` (`id`, `name`, `price`, `created_at`, `updated_at`) VALUES
+	(1, 'Obshiy', 100.00, NULL, '2024-02-04 08:28:31'),
+	(2, 'Sauna ', 125.00, NULL, '2024-02-04 08:34:24'),
+	(3, 'Vip Sauna', 150.00, NULL, '2024-02-04 08:28:53'),
+	(4, 'Basseynn', 70.00, NULL, '2024-02-10 06:44:26'),
+	(6, 'Finskaya Sauna', 125.00, '2024-02-29 06:20:39', '2024-02-29 06:20:39');
+
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

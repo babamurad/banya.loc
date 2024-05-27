@@ -203,7 +203,7 @@
                with font-awesome or any other icon font library -->
 
             <li class="nav-item">
-                <a href="{{ route('admin')}}" class="nav-link {{ request()->is('admin') ? 'active' : '' }}" wire:navigate>
+                <a href="{{ route('admin')}}" class="nav-link {{ request()->is('admin') ? 'active' : '' }}">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     {{__('Dashboard')}}
@@ -212,7 +212,7 @@
               </li>
             <li class="nav-header">EXAMPLES</li>
           <li class="nav-item">
-            <a href="{{route('users')}}" class="nav-link {{ request()->is('users') ? 'active' : '' }}" wire:navigate>
+            <a href="{{route('users')}}" class="nav-link {{ request()->is('users') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user"></i>
               <p>
                 {{__('Users')}}
@@ -221,7 +221,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('clients')}}" class="nav-link {{ request()->is('clients') ? 'active' : '' }}" wire:navigate>
+            <a href="{{route('clients')}}" class="nav-link {{ request()->is('clients') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-tag"></i>
               <p>
                 {{__('Clients')}}
@@ -230,7 +230,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('department')}}" class="nav-link {{ request()->is('department') ? 'active' : '' }}" wire:navigate>
+            <a href="{{route('department')}}" class="nav-link {{ request()->is('department') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th-list"></i>
               <p>
                 {{__('Departments')}}
@@ -238,7 +238,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('jobtitle')}}" class="nav-link {{ request()->is('jobtitle') ? 'active' : '' }}" wire:navigate>
+            <a href="{{route('jobtitle')}}" class="nav-link {{ request()->is('jobtitle') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tags"></i>
               <p>
                 {{__('Service')}}
@@ -247,7 +247,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{route('day-events', ['data' => null, 'dep_id' => null])}}" class="nav-link {{ request()->is('day-events') ? 'active' : '' }}" wire:navigate>
+            <a href="{{route('day-events', ['data' => null, 'dep_id' => null])}}" class="nav-link {{ request()->is('day-events') ? 'active' : '' }}">
               <i class="nav-icon fas fa-calendar-week"></i>
               <p>
                 Заказы
@@ -256,7 +256,7 @@
           </li>
             <li class="nav-item">
                 <a href="{{route('obshaya')}}"
-                   class="nav-link {{ request()->is('obshaya') ? 'active' : '' }}" wire:navigate>
+                   class="nav-link {{ request()->is('obshaya') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-calendar-alt"></i>
                     <p>
                         Общая баня
@@ -265,7 +265,7 @@
             </li>
 
           <li class="nav-item">
-            <a href="{{route('shift')}}" class="nav-link {{ request()->is('shift') ? 'active' : '' }}" wire:navigate>
+            <a href="{{route('shift')}}" class="nav-link {{ request()->is('shift') ? 'active' : '' }}">
               <i class="nav-icon fas fa-business-time"></i>
               <p>
                 Смена
