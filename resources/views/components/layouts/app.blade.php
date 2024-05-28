@@ -221,6 +221,15 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{route('employee')}}" class="nav-link {{ request()->is('employee') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-briefcase"></i>
+              <p>
+                Работники
+                <span class="badge badge-info right"></span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('clients')}}" class="nav-link {{ request()->is('clients') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-tag"></i>
               <p>

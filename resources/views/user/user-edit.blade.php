@@ -13,23 +13,23 @@
                           <div class="col-md-6">
                               <div class="form-group">
                                   <label for="first_name">First Name</label>
-                                  <input name="first_name" type="text" class="form-control" placeholder="First Name" wire:model="firstname">
+                                  <input name="first_name" type="text" class="form-control" placeholder="First Name" wire:model="first_name">
+                                  @error('name')
+                                  <span class="error invalid-feedback">{{ $message }}</span>
+                                  @enderror
                               </div>
                           </div>
                           <div class="col-md-6">
                               <div class="form-group">
                                   <label for="last_name">Last Name</label>
-                                  <input name="last_name" type="text" class="form-control" placeholder="Last Name" wire:model="lastname">
+                                  <input name="last_name" type="text" class="form-control" placeholder="Last Name" wire:model="last_name">
+                                  @error('name')
+                                  <span class="error invalid-feedback">{{ $message }}</span>
+                                  @enderror
                               </div>
                           </div>
                       </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                            <label for="name">Name</label>
-                            <input name="name" type="text" class="form-control" placeholder="Name" wire:model="name">
-                            </div>
-                        </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>{{ __('Тип') }}</label>
@@ -42,8 +42,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label></label>
-                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success mt-5">
                                     <input type="checkbox" class="custom-control-input" id="customSwitch3" wire:model.live="status" style="cursor: pointer;">
                                     <label class="custom-control-label" for="customSwitch3" style="cursor: pointer;">
                                         Активирован
@@ -52,7 +51,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">

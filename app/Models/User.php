@@ -18,7 +18,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'first_name',
         'last_name',
         'email',
@@ -47,8 +46,8 @@ class User extends Authenticatable
 
     public function scopeSearch($query, $search)
     {
-        return $query->where('name','LIKE','%'. $search .'%')
-        ->orWhere('email','LIKE','%'. $search .'%')
+        return $query
+        ->Where('email','LIKE','%'. $search .'%')
         ->orWhere('first_name','LIKE','%'. $search .'%')
         ->orWhere('last_name','LIKE','%'. $search .'%');
     }

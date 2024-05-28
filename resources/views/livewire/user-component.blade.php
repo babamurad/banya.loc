@@ -3,6 +3,9 @@
         window.addEventListener('closeEditUserModal', event=> {
             $('#closeEditUserModal').modal('hide');
         })
+        window.addEventListener('closeCreateUserModal', event=> {
+            $('#CreateUserDialog').modal('hide');
+        })
     </script>
     <!--Modal -->
     @include('user.user-create')
@@ -33,24 +36,23 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-primary d-none"
-                    data-toggle="modal" onClick="javascript:viewFile()" data-target="#CreateUserDialog">
+                    <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#CreateUserDialog">
                     <i class="fas fa-plus mr-1"></i> {{__('Add User')}}
                     </button>
                 </div>
                 <div class="col-md-6">
 
                 </div>
-                <div class="col-md-3">
-                    <div class="input-group input-group-lg">
-                        <input type="search" class="form-control form-control-lg" placeholder="Search..." wire:model.live.debounce.300ms='search'>
-                        <div class="input-group-append ml-auto">
-                            <button type="submit" class="btn btn-lg btn-default">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="col-md-3">--}}
+{{--                    <div class="input-group input-group-lg">--}}
+{{--                        <input type="search" class="form-control form-control-lg" placeholder="Search..." wire:model.live.debounce.300ms='search'>--}}
+{{--                        <div class="input-group-append ml-auto">--}}
+{{--                            <button type="submit" class="btn btn-lg btn-default">--}}
+{{--                                <i class="fa fa-search"></i>--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="col-md-1 ml-auto">
                     <div class="form-group" data-select2-id="29">
                         {{-- <label>Per Page</label> --}}

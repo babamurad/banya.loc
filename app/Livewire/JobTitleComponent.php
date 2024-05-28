@@ -19,7 +19,7 @@ class JobTitleComponent extends Component
     public $sortDirection = 'DESC';
     public $sortIcon = '<i class="fas fa-sort ml-1"></i>';
     public $name, $qty, $price, $desc, $idc, $sum;
-    public $first_name, $last_name, $phone, $address;
+    public $first_name, $last_name, $phone, $address, $department_id, $jobtitle_id, $role_id;
     public $employe_name, $employe_id;
 
 
@@ -42,9 +42,9 @@ class JobTitleComponent extends Component
         $employe->last_name = $this->last_name;
         $employe->phone = $this->phone;
         $employe->address = $this->address;
-        $employe->department_id = 1;
-        $employe->jobtitle_id = 1;
-        $employe->role_id = 1;
+        $employe->department_id = $this->department_id;
+        $employe->jobtitle_id = $this->jobtitle_id;
+        $employe->role_id = $this->role_id;
         $employe->save();
         $this->resetEmployeFields();
         $this->dispatch('closeModal');

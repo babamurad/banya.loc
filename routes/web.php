@@ -4,6 +4,7 @@ use App\Livewire\Calendar;
 use App\Livewire\ClientComponent;
 use App\Livewire\DayEventsComponent;
 use App\Livewire\DepartmentComponent;
+use App\Livewire\EmployeeComponent;
 use App\Livewire\EventsComponent;
 use App\Livewire\HomeComponent;
 use App\Livewire\JobTitleComponent;
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'authadmin'])->group(function () {
 
     Route::get('day-events/{data?}/{dep_id?}', DayEventsComponent::class)->name('day-events');
     Route::get('obshaya', ObshayaComponent::class)->name('obshaya');
+    Route::get('employee', EmployeeComponent::class)->name('employee');
 });
 
 
