@@ -4,8 +4,8 @@
             window.addEventListener('closeEditUserModal', event=> {
                 $('#closeEditUserModal').modal('hide');
             })
-            window.addEventListener('closeCreateUserModal', event=> {
-                $('#CreateUserDialog').modal('hide');
+            window.addEventListener('closeCreateModal', event=> {
+                $('#CreateEmployeeDialog').modal('hide');
             })
         </script>
         <!--Modal -->

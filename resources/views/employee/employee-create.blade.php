@@ -16,6 +16,9 @@
                                 <input name="name" type="text"
                                        class="form-control @error('first_name') is-invalid @enderror"
                                        placeholder=" {{__('First Name')}} " wire:model="first_name">
+                                @error('first_name')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -23,6 +26,9 @@
                                 <label for="last_name"> {{__('Last Name')}} </label>
                                 <input name="last_name" type="text" class="form-control"
                                        placeholder=" {{__('Last Name')}} " wire:model="last_name">
+                                @error('last_name')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -30,6 +36,9 @@
                                 <label class="required-field" for="phone"> {{__('Phone')}} </label>
                                 <input type="number" class="form-control @error('phone') is-invalid @enderror"
                                        id="phone" placeholder=" {{__('Phone')}} " wire:model="phone">
+                                @error('phone')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
