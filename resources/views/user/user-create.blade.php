@@ -14,7 +14,7 @@
                             <div class="form-group">
                                 <label for="first_name">First Name</label>
                                 <input name="first_name" type="text" class="form-control" placeholder="First Name" wire:model="first_name">
-                                @error('name')
+                                @error('first_name')
                                 <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label for="last_name">Last Name</label>
                                 <input name="last_name" type="text" class="form-control" placeholder="Last Name" wire:model="last_name">
-                                @error('name')
+                                @error('last_name')
                                 <span class="error invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -56,12 +56,18 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
                                 <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" wire:model="email">
+                                @error('email')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" wire:model="password">
+                                @error('password')
+                                <span class="error invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
