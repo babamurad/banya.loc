@@ -29,11 +29,7 @@ class EmployeeComponent extends Component
     {
         $this->validate();
 
-        $employee = new Employe();
-        $employee->first_name = $this->first_name;
-        $employee->last_name = $this->last_name;
-        $employee->phone = $this->phone;
-        $employee->address = $this->address;
+        $employee = new Employe($this->all());
         $employee->save();
         $this->reset('first_name', 'last_name', 'phone', 'address');
         $this->dispatch('closeCreateModal');
