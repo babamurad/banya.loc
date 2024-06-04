@@ -42,8 +42,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="price"> {{__('Время (минут)')}} </label>
-                                <input name="price" type="number" step="15" class="form-control" placeholder=" {{__('Время')}} " wire:model.live="time">
+                                <label for="time"> {{__('Время (минут)')}} </label>
+                                <input name="time" type="number" step="15" class="form-control" placeholder=" {{__('Время')}} " wire:model.live="time">
                             </div>
                         </div>
                         <div class="col-md-3">

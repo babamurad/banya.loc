@@ -76,11 +76,6 @@
                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12"><table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
                                 <thead>
                                 <tr>
-                                    <th class="sorting sorting_asc" wire:click="setSortBy('name')">
-                                        <button class="btn btn-block btn-default">
-                                            <strong> {{__('Name')}} </strong>
-                                        </button>
-                                    </th>
                                     <th class="sorting" wire:click="setSortBy('first_name')">
                                         <button class="btn btn-block btn-default">
                                             <strong> {{__('First Name')}} </strong>
@@ -93,12 +88,12 @@
                                     </th>
                                     <th class="sorting">
                                         <button class="btn btn-block btn-default">
-                                            {{__('Type')}}
+                                            Телефон
                                         </button>
                                     </th>
                                     <th class="sorting">
                                         <button class="btn btn-block btn-default">
-                                            {{__('Status')}}
+                                            Адрес
                                         </button>
                                     </th>
                                     <th class="sorting">
@@ -111,11 +106,10 @@
                                 <tbody>
                                 @forelse ($employees as $employee)
                                     <tr wire:key="{{$employee->id}}" class="odd">
-                                        <td class="dtr-control sorting_1" tabindex="0">{{$employee->name}}</td>
-                                        <td>{{$employee->first_name}}</td>
+                                        <td class="dtr-control sorting_1" tabindex="0">{{$employee->first_name}}</td>
                                         <td>{{$employee->last_name}}</td>
-                                        <td>{{$employee->utype}}</td>
-                                        <td class="{{$employee->status=='Не активирован'? 'text-danger':'text-success'}}">{{$employee->status}}</td>
+                                        <td>{{$employee->phone}}</td>
+                                        <td>{{$employee->address}}</td>
                                         <td>
                                             <div>
                                                 <button type="button" class="btn btn-secondary btn-sm"

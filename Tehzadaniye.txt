@@ -39,3 +39,5 @@ Kassirlaryn 1 gundeki obshiy ishinin (zakazlarynyn) jemi otdellar boyunca gorunm
 Завтра: в компоненте order-view отключить все инпуты (сделать disable), поставить кнопку идущюю к редактированию заказа order-edit - сделано
 
 при редактировании заказа невозможно часы заказа передвинуть на позже, потому что они в состоянии disabled - problem!
+
+Работники редактировать 

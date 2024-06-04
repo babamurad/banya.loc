@@ -27,7 +27,7 @@ class EmployeeComponent extends Component
 
     public function SaveEmploye()
     {
-        $this->validate();
+        $this->validate();        
 
         $employee = new Employe($this->all());
         $employee->save();

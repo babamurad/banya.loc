@@ -97,13 +97,13 @@
                     </th>
                     <th class="sorting" wire:click="setSortBy('phone')">
                         <button class="btn btn-block btn-default">
-                            <strong> {{__('Phone')}} </strong>
+                            <strong> Телефон </strong>
                             @if($sortBy=='phone') {!!$sortIcon!!} @else <i class="fas fa-sort ml-1"></i> @endif
                             </button>
                     </th>
                     <th class="sorting" wire:click="setSortBy('email')">
                         <button class="btn btn-block btn-default">
-                            <strong> {{__('Email')}} </strong>
+                            <strong> Адрес </strong>
                             @if($sortBy=='email') {!!$sortIcon!!} @else <i class="fas fa-sort ml-1"></i> @endif
                             </button>
                     </th>
@@ -116,7 +116,7 @@
                         <td>{{$client->first_name}}</td>
                         <td>{{$client->last_name}}</td>
                         <td>{{$client->phone}}</td>
-                        <td>{{$client->email}}</td>
+                        <td>{{$client->address}}</td>
                         <td>
                             <div>
                                 <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"

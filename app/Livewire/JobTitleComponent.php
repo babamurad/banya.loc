@@ -19,7 +19,7 @@ class JobTitleComponent extends Component
     public $sortDirection = 'DESC';
     public $sortIcon = '<i class="fas fa-sort ml-1"></i>';
     public $name, $qty, $price, $desc, $idc, $sum;
-    public $first_name, $last_name, $phone, $address, $department_id, $jobtitle_id, $role_id;
+    public $first_name, $last_name, $phone, $address, $department_id, $jobtitle_id, $role_id, $time;
     public $employe_name, $employe_id;
 
 
@@ -63,6 +63,7 @@ class JobTitleComponent extends Component
         $jobtitle->desc = $this->desc;
         $jobtitle->price = $this->price;
         $jobtitle->qty = $this->qty;
+        $jobtitle->time = $this->time;
         $jobtitle->employe_id = $this->employe_id;
         $jobtitle->save();
         $this->ResetInputFields();
@@ -77,6 +78,7 @@ class JobTitleComponent extends Component
         $this->name = $jobtitle->name;
         $this->qty = $jobtitle->qty;
         $this->price = $jobtitle->price;
+        $this->time = $jobtitle->time;
         $this->desc = $jobtitle->desc;
     }
 
@@ -92,6 +94,7 @@ class JobTitleComponent extends Component
         $jobtitle->name = $this->name;
         $jobtitle->qty = $this->qty;
         $jobtitle->price = $this->price;
+        $jobtitle->time = $this->time;
         $jobtitle->desc = $this->desc ? $this->desc : '';
         $jobtitle->save();
         $this->ResetInputFields();
