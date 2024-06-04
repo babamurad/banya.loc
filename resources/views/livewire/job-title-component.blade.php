@@ -33,7 +33,8 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-2">
+                    <label for=""></label>
                     <button class="btn btn-block btn-success"
                     data-toggle="modal" data-target="#CreateJobTitleDialog">
                     <i class="fas fa-plus mr-1"></i> {{__('Add Job Titles')}}
@@ -55,28 +56,28 @@
                     </div>
 
                 </div>
-                <div class="col-md-2">
-                    {{-- @if ($search)
+                {{-- <div class="col-md-2">
+                    @if ($search)
                     <div class="alert alert-info alert-dismissible" style="height: 3rem;">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <h5><i class="fas fa-search"></i> {{$search}}</h5>
                     </div>
 
-                    @endif --}}
-                </div>
-                <div class="col-md-3">
-                    {{-- <div class="input-group input-group-lg">
+                    @endif
+                </div> --}}
+                {{-- <div class="col-md-3">
+                    <div class="input-group input-group-lg">
                         <input type="search" class="form-control form-control-lg" placeholder=" {{__('Search...')}} "  wire:model.live.debounce.300ms='search'>
                         <div class="input-group-append ml-auto">
                             <button type="submit" class="btn btn-lg btn-default">
                                 <i class="fa fa-search"></i>
                             </button>
                         </div>
-                    </div> --}}
-                </div>
-                <div class="col-md-1 ml-auto">
+                    </div>
+                </div> --}}
+                <div class="col-md-2 ml-auto">
                     <div class="form-group" data-select2-id="29">
-                        {{-- <label>Per Page</label> --}}
+                        <label>Per Page</label>
                         <select wire:model.live='perPage'
                         class="form-control select2 select2-hidden-accessible" style="width: 70%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
                         <option selected="selected" data-select2-id="5" value="5">5</option>

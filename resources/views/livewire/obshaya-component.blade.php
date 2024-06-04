@@ -118,8 +118,8 @@
                            </div>
                            <div class="col md-4">
                                <div class="form-group">
-                                   <label for="jsum">Сумма</label>
-                                   <input type="number" class="form-control" placeholder="Сумма" wire:model.live="sum" readonly>
+                                   <label for="sum">Сумма</label>
+                                   <input type="number" name="sum" class="form-control" placeholder="Сумма" wire:model.live="sum" readonly>
                                </div>
                            </div>
                        </div>
@@ -140,18 +140,18 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Взрослые</label>
-                                    <input type="number" class="form-control" wire:model.live="qtyAdults">
+                                    <input type="number" class="form-control" wire:model.live="qtyAdults" min="0">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Дети до 12 лет</label>
-                                    <input type="number" class="form-control" wire:model.live="qtyChildren">
+                                    <input type="number" class="form-control" wire:model.live="qtyChildren" min="0">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label class="required-field">{{__('Start Time')}} - {{$startOrder}}</label>
+                                    <label class="required-field">{{__('Start Time')}}</label>
                                     <select class="custom-select" wire:model.live="startOrder">
                                         @foreach($time_list  as $times)
                                             <option wire:key='{{$times->id}}'>{{$times->time}}</option>
@@ -161,7 +161,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label class="required-field">{{__('End Time')}} - {{$endOrder}}</label>
+                                    <label class="required-field">{{__('End Time')}}</label>
                                     <select class="custom-select" wire:model.live="endOrder">
                                         @foreach($time_list  as $times)
                                             <option wire:key='{{$times->id}}'>{{$times->time}}</option>
@@ -173,15 +173,19 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for=""></label>
-                                <div class="form-group" ><span>Баня: {{ number_format($sum, 2, ',', ' ') }} </span></div>
+                                <div class="form-group" ><span>Баня: {{ $sum }} </span></div>
                             </div>
                             <div class="col-sm-3">
                                 <label for=""></label>
-                                <div class="form-group" ><span>Услуги: {{ number_format($details_sum, 2, ',', ' ') }} </span></div>
+                                <div class="form-group" ><span>Услуги: {{ $details_sum }} </span></div>
                             </div>
                             <div class="col-sm-3">
                                 <label for=""></label>
-                                <div class="form-group"><span><strong>Итого: {{ number_format($details_sum + $sum, 2, ',', ' ') }}</strong> </span></div>
+                                <div class="form-group"><span><strong>Итого:
+                                    @if (is_numeric($details_sum) && is_numeric($sum))
+                                        {{ $details_sum + $sum }}
+                                    @endif                                     
+                                </strong> </span></div>
                             </div>
                         </div>
                         <a href="#" class="btn btn-secondary" wire:click="cancelOrder">Cancel</a>

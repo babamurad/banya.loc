@@ -78,8 +78,8 @@ class ObshayaComponent extends Component
     {
         $this->toggleNewOrder();
         //create number for new order num + 1
-        $numb = DB::select('call procNewNumber()');
-        $this->num = $numb[0]->Number;
+        $numb = Order::latest()->first();
+        $this->num = $numb->num;
 
         DB::beginTransaction();
 
@@ -111,8 +111,8 @@ class ObshayaComponent extends Component
 
     public function saveOrder()
     {
-        $numb = DB::select('call procNewNumber()');
-        $this->num = $numb[0]->Number;
+        $numb = Order::latest()->first();
+        $this->num = $numb->num+1;
         if ($this->sum > 0) {
             $order = new Order();
             $order->num = $this->num;
@@ -184,9 +184,9 @@ class ObshayaComponent extends Component
             $detail->order_id = $this->order->id;
             $detail->jobtitle_id = $this->job_id;
             $detail->employes_id = $this->employe_id;
-            $detail->jqty = $this->qty;
-            $detail->price = $this->price;
-            $detail->sum = number_format($this->qty * $this->price, 2, 2);
+            $detail->qty = $this->jqty;
+            $detail->price = $this->jprice;
+            $detail->sum = $this->details_sum;
             $detail->save();
             $this->dispatch('closeJobTitleModal');
             session()->flash('success', 'Добавлен вид услуг.');
@@ -198,21 +198,22 @@ class ObshayaComponent extends Component
         return;
     }
 
-    public function updatedQty()
+    public function updatedJqty()
     {
         //$employe_id, $job_id, $qty, $sum, $price;
+        $this->details_sum = number_format($this->jqty * $this->jprice, 2, ',', ' ');
     }
 
     public function updatedJobId()
     {
         $this->job = JobTitle::where('employe_id', $this->employe_id)->where('id', $this->job_id)->first();
-        $this->price = $this->job->price;
+        $this->jprice = $this->job->price;
 
     }
 
     public function updatedEmployeId()
     {
         $this->job = JobTitle::where('employe_id', $this->employe_id)->first();
-        $this->price = $this->job->price;
+        $this->jprice = $this->job->price;
     }
 }

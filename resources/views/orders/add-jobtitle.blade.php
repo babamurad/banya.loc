@@ -40,20 +40,20 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="name">{{__('Количество')}} </label>
-                                <input name="name" type="number" step="any" class="form-control" placeholder=" {{__('Количество')}} " wire:model.live="jqty">
+                                <label for="jqty">{{__('Количество')}} </label>
+                                <input name="jqty" type="number" step="any" class="form-control" placeholder=" {{__('Количество')}} " wire:model.live="jqty">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="name">{{__('Цена')}} </label>
-                                <input name="name" type="number" class="form-control" placeholder=" {{__('Цена')}} " wire:model.live="price" disabled>
+                                <label for="price">{{__('Цена')}} </label>
+                                <input name="price" type="number" class="form-control" placeholder=" {{__('Цена')}} " wire:model.live="jprice" disabled>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="name">{{__('Сумма')}} </label>
-                                <input class="form-control" type="text" value="{{ $qty*$price }}" readonly>
+                                <label for="jsum">{{__('Сумма')}} </label>
+                                <input class="form-control" name="jsum" type="text" readonly wire:model.live="details_sum">
                             </div>
                         </div>
                     </div>

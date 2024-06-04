@@ -7,11 +7,11 @@ use Livewire\Component;
 
 class LoginRegisterComponent extends Component
 {
-    public $email;
+    public $name;
     public $password;
 
     protected $rules = [
-        'email' => 'required|min:3|max:50',
+        'name' => 'required|min:3|max:50',
         'password' => 'required|min:6',
     ];
     public function render()
