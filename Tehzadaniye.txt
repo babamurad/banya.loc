@@ -1,4 +1,5 @@
-﻿Barcode for order
+﻿//     9934 3010 0008 9296
+Barcode for order
 
 Invoice print check printer size 7,8 мм
 
