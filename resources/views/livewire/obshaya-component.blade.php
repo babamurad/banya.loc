@@ -320,7 +320,7 @@
                                 <td>{{ $order->sum }}</td>
                                 <td>
                                     <div>
-                                        <button type="button" class="btn btn-secondary btn-sm">
+                                        <button type="button" class="btn btn-secondary btn-sm" wire:click="editOrder({{ $order->id }})">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button onclick="confirm('Are you sure want to delete ?') || event.stopImmediatePropagation() " type="button"

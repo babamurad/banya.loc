@@ -1,8 +1,8 @@
 <div>
     <div>
         <script>
-            window.addEventListener('closeEditUserModal', event=> {
-                $('#closeEditUserModal').modal('hide');
+            window.addEventListener('closeEditEmployeeModal', event=> {
+                $('#EditEmployeeModal').modal('hide');
             })
             window.addEventListener('closeCreateModal', event=> {
                 $('#CreateEmployeeDialog').modal('hide');
@@ -113,16 +113,16 @@
                                         <td>
                                             <div>
                                                 <button type="button" class="btn btn-secondary btn-sm"
-                                                        data-toggle="modal" onClick="javascript:edit()" data-target="#closeEditUserModal" wire:click="edit({{ $employee->id }})">
+                                                        data-toggle="modal" onClick="javascript:edit()" data-target="#EditEmployeeModal" wire:click="edit({{ $employee->id }})">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button onclick="confirm('Are you sure want to delete {{$employee->name}}?') || event.stopImmediatePropagation() "
+                                                <button onclick="confirm('Вы уверены что хотите удалить сотрудника {{$employee->name}}?') || event.stopImmediatePropagation() "
                                                         type="button" class="btn btn-danger btn-sm" wire:click="delete({{$employee->id}})">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr>                                                                        
 
                                 @empty
                                     <p> {{__('Users table is Empty!')}} </p>

@@ -29,6 +29,6 @@ class OrderDetail extends Model
 
     public function employe()
     {
-        return $this->belongsTo(Employe::class, 'employes_id', 'id');
+        return $this->belongsTo(Employe::class, 'employe_id', 'id');
     }
 }

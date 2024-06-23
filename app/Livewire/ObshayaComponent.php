@@ -34,6 +34,7 @@ class ObshayaComponent extends Component
     public $gender;
     public $order;
     public $details;
+    public $edit_id = '';
 
     public function render()
     {
@@ -109,10 +110,52 @@ class ObshayaComponent extends Component
         $this->visOrder = !$this->visOrder;
     }
 
+    public function editOrder($id)
+    {
+        $this->edit_id = $id;
+        $order = Order::findOrFail($this->edit_id);
+                 
+                 $this->department_id = $order->department_id ;
+                // $cl_id = Client::select('id')->first();
+                //  $cl_id->id = $order->clients_id ;
+                 $this->qty = $order->qty;
+                 $this->qtyAdults = $order->adults ;
+                 $this->qtyChildren = $order->children ;
+                 $this->startOrder = $order->start ;
+                 $this->endOrder = $order->end ;
+                 $this->sum = $order->sum ;
+                 $this->pol = $order->gender ;
+        $this->toggleNewOrder();
+    }
+
     public function saveOrder()
     {
-        $numb = Order::latest()->first();
-        $this->num = $numb->num+1;
+        if( $this->edit_id){
+            if ($this->sum > 0) {
+                $order = Order::findOrFail($this->edit_id);
+                //$order->num = $this->num;
+                $order->data = Carbon::create(now());
+                $order->department_id = $this->department_id;
+                $cl_id = Client::select('id')->first();
+                $order->clients_id = $cl_id->id;
+                $order->employes_id = 3;
+                $order->adults = $this->qtyAdults;
+                $order->children = $this->qtyChildren;
+                $order->start = $this->startOrder;
+                $order->end = $this->endOrder;
+                $order->sum = $this->sum;
+                $order->gender = $this->pol;
+                $order->update();
+                session()->flash('success', 'Сохранено');
+                //$this->toggleNewOrder();
+                $this->order = $order;
+                $this->closeForm();
+            } else {
+                session()->flash('error', 'Сумма не может быть 0. Проверьте время заказа');
+        }            
+        } else {
+            $numb = Order::latest()->first();
+            $this->num = $numb->num+1;
         if ($this->sum > 0) {
             $order = new Order();
             $order->num = $this->num;
@@ -132,9 +175,12 @@ class ObshayaComponent extends Component
             session()->flash('success', 'Сохранено');
             //$this->toggleNewOrder();
             $this->order = $order;
+            $this->closeForm();
         } else {
             session()->flash('error', 'Сумма не может быть 0. Проверьте время заказа');
         }
+        }
+        
     }
 
     public function closeForm()

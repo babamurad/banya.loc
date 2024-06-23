@@ -197,9 +197,9 @@
 
                                         @if($tb_time['busy']==1)
                                             <span>#{{$tb_time->order_id}}</span>
-                                            <button type="button" class="btn btn-sm btn-outline-info" wire:click='gotoView("{{ $tb_time->order_id }}")'>
+                                            {{-- <button type="button" class="btn btn-sm btn-outline-info" wire:click='gotoView("{{ $tb_time->order_id }}")'>
                                                 <i class="fas fa-eye mr-2"></i>View
-                                            </button>
+                                            </button> --}}
 
                                             <button type="button" class="btn btn-outline-success btn-sm" wire:click='gotoEdit("{{ $tb_time->order_id }}")'>
                                                 <i class="fas fa-edit mr-2"></i>Edit
