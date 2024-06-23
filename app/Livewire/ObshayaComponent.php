@@ -44,7 +44,7 @@ class ObshayaComponent extends Component
         $time_list = TimeTb::all();
         //$mans = Order::where('gender', '=', 1)->count();
         //$womans = Order::where('gender', '=', 2)->count();
-        $kol = DB::select('SELECT SUM(CASE WHEN o.gender=1 THEN 1 END) AS mans, SUM(CASE WHEN o.gender=2 THEN 1 END) AS womans FROM orders o')[0];
+        $kol = DB::select("SELECT SUM(CASE WHEN o.gender=1 THEN 1 END) AS mans, SUM(CASE WHEN o.gender=2 THEN 1 END) AS womans FROM orders o WHERE o.data BETWEEN '" . $this->FormatDate($this->date1) . "' AND '" . $this->FormatDate($this->date2). "'")[0];
         //dd($kol->mans);
         if ($this->employe_id) {
             $jobtitles = JobTitle::where('employe_id', $this->employe_id)->get();
@@ -85,23 +85,23 @@ class ObshayaComponent extends Component
         $this->employe_id = $employe->id;
         $this->job = JobTitle:: where('employe_id', $this->employe_id)->get();
 
-        //$this->date1 = Carbon::create(now())->format(('d.m.Y'));
-        //$this->date2 = Carbon::create(now())->format(('d.m.Y'));
+        $this->date1 = Carbon::create(now())->format(('d.m.Y'));
+        $this->date2 = Carbon::create(now())->format(('d.m.Y'));
+
     }
 
-    public function updatedDate1($newDate)
+    public function updatedDate1($data)
     {
-        $this->date1 = $newDate;
-        $this->dispatch('date1Updated', $newDate);
-        dd('Date changed');
-        // ... perform any additional actions needed after date update
+        $this->date1 = $data;
     }
 
-    public function FormatDate($data) {
-        //
-        //$oldDateFormat = $data . ' 06:00:00 Europe/Moscow';
-        //dd($oldDateFormat);
-        //$newDateFormat = 'Y-m-d H:i:s';
+    public function updatedDate2($data)
+    {
+        $this->date2 = $data;
+    }
+
+    public function FormatDate($data) 
+    {
         $newDate = Carbon::create($data)->format('Y-m-d');
         return $newDate;
     }

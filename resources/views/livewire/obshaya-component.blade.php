@@ -4,19 +4,7 @@
             //pda net +
             window.addEventListener('closeJobTitleModal', event=> {
                 $('#AddJobTitle').modal('hide');
-            });
-            
-
-            //Date picker   
-                $('#reservationdate1').datepicker({
-                        format: 'DD.MM.yyyy'
-                    });
-                    // @this.set('date1', date1Value)
-
-                $('#reservationdate2').datetimepicker({
-                        format: 'DD.MM.yyyy'
-                    }); 
-                    // @this.set('date2', date2Value)    
+            });  
 
             </script>
     @endpush
@@ -54,6 +42,8 @@
 
     <section class="content-header">
         <div class="container-fluid"> 
+
+        
             <div class="row mb-2">
                 <div class="col-sm-3">
                     <h1>Общая баня</h1>
@@ -62,14 +52,14 @@
                     </button>
                 </div>
                 <div class="col-sm-3">
+                    @php
+                        $d1 =$this->FormatDate($date1)
+                    @endphp
                     <div class="form-group">
-                        <label for="reservationdate1">Date1: {{ $date1 }}</label>
-                        <div class="input-group date" id="reservationdate1" data-target-input="nearest">
-                          <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate1" wire:model="date1" format="DD.MM.YYYY">
-                          <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                          </div>
-                        </div>
+                        <label for="reservationdate1">Дата1: <span class="bg-success p-2 ml-2 rounded">
+                            {{  Carbon\Carbon::create($date1)->format(('d.m.Y')); }}
+                        </span></label>
+                        <input type="date" wire:model.live="date1" value="{{ $date1 }}" style="width: 25px; cursor: pointer;">
                       </div>
                     <!-- small box -->
                     <div class="small-box bg-info">
@@ -81,13 +71,10 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="reservationdate2">Date2: {{ $date2 }}</label>
-                        <div class="input-group date" id="reservationdate2" data-target-input="nearest">
-                          <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" wire:model="date2" format="DD.MM.YYYY">
-                          <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                          </div>
-                        </div>
+                        <label for="reservationdate2">Дата2:<span class="bg-success p-2 ml-2 rounded">
+                            {{  Carbon\Carbon::create($date2)->format(('d.m.Y')); }}
+                        </span></label>
+                        <input type="date" wire:model.live="date2" value="{{ $date2 }}" style="width: 25px; cursor: pointer;">
                       </div>
                     <!-- small box -->
                     <div class="small-box bg-warning">
