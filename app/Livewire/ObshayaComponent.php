@@ -36,7 +36,7 @@ class ObshayaComponent extends Component
     public $details;
     public $edit_id = '';
     public $date1, $date2;
-    protected $listener = ['setDate'];
+    protected $listeners = ['updateDate' => 'setDate'];
 
     public function render()
     {
@@ -84,13 +84,17 @@ class ObshayaComponent extends Component
         $employe = Employe::first();
         $this->employe_id = $employe->id;
         $this->job = JobTitle:: where('employe_id', $this->employe_id)->get();
+
         //$this->date1 = Carbon::create(now())->format(('d.m.Y'));
         //$this->date2 = Carbon::create(now())->format(('d.m.Y'));
     }
 
-    public function setDate($data)
+    public function updatedDate1($newDate)
     {
-        $this->date1 = $data;
+        $this->date1 = $newDate;
+        $this->dispatch('date1Updated', $newDate);
+        dd('Date changed');
+        // ... perform any additional actions needed after date update
     }
 
     public function FormatDate($data) {
@@ -101,11 +105,6 @@ class ObshayaComponent extends Component
         $newDate = Carbon::create($data)->format('Y-m-d');
         return $newDate;
     }
-
-    // public function updatedDate1()
-    // {
-    //     $this->render();
-    // }
 
 
     public function addOrder()

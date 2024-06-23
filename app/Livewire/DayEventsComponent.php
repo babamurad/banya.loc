@@ -73,8 +73,8 @@ class DayEventsComponent extends Component
         $this->mon = $now->month;
         $this->data = Carbon::create($now)->format('d.m.Y');
 
-        $this->startCalendar = $now->copy()->firstOfMonth()->startOfWeek(Carbon::MONDAY);
-        $this->endCalendar = $now->copy()->lastOfMonth()->endOfWeek(Carbon::SUNDAY);
+        // $this->startCalendar = $now->copy()->firstOfMonth()->startOfWeek(Carbon::MONDAY);
+        // $this->endCalendar = $now->copy()->lastOfMonth()->endOfWeek(Carbon::SUNDAY);
 
         $this->calendar($this->data);
         $this->viewDay($this->data);
