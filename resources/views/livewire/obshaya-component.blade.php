@@ -5,49 +5,18 @@
             window.addEventListener('closeJobTitleModal', event=> {
                 $('#AddJobTitle').modal('hide');
             });
-
-            $(document).ready(function() {
-            $('#reservationdate1').datepicker({
-                format: 'DD.MM.YYYY',
-                // ... other datepicker options
-            });
-
-            Livewire.on('date1Updated', (newDate) => {
-            date1 = newDate;
-            });
-
-            $('#reservationdate2').datepicker({
-                format: 'DD.MM.YYYY',
-                // ... other datepicker options
-            });
-            });
-
-function formatDate(date) {
-  // ... Format date according to your desired format
-  return formattedDate;
-}
-
-        </script>
-        <script>
-            //Date picker    
-            // document.addEventListener('livewire:initialized', () => {
-            //     var d1 = document.getElementById('reservationdate1');
-            //     var date1Value = d1.value;
-            //     $('#reservationdate1').datepicker({
-            //             format: 'DD.MM.yyyy'
-            //         });
-            //         @this.set('date1', date1Value)
-
-            //     $('#reservationdate2').datetimepicker({
-            //             format: 'DD.MM.yyyy'
-            //         }); 
-            //         @this.set('date2', '30.06.2024')
-            // })       
             
-            
-                    
-            
-            // @this.set('date1', startday); 
+
+            //Date picker   
+                $('#reservationdate1').datepicker({
+                        format: 'DD.MM.yyyy'
+                    });
+                    // @this.set('date1', date1Value)
+
+                $('#reservationdate2').datetimepicker({
+                        format: 'DD.MM.yyyy'
+                    }); 
+                    // @this.set('date2', date2Value)    
 
             </script>
     @endpush
@@ -84,21 +53,7 @@ function formatDate(date) {
     </div>
 
     <section class="content-header">
-        <div class="container-fluid">  
-            <div x-data="{ date1: null, date2: null }">
-                <div class="form-group">
-                  <label for="reservationdate1">Date1:</label>
-                  <input type="text" class="form-control datetimepicker-input" id="reservationdate1" x-model="date1" />
-                </div>
-              
-                <div class="form-group">
-                  <label for="reservationdate2">Date2:</label>
-                  <input type="text" class="form-control datetimepicker-input" id="reservationdate2" x-model="date2" />
-                </div>
-              
-                <span>Selected Date1: {{ $date1 }}</span>
-                <span>Selected Date2: {{ $date2 }}</span>
-              </div>
+        <div class="container-fluid"> 
             <div class="row mb-2">
                 <div class="col-sm-3">
                     <h1>Общая баня</h1>
@@ -107,7 +62,7 @@ function formatDate(date) {
                     </button>
                 </div>
                 <div class="col-sm-3">
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label for="reservationdate1">Date1: {{ $date1 }}</label>
                         <div class="input-group date" id="reservationdate1" data-target-input="nearest">
                           <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate1" wire:model="date1" format="DD.MM.YYYY">
@@ -115,18 +70,17 @@ function formatDate(date) {
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                           </div>
                         </div>
-                      </div> --}}
+                      </div>
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3>{{ $kol->mans }}</h3>
-
                             <p>Человек в мужской бане</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label for="reservationdate2">Date2: {{ $date2 }}</label>
                         <div class="input-group date" id="reservationdate2" data-target-input="nearest">
                           <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" wire:model="date2" format="DD.MM.YYYY">
@@ -134,12 +88,11 @@ function formatDate(date) {
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                           </div>
                         </div>
-                      </div> --}}
+                      </div>
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>{{ $kol->womans }}</h3>
-
                             <p>Человек в женской бане</p>
                         </div>
                     </div>
