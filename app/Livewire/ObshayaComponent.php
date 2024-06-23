@@ -262,4 +262,11 @@ class ObshayaComponent extends Component
         $this->job = JobTitle::where('employe_id', $this->employe_id)->first();
         $this->jprice = $this->job->price;
     }
+
+    public function destroy($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();
+        session()->flash('error', 'Зааказ был удален!');
+    }
 }

@@ -324,7 +324,7 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button onclick="confirm('Are you sure want to delete ?') || event.stopImmediatePropagation() " type="button"
-                                                class="btn btn-danger btn-sm">
+                                                class="btn btn-danger btn-sm" wire:click="destroy({{ $order->id }})">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </div>
