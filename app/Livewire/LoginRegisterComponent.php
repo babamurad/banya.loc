@@ -22,7 +22,7 @@ class LoginRegisterComponent extends Component
 
     public function login()
     {
-
+        if (Auth::check()){
             if (auth()->user()->utype == 'KSS' || auth()->user()->utype == 'ADM'){
                 //dd(auth()->user()->utype.' - '.auth()->user()->status);
                 return redirect()->route('admin');
@@ -30,7 +30,10 @@ class LoginRegisterComponent extends Component
                 //dd(auth()->user()->utype.' - '.auth()->user()->status);
                 $this->redirectRoute('lock-screen');
             }
-            session()->flash('success', __('Вы авторизованы.'));
+            session()->flash('success', 'Вы авторизованы.');            
+        } else {
+            session()->flash('error', 'Логин или пароль неверны.');
+        }
          
     }
 

@@ -6,6 +6,30 @@
                 $('#AddJobTitle').modal('hide');
             });
         </script>
+        <script>
+            //Date picker
+            // $('#reservationdate1').datetimepicker({
+            //     format: 'DD.MM.yyyy'
+            // });
+                    
+            $('#reservationdate2').datetimepicker({
+                format: 'DD.MM.yyyy'
+            });
+
+            document.addEventListener('livewire:load', function () {
+            $('#reservationdate1').datepicker({
+                format: 'yyyy-mm-dd',
+            }).on('changeDate', function(e) {
+                @this.set('date1', e.format(0, "yyyy-mm-dd"));
+            });
+            $('#reservationdate2').datepicker({
+                format: 'yyyy-mm-dd',
+            }).on('changeDate', function(e) {
+                @this.set('date2', e.format(0, "yyyy-mm-dd"));
+            });
+        });
+
+            </script>
     @endpush
 
     @include('orders.add-jobtitle')
@@ -43,17 +67,36 @@
 
     <section class="content-header">
         <div class="container-fluid">
+
+            <div>
+                <div class="form-group">
+                    <label for="date">Выберите дату</label>
+                    <input type="text" id="date" class="form-control" placeholder="Выберите дату" autocomplete="off">
+                </div>
+                <div>
+                    Выбранная дата: {{ $date1 }}
+                </div>
+            </div>
+            
             <div class="row mb-2">
                 <div class="col-sm-3">
                     <h1>Общая баня</h1>
                     <button type="submit" class="btn btn-success mt-4"  wire:click="toggleNewOrder">
                         Новый Заказ<i class="fas fa-chevron-{{ $visOrder? 'down' : 'up'}} ml-3"></i>
-
-{{--                        --}}
                     </button>
-
                 </div>
                 <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Date1: {{ $date1 }}</label>
+                          <div class="input-group date" id="reservationdate1" data-target-input="nearest">
+                              <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate1" wire:model.live="date1"
+                              onchange="Livewire.emit('setDate', this.value)"
+                              >
+                              <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
+                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                              </div>
+                          </div>
+                      </div>
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
@@ -64,6 +107,15 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Date2: {{ $date2 }}</label>
+                          <div class="input-group date" id="reservationdate2" data-target-input="nearest">
+                              <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" wire:model.live="date2">
+                              <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
+                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                              </div>
+                          </div>
+                      </div>
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">

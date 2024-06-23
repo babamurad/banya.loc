@@ -35,6 +35,8 @@ class ObshayaComponent extends Component
     public $order;
     public $details;
     public $edit_id = '';
+    public $date1, $date2;
+    protected $listener = ['setDate'];
 
     public function render()
     {
@@ -58,7 +60,16 @@ class ObshayaComponent extends Component
         }
             //$orders = Order::with('order_details')->orderBy('id', 'DESC')->paginate(10);
             $orders_query = Order::query();
-            if ($this->gender) { $orders_query->where('gender', '=', $this->gender); }
+
+            if ($this->gender) {
+                $orders_query->where('gender', '=', $this->gender);
+            }
+
+            // Обновление фильтра по дате
+            if ($this->date1 && $this->date2) {
+                $orders_query->whereBetween('data', [$this->FormatDate($this->date1), $this->FormatDate($this->date2)]);
+            }
+
             $orders = $orders_query
                 ->with('order_details')
                 ->orderBy('id', 'DESC')
@@ -73,7 +84,29 @@ class ObshayaComponent extends Component
         $employe = Employe::first();
         $this->employe_id = $employe->id;
         $this->job = JobTitle:: where('employe_id', $this->employe_id)->get();
+        //$this->date1 = Carbon::create(now())->format(('d.m.Y'));
+        //$this->date2 = Carbon::create(now())->format(('d.m.Y'));
     }
+
+    public function setDate($data)
+    {
+        $this->date1 = $data;
+    }
+
+    public function FormatDate($data) {
+        //
+        //$oldDateFormat = $data . ' 06:00:00 Europe/Moscow';
+        //dd($oldDateFormat);
+        //$newDateFormat = 'Y-m-d H:i:s';
+        $newDate = Carbon::create($data)->format('Y-m-d');
+        return $newDate;
+    }
+
+    // public function updatedDate1()
+    // {
+    //     $this->render();
+    // }
+
 
     public function addOrder()
     {
