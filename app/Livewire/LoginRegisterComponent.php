@@ -22,7 +22,9 @@ class LoginRegisterComponent extends Component
 
     public function login()
     {
-        if (Auth::check()){
+        $data = $this->validate();
+        
+        if (Auth::attempt($data)){
             if (auth()->user()->utype == 'KSS' || auth()->user()->utype == 'ADM'){
                 //dd(auth()->user()->utype.' - '.auth()->user()->status);
                 return redirect()->route('admin');

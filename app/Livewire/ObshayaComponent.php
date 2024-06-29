@@ -162,6 +162,7 @@ class ObshayaComponent extends Component
 
     public function saveOrder()
     {
+        dd($this->depart_id);
         if( $this->edit_id){
             if ($this->sum > 0) {
                 $order = Order::findOrFail($this->edit_id);
