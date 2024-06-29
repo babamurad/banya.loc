@@ -21,7 +21,7 @@ class ObshayaComponent extends Component
     // нужно использовать массив для подчиненной таблицы. Нужно использовать DB::beginTransaction();
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $depart_id, $clients_id, $pol = 1;
+    public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $clients_id, $pol = 1;
     public $startOrder = "06:00:00", $endOrder;
     //Sprawocniki kazhetsya
     public $jobtitle_id, $jqty, $jprice, $jsum, $dep_sum, $job;
@@ -44,7 +44,8 @@ class ObshayaComponent extends Component
         $time_list = TimeTb::all();
         //$mans = Order::where('gender', '=', 1)->count();
         //$womans = Order::where('gender', '=', 2)->count();
-        $kol = DB::select("SELECT SUM(CASE WHEN o.gender=1 THEN 1 END) AS mans, SUM(CASE WHEN o.gender=2 THEN 1 END) AS womans FROM orders o WHERE o.data BETWEEN '" . $this->FormatDate($this->date1) . "' AND '" . $this->FormatDate($this->date2). "'")[0];
+        $kol = DB::select("SELECT SUM(CASE WHEN o.gender=1 THEN 1 END) AS mans, SUM(CASE WHEN o.gender=2 THEN 1 END) AS womans 
+        FROM orders o WHERE o.data BETWEEN '" . $this->FormatDate($this->date1) . "' AND '" . $this->FormatDate($this->date2) . "'". " AND department_id=1 ")[0];
         //dd($kol->mans);
         if ($this->employe_id) {
             $jobtitles = JobTitle::where('employe_id', $this->employe_id)->get();
@@ -72,6 +73,7 @@ class ObshayaComponent extends Component
 
             $orders = $orders_query
                 ->with('order_details')
+                ->where('department_id', '=', 1)
                 ->orderBy('id', 'DESC')
                 ->paginate(10);
 
@@ -87,7 +89,6 @@ class ObshayaComponent extends Component
 
         $this->date1 = Carbon::create(now())->format(('d.m.Y'));
         $this->date2 = Carbon::create(now())->format(('d.m.Y'));
-
     }
 
     public function updatedDate1($data)
@@ -162,7 +163,6 @@ class ObshayaComponent extends Component
 
     public function saveOrder()
     {
-        dd($this->depart_id);
         if( $this->edit_id){
             if ($this->sum > 0) {
                 $order = Order::findOrFail($this->edit_id);
@@ -194,7 +194,7 @@ class ObshayaComponent extends Component
             $order->num = $this->num;
 
             $order->data = Carbon::create(now());
-            $order->department_id = $this->department_id;
+            $order->department_id = 1;
             $cl_id = Client::select('id')->first();
             $order->clients_id = $cl_id->id;
             $order->employes_id = 3;

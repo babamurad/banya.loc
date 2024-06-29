@@ -64,7 +64,7 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{ $kol->mans }}</h3>
+                            <h3>{{ $kol->mans??0 }}</h3>
                             <p>Человек в мужской бане</p>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{ $kol->womans }}</h3>
+                            <h3>{{ $kol->womans??0 }}</h3>
                             <p>Человек в женской бане</p>
                         </div>
                     </div>
