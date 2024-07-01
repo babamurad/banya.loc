@@ -21,7 +21,7 @@ class ObshayaComponent extends Component
     // нужно использовать массив для подчиненной таблицы. Нужно использовать DB::beginTransaction();
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $clients_id, $pol = 1;
+    public $order_id, $num, $order_data, $employes_id, $department_id, $total_sum, $desc, $clients_id, $pol = 1, $user_id;
     public $startOrder = "06:00:00", $endOrder;
     //Sprawocniki kazhetsya
     public $jobtitle_id, $jqty, $jprice, $jsum, $dep_sum, $job;
@@ -89,6 +89,7 @@ class ObshayaComponent extends Component
 
         $this->date1 = Carbon::create(now())->format(('d.m.Y'));
         $this->date2 = Carbon::create(now())->format(('d.m.Y'));
+        $this->user_id = auth()->user()->id;
     }
 
     public function updatedDate1($data)
@@ -172,6 +173,7 @@ class ObshayaComponent extends Component
                 $cl_id = Client::select('id')->first();
                 $order->clients_id = $cl_id->id;
                 $order->employes_id = 3;
+                $order->user_id = auth()->user()->id;
                 $order->adults = $this->qtyAdults;
                 $order->children = $this->qtyChildren;
                 $order->start = $this->startOrder;
@@ -198,6 +200,7 @@ class ObshayaComponent extends Component
             $cl_id = Client::select('id')->first();
             $order->clients_id = $cl_id->id;
             $order->employes_id = 3;
+            $order->user_id = auth()->user()->id;
             $order->adults = $this->qtyAdults;
             $order->children = $this->qtyChildren;
             $order->start = $this->startOrder;

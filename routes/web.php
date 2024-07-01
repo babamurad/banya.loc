@@ -41,6 +41,7 @@ Route::middleware(['auth', 'authadmin'])->group(function () {
     Route::get('day-events/{data?}/{dep_id?}', DayEventsComponent::class)->name('day-events');
     Route::get('obshaya', ObshayaComponent::class)->name('obshaya');
     Route::get('employee', EmployeeComponent::class)->name('employee');
+    Route::get('shift', ShiftCloseComponent::class)->name('shift');
 });
 
 
@@ -59,7 +60,7 @@ Route::get('order-edit/{id}', OrderEdit::class)->name('order-edit');
 Route::get('order-view/{id}', OrderViewComponent::class)->name('order-view');
 
 
-Route::get('shift', ShiftCloseComponent::class)->name('shift');
+
 
 Route::get('events', EventsComponent::class)->name('events');
 Route::get('full-calendar', \App\Livewire\FullCalendar::class)->name('full-calendar');

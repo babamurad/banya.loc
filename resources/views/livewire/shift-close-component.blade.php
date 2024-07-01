@@ -36,7 +36,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="start">Дата: </label><br>
-                    <input type="date" id="start" name="trip-start" style="width: 50%;" readonly
+                    <input type="date" id="start" name="trip-start" style="width: 50%;" 
                     value="{{ \Carbon\Carbon::create(now())->format('Y-m-d') }}"
                     min="2024-01-01"
                     max="2024-12-31" />
@@ -46,7 +46,7 @@
             <div class="col-sm-2">
                 <div class="form-group">
                     <label>Смена</label>
-                    <select class="form-control">
+                    <select class="form-control" wire:model.live="time">
                         <option value="6">06:00 - 10:00</option>
                         <option value="10">10:00 - 16:30</option>
                         <option value="16">16:30 - 22:30</option>
@@ -61,21 +61,28 @@
                 </div>
             </div>
             </div>
+            @php
+                $totalSum = 0;
+            @endphp
             <div class="row">
                 <div class="col-sm-8">
                     <div class="form-group d-flex">
                         @foreach($departments as $department)
                             <ul>
-                                <li>
-                                    <strong>{{$department->name}}</strong> <br> 1800 man.
+                                <li wire:key='{{$department->id}}'>
+                                    <strong>{{$department->name}}</strong>                                      
+                                    @php
+                                       $totalSum = $totalSum + $department->total_sum; 
+                                    @endphp
                                 </li>
+                                <li class="text-success"><strong>{{$department->total_sum}}</strong></li>
                             </ul>
                         @endforeach
                     </div>
                 </div>
                 <div class="col-sm-4"><br>
                     <div class="form-group">
-                        <strong>Общая сумма за смену: </strong>3750 man.
+                        <strong>Общая сумма за смену: </strong><strong class="text-success"> {{ $totalSum }} man.</strong>
                     </div>
                 </div>
             </div>

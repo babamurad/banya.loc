@@ -78,7 +78,8 @@
             @foreach($departments as $department)
             <div class="custom-control custom-radio mr-3">
                 <input class="custom-control-input" type="radio" id="customRadio{{$department->id}}" name="customRadio"
-                       wire:model="department_id" wire:key="department-{{$department->id}}" wire:click="DepartmentChecked({{$department->id}})" value="{{$department->id}}">
+                       wire:model="department_id" wire:key="department-{{$department->id}}" 
+                       wire:click="DepartmentChecked({{$department->id}})" value="{{$department->id}}">
                 <label for="customRadio{{$department->id}}" class="custom-control-label" style="cursor: pointer;">{{$department->name}}</label>
             </div>
             @endforeach

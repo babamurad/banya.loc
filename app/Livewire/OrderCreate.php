@@ -159,7 +159,7 @@ class OrderCreate extends Component
         $order->data = $this->data;
         $order->department_id = $this->department_id;
         $order->clients_id = $this->clients_id;
-        $order->user_id = 22;
+        $order->user_id = auth()->user()->id;
 
         if (!$this->startOrder) {
             $this->startOrder = '06:00';

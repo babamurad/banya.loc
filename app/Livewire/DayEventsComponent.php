@@ -66,7 +66,7 @@ class DayEventsComponent extends Component
         if ($dep_id) {
             $this->department_id = $dep_id;
         } else {
-            $this->department_id = Department::first()->id;
+            $this->department_id = Department::skip(1)->first()->id;
         }
         $this->year = $now->year;
         $this->month = $now->month;
@@ -142,7 +142,7 @@ class DayEventsComponent extends Component
         $tomorrow = Carbon::create($this->data)->format('Y-m-d 23:59:59');
 
         $data = Carbon::create($this->data)->format('Y-m-d');
-        $this->department_id = $this->department_id ? $this->department_id : 1;
+        $this->department_id = $this->department_id ? $this->department_id : 2;
         //Это ХП в БД переводит время с таблицы заказов в таблицу времени TimeTb для отображения
         DB::select('CALL procGetOrderTime("' . $data . '", "' . $this->department_id . '")');
         $this->tb_times = TimeTb::all();
@@ -218,6 +218,7 @@ class DayEventsComponent extends Component
         $cl_id = Client::select('id')->first();
         $order->clients_id = $cl_id->id;
         $order->employes_id = 3;
+        $order->user_id = auth()->user()->id;
         $order->save();
         return redirect()->route('order-create', ['data' => (\Carbon\Carbon::create($this->data)->format('Y-m-d')), 'dep_id' => $this->department_id, 'number' => $this->num]);
     }

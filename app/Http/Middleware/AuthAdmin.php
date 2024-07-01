@@ -16,7 +16,7 @@ class AuthAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->utype === 'ADM')
+        if (Auth::user()->utype === 'ADM' || Auth::user()->utype === 'KSS')
         {
             return $next($request);
         }
